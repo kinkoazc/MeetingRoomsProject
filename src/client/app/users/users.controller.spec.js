@@ -1,27 +1,27 @@
 /* jshint -W117, -W030 */
-describe('AdminController', function() {
+describe('UsersController', function() {
     var controller;
 
     beforeEach(function() {
-        bard.appModule('app.admin');
+        bard.appModule('app.users');
         bard.inject('$controller', '$log', '$rootScope');
     });
 
     beforeEach(function () {
-        controller = $controller('AdminController');
+        controller = $controller('UsersController');
         $rootScope.$apply();
     });
 
     bard.verifyNoOutstandingHttpRequests();
 
-    describe('Admin controller', function() {
+    describe('Users controller', function() {
         it('should be created successfully', function () {
             expect(controller).to.be.defined;
         });
 
         describe('after activate', function() {
-            it('should have title of Admin', function() {
-                expect(controller.title).to.equal('Admin');
+            it('should have title of Users', function() {
+                expect(controller.title).to.equal('Users');
             });
 
             it('should have logged "Activated"', function() {

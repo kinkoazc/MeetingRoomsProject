@@ -6,7 +6,8 @@
         //'app.widgets',
         'app.meetings',
         'app.rooms',
-        'app.admin',
+        'app.login',
+        'app.users',
         //'app.dashboard',
         'app.layout'
     ]);
