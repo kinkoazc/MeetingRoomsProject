@@ -37,7 +37,8 @@ module.exports = function() {
             clientApp + '**/*.module.js',
             clientApp + '**/*.js',
             '!' + clientApp + '**/*.spec.js',
-            '!' + clientApp + 'i_*/*.js'
+            '!' + clientApp + 'i_*/*.js',
+            '!' + clientApp + 'i_blocks/*.js'
         ],
         jsOrder: [
             '**/app.module.js',
