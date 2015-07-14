@@ -6,7 +6,7 @@
         /* Since Angular has this but needs to load, this gives us the class early. */
         .ng-hide { display: none!important; }
     </style>
-    <title ng-bind="title">meetings</title>
+    <title ng-bind="title">Meetings</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
@@ -32,7 +32,7 @@
         <div id="splash-page" ng-show="showSplash">
             <div class="page-splash">
                 <div class="page-splash-message">
-                    meetings
+                    meeting room administration
                 </div>
                 <div class="progress progress-striped active page-progress-bar">
                     <div class="bar"></div>
@@ -58,32 +58,18 @@
     <!-- build:js js/app.js -->
     <!-- inject:js -->
     <script src="/src/client/app/app.module.js"></script>
-    <script src="/src/client/app/admin/admin.module.js"></script>
-    <script src="/src/client/app/blocks/exception/exception.module.js"></script>
-    <script src="/src/client/app/blocks/logger/logger.module.js"></script>
-    <script src="/src/client/app/blocks/router/router.module.js"></script>
-    <script src="/src/client/app/core/core.module.js"></script>
-    <script src="/src/client/app/dashboard/dashboard.module.js"></script>
+    <script src="/src/client/app/i_blocks/exception/exception.module.js"></script>
+    <script src="/src/client/app/i_blocks/logger/logger.module.js"></script>
+    <script src="/src/client/app/i_blocks/router/router.module.js"></script>
     <script src="/src/client/app/layout/layout.module.js"></script>
-    <script src="/src/client/app/widgets/widgets.module.js"></script>
-    <script src="/src/client/app/admin/admin.controller.js"></script>
-    <script src="/src/client/app/admin/admin.route.js"></script>
-    <script src="/src/client/app/blocks/exception/exception-handler.provider.js"></script>
-    <script src="/src/client/app/blocks/exception/exception.js"></script>
-    <script src="/src/client/app/blocks/logger/logger.js"></script>
-    <script src="/src/client/app/blocks/router/router-helper.provider.js"></script>
-    <script src="/src/client/app/core/config.js"></script>
-    <script src="/src/client/app/core/constants.js"></script>
-    <script src="/src/client/app/core/core.route.js"></script>
-    <script src="/src/client/app/core/dataservice.js"></script>
-    <script src="/src/client/app/dashboard/dashboard.controller.js"></script>
-    <script src="/src/client/app/dashboard/dashboard.route.js"></script>
+    <script src="/src/client/app/i_blocks/exception/exception-handler.provider.js"></script>
+    <script src="/src/client/app/i_blocks/exception/exception.js"></script>
+    <script src="/src/client/app/i_blocks/logger/logger.js"></script>
+    <script src="/src/client/app/i_blocks/router/router-helper.provider.js"></script>
     <script src="/src/client/app/layout/ht-sidebar.directive.js"></script>
     <script src="/src/client/app/layout/ht-top-nav.directive.js"></script>
     <script src="/src/client/app/layout/shell.controller.js"></script>
     <script src="/src/client/app/layout/sidebar.controller.js"></script>
-    <script src="/src/client/app/widgets/ht-img-person.directive.js"></script>
-    <script src="/src/client/app/widgets/ht-widget-header.directive.js"></script>
     <!-- endinject -->
 
     <!-- inject:templates:js -->
