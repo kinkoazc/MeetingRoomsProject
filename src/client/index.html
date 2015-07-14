@@ -29,16 +29,16 @@
 <body>
     <div>
         <div ng-include="'app/layout/shell.html'"></div>
-        <div id="splash-page" ng-show="showSplash">
-            <div class="page-splash">
-                <div class="page-splash-message">
-                    meeting room administration
-                </div>
-                <div class="progress progress-striped active page-progress-bar">
-                    <div class="bar"></div>
-                </div>
-            </div>
-        </div>
+        <!--<div id="splash-page" ng-show="showSplash">-->
+            <!--<div class="page-splash">-->
+                <!--<div class="page-splash-message">-->
+                    <!--Loading...-->
+                <!--</div>-->
+                <!--<div class="progress progress-striped active page-progress-bar">-->
+                    <!--<div class="bar"></div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
 
     <!-- build:js js/lib.js -->
@@ -58,10 +58,15 @@
     <!-- build:js js/app.js -->
     <!-- inject:js -->
     <script src="/src/client/app/app.module.js"></script>
+    <script src="/src/client/app/core/core.module.js"></script>
     <script src="/src/client/app/i_blocks/exception/exception.module.js"></script>
     <script src="/src/client/app/i_blocks/logger/logger.module.js"></script>
     <script src="/src/client/app/i_blocks/router/router.module.js"></script>
     <script src="/src/client/app/layout/layout.module.js"></script>
+    <script src="/src/client/app/core/config.js"></script>
+    <script src="/src/client/app/core/constants.js"></script>
+    <script src="/src/client/app/core/core.route.js"></script>
+    <script src="/src/client/app/core/dataservice.js"></script>
     <script src="/src/client/app/i_blocks/exception/exception-handler.provider.js"></script>
     <script src="/src/client/app/i_blocks/exception/exception.js"></script>
     <script src="/src/client/app/i_blocks/logger/logger.js"></script>

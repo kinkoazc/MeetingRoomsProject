@@ -7,7 +7,14 @@
 
     /* @ngInject */
     function htTopNav () {
-        var directive = {
+
+
+        /* @ngInject */
+        function TopNavController() {
+            var vm = this;
+        }
+
+        return {
             bindToController: true,
             controller: TopNavController,
             controllerAs: 'vm',
@@ -17,12 +24,5 @@
             },
             templateUrl: 'app/layout/ht-top-nav.html'
         };
-
-        /* @ngInject */
-        function TopNavController() {
-            var vm = this;
-        }
-
-        return directive;
     }
 })();
