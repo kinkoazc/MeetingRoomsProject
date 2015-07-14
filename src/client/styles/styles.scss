@@ -18,13 +18,13 @@ $color_violet: #932ab6;
     /*font-weight: 400;*/
 }
 
-.btn, .badge, .modal, .modal-dialog, .modal-content,
-input, select {
+.btn, .badge, .modal, .modal-dialog, .modal-content {
     -ms-border-radius: 0 !important;
     border-radius: 0 !important;
 }
 
 input, select {
+    @extend .btn, .badge, .modal, .modal-dialog, .modal-content;
     padding: 4px !important;
     /*width: 65% !important;*/
     display: inline-block !important;
@@ -64,13 +64,15 @@ input[type="radio"], input[type="checkbox"] {
     background-image: none !important;
     font-family: "Segoe UI", Arial, Helvetica, sans-serif;
     font-size: 13px !important;
-}
-.btn.btn-form-md {
-    margin: 0 .5em .2em .5em;
-    width: 9em;
-}
-.btn.btn-mini {
-    font-size: 11px !important;
+
+    .btn-form-md {
+        margin: 0 .5em .2em .5em;
+        width: 9em;
+    }
+
+    .btn-mini {
+        font-size: 11px !important;
+    }
 }
 
 body {
@@ -80,15 +82,15 @@ body {
     background: #111;
     padding-top: 45px;
     -webkit-font-smoothing: antialiased;
+
+    .container {
+        width: 97%;
+        padding-left: 1.5%;
+        padding-right: 1.5%;
+    }
 }
 
-body .container {
-    width: 97%;
-    padding-left: 1.5%;
-    padding-right: 1.5%;
-}
-
-h1, h2, h3, h4, h5, h6 {
+h1 {
     padding: 2px 0;
     margin: 2px 0;
     color: #777;
@@ -96,26 +98,31 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h2 {
+    @extend h1;
     font-size: 30px;
     line-height: 40px;
 }
 
 h3 {
+    @extend h1;
     font-size: 23px;
     line-height: 33px;
 }
 
 h4 {
+    @extend h1;
     font-size: 20px;
     line-height: 30px;
 }
 
 h5 {
+    @extend h1;
     font-size: 18px;
     line-height: 28px;
 }
 
 h6 {
+    @extend h1;
     font-size: 15px;
     line-height: 25px;
 }
@@ -128,15 +135,20 @@ p {
 a {
     color: #333;
     text-decoration: none !important;
-}
 
-a:hover {
-    color: #888;
-    text-decoration: none;
-}
+    &:hover {
+        color: #888;
+        text-decoration: none;
+        outline: 0;
+    }
 
-a:hover, a:focus, a:active {
-    outline: 0;
+    &:focus, &:active {
+        outline: 0;
+    }
+
+    &.btn {
+        font-size: 13px !important;
+    }
 }
 
 .bold {
@@ -161,10 +173,6 @@ hr {
 
 .well {
     padding: 10px 15px;
-}
-
-a.btn {
-    font-size: 13px !important;
 }
 
 .label {
@@ -197,44 +205,44 @@ a.btn {
 
 /* Button colors */
 
-.btn.btn-primary {
-    background: $color_blue !important;
-}
+.btn {
+    &.btn-primary {
+        background: $color_blue !important;
+        &:hover {
+            background: #0f608b !important;
+        }
+    }
 
-.btn.btn-primary:hover {
-    background: #0f608b !important;
-}
+    &.btn-info {
+        background: $color_lightblue !important;
+        &:hover {
+            background: #459fc9 !important;
+        }
+    }
 
-.btn.btn-info {
-    background: $color_lightblue !important;
-}
+    &.btn-success {
+        background: $color_success !important;
 
-.btn.btn-info:hover {
-    background: #459fc9 !important;
-}
+        &:hover {
+            background: #36a530 !important;
+        }
+    }
 
-.btn.btn-success {
-    background: $color_success !important;
-}
+    &.btn-warning {
+        background: $color_warning !important;
+        &:hover {
+            background: #d67323 !important;
+        }
+    }
 
-.btn.btn-success:hover {
-    background: #36a530 !important;
-}
+    &.btn-danger {
+        background: $color_important !important;
 
-.btn.btn-warning {
-    background: $color_warning !important;
-}
+        &:hover {
+            background: #d82829 !important;
+        }
+    }
 
-.btn.btn-warning:hover {
-    background: #d67323 !important;
-}
-
-.btn.btn-danger {
-    background: $color_important !important;
-}
-
-.btn.btn-danger:hover {
-    background: #d82829 !important;
 }
 
 /* Label colors */
@@ -712,7 +720,7 @@ form label {
 
 /* Sidebar dropdown */
 
-.sidebar .sidebar-dropdown* {
+.sidebar .sidebar-dropdown * {
     text-decoration: none;
 }
 
@@ -840,7 +848,7 @@ form label {
 /* Matter */
 
 .mainbar .matter {
-    border-top: 0px solid #ddd;
+    border-top: 0 solid #ddd;
     margin: 2em;
 }
 
@@ -1004,7 +1012,6 @@ form label {
     margin-bottom: 5px;
     margin-right: 10px;
     padding: 1.5em 1em;
-    background-color: #f8f8f8;
     background: #f8f8f8;
     border: 1px solid #ccc;
     max-width: 100%;
@@ -1387,7 +1394,6 @@ input.form-control,
 select.form-control,
 textarea.form-control {
     /*width: 205px;*/
-    display: inline;
     display: block;
     width: 50%;
     max-width: 30em;
@@ -1573,7 +1579,6 @@ small {
     font-family: "Segoe UI", Arial, Helvetica, sans-serif;
     font-weight: normal;
     -webkit-text-shadow: 2px 2px #000000;
-    text-shadow: 2px 2px #000000;
     text-shadow: 2px 2px rgba(0, 0, 0, 0.15);
     text-transform: uppercase;
     text-decoration: none;
@@ -1612,8 +1617,8 @@ small {
 }
 
 .ngplus-overlay-background {
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
     padding-left: 100px;
     position: absolute;
     z-index: 10000;
@@ -1628,8 +1633,6 @@ small {
     /*border: 1px solid #000;*/
     /*background-color: #fff;*/
     font-weight: bold;
-    height: 100px;
-    width: 300px;
     height: 15em;
     width: 20em;
     z-index: 10000;
@@ -1642,7 +1645,6 @@ small {
     font-family: "Segoe UI", Arial, Helvetica, sans-serif;
     font-weight: normal;
     -webkit-text-shadow: 2px 2px #000000;
-    text-shadow: 2px 2px #000000;
     text-shadow: 2px 2px rgba(0, 0, 0, 0.15);
     text-transform: uppercase;
     text-decoration: none;

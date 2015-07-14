@@ -60,12 +60,12 @@ gulp.task('plato', function(done) {
  * @return {Stream}
  */
 gulp.task('styles', ['clean-styles'], function() {
-    log('Compiling Less --> CSS');
+    log('Compiling SASS --> CSS');
 
     return gulp
-        .src(config.less)
+        .src(config.sass)
         .pipe($.plumber()) // exit gracefully if something fails after this
-        .pipe($.less())
+        .pipe($.sass())
 //        .on('error', errorLogger) // more verbose and dupe output. requires emit.
         .pipe($.autoprefixer({browsers: ['last 2 version', '> 5%']}))
         .pipe(gulp.dest(config.temp));
@@ -96,8 +96,8 @@ gulp.task('images', ['clean-images'], function() {
         .pipe(gulp.dest(config.build + 'images'));
 });
 
-gulp.task('less-watcher', function() {
-    gulp.watch([config.less], ['styles']);
+gulp.task('sass-watcher', function() {
+    gulp.watch([config.sass], ['styles']);
 });
 
 /**
@@ -488,10 +488,10 @@ function startBrowserSync(isDev, specRunner) {
     // If build: watches the files, builds, and restarts browser-sync.
     // If dev: watches less, compiles it to css, browser-sync handles reload
     if (isDev) {
-        gulp.watch([config.less], ['styles'])
+        gulp.watch([config.sass], ['styles'])
             .on('change', changeEvent);
     } else {
-        gulp.watch([config.less, config.js, config.html], ['optimize', browserSync.reload])
+        gulp.watch([config.sass, config.js, config.html], ['optimize', browserSync.reload])
             .on('change', changeEvent);
     }
 
@@ -500,7 +500,7 @@ function startBrowserSync(isDev, specRunner) {
         port: 3000,
         files: isDev ? [
             config.client + '**/*.*',
-            '!' + config.less,
+            '!' + config.sass,
             config.temp + '**/*.css'
         ] : [],
         ghostMode: { // these are the defaults t,f,t,t
