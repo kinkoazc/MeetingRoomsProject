@@ -8,14 +8,14 @@
     dataservice.$inject = ['$http', '$q', 'logger'];
     /* @ngInject */
     function dataservice($http, $q, logger) {
-        var service = {
+        return {
             getPeople: getPeople,
             getMessageCount: getMessageCount
         };
 
-        return service;
-
-        function getMessageCount() { return $q.when(72); }
+        function getMessageCount() {
+            return $q.when(72);
+        }
 
         function getPeople() {
             return $http.get('/api/people')
