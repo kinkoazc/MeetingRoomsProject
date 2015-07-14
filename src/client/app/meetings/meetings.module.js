@@ -1,9 +1,8 @@
 (function () {
     'use strict';
 
-    angular.module('app.admin', [
+    angular.module('app.meetings', [
         'app.core'
-        //'app.widgets'
       ]);
 
 })();
