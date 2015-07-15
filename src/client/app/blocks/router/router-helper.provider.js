@@ -45,7 +45,8 @@
 
             function configureStates(states, otherwisePath) {
                 states.forEach(function (state) {
-                    state.config.resolve = angular.extend(state.config.resolve || {}, config.resolveAlways);
+                    state.config.resolve =
+                        angular.extend(state.config.resolve || {}, config.resolveAlways);
                     $stateProvider.state(state.state, state.config);
                 });
                 if (otherwisePath && !hasOtherwise) {
@@ -72,7 +73,7 @@
                             (error.data || '') + '. <br/>' + (error.statusText || '') +
                             ': ' + (error.status || '');
                         logger.warning(msg, [toState]);
-                        $location.path('/');
+                        $location.path('/404');
                     }
                 );
             }
@@ -95,9 +96,7 @@
                     }
                 );
             }
-
         }
-
 
         return {
             configure: configure,

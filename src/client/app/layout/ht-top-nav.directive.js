@@ -8,7 +8,6 @@
     /* @ngInject */
     function htTopNav () {
 
-
         /* @ngInject */
         function TopNavController($state, routerHelper) {
             var vm = this;
