@@ -10,6 +10,7 @@
     function MeetingsController($rootScope, $state, $stateParams, logger, routerHelper) {
         var vm = this,
             states = routerHelper.getStates();
+        vm.editForm = editForm;
         vm.isCurrent = isCurrent;
         vm.meetings = [];
         vm.meeting = {};
@@ -97,6 +98,10 @@
                     id: 1231256
                 }
             ];
+        }
+
+        function editForm(e) {
+
         }
     }
 })();
