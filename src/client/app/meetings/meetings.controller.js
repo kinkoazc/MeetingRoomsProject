@@ -12,6 +12,7 @@
             states = routerHelper.getStates();
         vm.isCurrent = isCurrent;
         vm.meetings = [];
+        vm.meeting = {};
         vm.meetingsNavRoutes = [];
         vm.title = 'Meetings';
         vm.user = 'User One';
@@ -21,9 +22,16 @@
         function activate() {
             logger.info('Activated Meetings View');
 
-            //$rootScope.$on('$stateChangeSuccess', function () {
-            //    alert('state changed successfully');
-            //});
+            $rootScope.$on('$stateChangeSuccess', function () {
+                //alert('state changed successfully');
+                if ($state.params.id) {
+                    for (var i=0;i<vm.meetings.length;i++) {
+                        if ($state.params.id==vm.meetings[i].id+"") {
+                            vm.meeting = vm.meetings[i];
+                        }
+                    }
+                }
+            });
 
             $rootScope.$on('$stateChangeStart', function (e, toState, toParams, fromState, fromParams) {
                 getNavRoutes(toState);
@@ -32,10 +40,6 @@
                     toParams.id=fromParams.id;
                 }
 
-                console.log('toState', toState);
-                console.log('toParams', toParams);
-                console.log('fromState', fromState);
-                console.log('fromParams', fromParams);
             });
 
             getNavRoutes();

@@ -21,6 +21,7 @@
                     controller: 'MeetingsController',
                     controllerAs: 'vm',
                     title: 'Meetings',
+                    abstract: true,
                     settings: {
                         nav: 1,
                         content: '<i class="fa fa-briefcase"></i> Meetings'
