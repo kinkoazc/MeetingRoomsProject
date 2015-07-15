@@ -23,6 +23,7 @@
                     title: 'Rooms',
                     settings: {
                         nav: 2,
+                        inMainMenu : true,
                         content: '<i class="fa fa-random"></i> Rooms'
                     }
                 }

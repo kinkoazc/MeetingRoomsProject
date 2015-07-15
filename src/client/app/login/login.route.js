@@ -23,6 +23,7 @@
                     title: 'Login',
                     settings: {
                         nav: 4,
+                        inMainMenu : true,
                         content: '<i class="fa fa-sign-in"></i> Login'
                     }
                 }

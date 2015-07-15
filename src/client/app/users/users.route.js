@@ -23,6 +23,7 @@
                     title: 'Users',
                     settings: {
                         nav: 3,
+                        inMainMenu : true,
                         content: '<i class="fa fa-users"></i> Users'
                     }
                 }

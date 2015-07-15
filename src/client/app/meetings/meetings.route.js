@@ -79,6 +79,7 @@
                     title: 'Meetings list',
                     settings: {
                         nav: 1,
+                        inMainMenu : true,
                         content: '<i class="fa fa-briefcase"></i> Meetings'
                     }
                 }
