@@ -22,9 +22,25 @@
                     controllerAs: 'vm',
                     title: 'Meetings',
                     settings: {
-                        nav: 2,
+                        nav: 1,
                         content: '<i class="fa fa-briefcase"></i> Meetings'
                     }
+                }
+            },
+            {
+                state: 'meetings.all',
+                config: {
+                    url: '/all',
+                    templateUrl: 'app/meetings/meetings.mru.list.html',
+                    title: 'Meetings list'
+                }
+            },
+            {
+                state: 'meetings.add',
+                config: {
+                    url: '/add',
+                    templateUrl: 'app/meetings/meetings.mru.add.html',
+                    title: 'Meetings add'
                 }
             }
         ];

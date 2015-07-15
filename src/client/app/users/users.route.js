@@ -22,7 +22,7 @@
                     controllerAs: 'vm',
                     title: 'Users',
                     settings: {
-                        nav: 2,
+                        nav: 3,
                         content: '<i class="fa fa-users"></i> Users'
                     }
                 }

@@ -47,7 +47,7 @@
             controllerAs: 'vm',
             restrict: 'E',
             scope: {
-                'navline': '=',
+                'navRoutes': '=routes',
                 'section': '@'
             },
             templateUrl: 'app/core/mru.html'
