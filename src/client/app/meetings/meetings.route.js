@@ -5,13 +5,13 @@
         .module('app.meetings')
         .run(appRun);
 
-    appRun.$inject = ['routerHelper'];
+    appRun.$inject = ['$q', '$stateParams', 'routerHelper'];
     /* @ngInject */
-    function appRun(routerHelper) {
-        routerHelper.configureStates(getStates());
+    function appRun($q, $stateParams, routerHelper) {
+        routerHelper.configureStates(getStates($q, $stateParams));
     }
 
-    function getStates() {
+    function getStates($q, $stateParams) {
         return [
             {
                 state: 'meetings',
@@ -25,6 +25,49 @@
                     settings: {
                         nav: 1,
                         content: '<i class="fa fa-briefcase"></i> Meetings'
+                    },
+                    resolve: {
+                        meetings: function () {
+                            var meetings = [
+                                {
+                                    description: "Scrum meeting",
+                                    who: "User One",
+                                    when: 1488323623006,
+                                    duration: 6600000,
+                                    where: "Room 45",
+                                    allowed: "User One, User Three",
+                                    id: 1231241
+                                },
+                                {
+                                    description: "Investors meeting",
+                                    who: "User Three",
+                                    when: 1498323623006,
+                                    duration: 10200000,
+                                    where: "Room 30",
+                                    allowed: "User Three",
+                                    id: 1231256
+                                }
+                            ];
+
+                            return $q.when(meetings);
+                        },
+                        meeting: function ($stateParams) {
+                            if ($stateParams.id) {
+                                return this.meetings().when(
+                                    function (data) {
+                                        for (var i=0;i<data.length;i++) {
+                                            if ($stateParams.id==data[i].id+"") {
+                                                return data[i];
+                                            }
+                                        }
+
+                                        return {};
+                                    }
+                                )
+                            } else {
+                                return {};
+                            }
+                        }
                     }
                 }
             },
@@ -54,7 +97,24 @@
                     url: '/details/:id',
                     templateUrl: 'app/meetings/meetings.mru.details.html',
                     title: 'Meeting details'
-                }
+                },
+                resolve: {
+                    meeting: function ($stateParams) {
+                        console.log('resolve details');
+                        if ($stateParams.id) {
+                            for (var i=0;i<vm.meetings.length;i++) {
+                                if ($stateParams.id==vm.meetings[i].id+"") {
+                                    return vm.meetings[i];
+                                }
+                            }
+                        }
+                    }
+                },
+                controller: function (meeting) {
+                    var vm=this;
+                    vm.meeting=meeting;
+                },
+                controllerAs: 'vm'
             },
             {
                 state: 'meetings.edit',

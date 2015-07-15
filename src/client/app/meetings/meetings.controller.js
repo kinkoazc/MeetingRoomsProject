@@ -5,9 +5,9 @@
         .module('app.meetings')
         .controller('MeetingsController', MeetingsController);
 
-    MeetingsController.$inject = ['$rootScope', '$state', '$stateParams', 'logger', 'routerHelper'];
+    MeetingsController.$inject = ['$rootScope', '$state', 'logger', 'routerHelper', 'meetings', 'meeting'];
     /* @ngInject */
-    function MeetingsController($rootScope, $state, $stateParams, logger, routerHelper) {
+    function MeetingsController($rootScope, $state, logger, routerHelper, meetings, meeting) {
         var vm = this,
             states = routerHelper.getStates();
         vm.editForm = editForm;
@@ -32,6 +32,14 @@
                         }
                     }
                 }
+
+                if (angular.equals({}, vm.meeting)) {
+                    vm.meeting=meeting;
+                }
+
+                if (angular.equals({}, vm.meeting)) {
+                    $state.go('meetings.list');
+                }
             });
 
             $rootScope.$on('$stateChangeStart', function (e, toState, toParams, fromState, fromParams) {
@@ -44,7 +52,7 @@
             });
 
             getNavRoutes();
-            getMeetings();
+            vm.meetings = meetings;
         }
 
         function getNavRoutes(toState) {
@@ -73,35 +81,36 @@
             if (!route.title || !$state.current || !$state.current.title) {
                 return '';
             }
+
             var menuName = route.title;
             return $state.current.title.substr(0, menuName.length) === menuName ? 'active' : '';
         }
 
-        function getMeetings() {
-            vm.meetings = [
-                {
-                    description: "Scrum meeting",
-                    who: "User One",
-                    when: "17.07.2015, 11:00-12:50",
-                    duration: "1h 50min",
-                    where: "Room 45",
-                    allowed: "User One, User Three",
-                    id: 1231241
-                },
-                {
-                    description: "Investors meeting",
-                    who: "User Three",
-                    when: "17.07.2015, 13:00-15:50",
-                    duration: "2h 50min",
-                    where: "Room 30",
-                    allowed: "User Three",
-                    id: 1231256
-                }
-            ];
-        }
+        //function getMeetings() {
+        //    vm.meetings = [
+        //        {
+        //            description: "Scrum meeting",
+        //            who: "User One",
+        //            when: "17.07.2015, 11:00-12:50",
+        //            duration: "1h 50min",
+        //            where: "Room 45",
+        //            allowed: "User One, User Three",
+        //            id: 1231241
+        //        },
+        //        {
+        //            description: "Investors meeting",
+        //            who: "User Three",
+        //            when: "17.07.2015, 13:00-15:50",
+        //            duration: "2h 50min",
+        //            where: "Room 30",
+        //            allowed: "User Three",
+        //            id: 1231256
+        //        }
+        //    ];
+        //}
 
         function editForm(e) {
-
+            alert('Form submitted! ', e);
         }
     }
 })();

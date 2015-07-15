@@ -15,8 +15,8 @@
                 <a ui-sref="meetings.details({id : meeting.id})">{{meeting.description}}</a>
             </td>
             <td>{{meeting.who}}</td>
-            <td>{{meeting.when}}</td>
-            <td>{{meeting.duration}}</td>
+            <td>{{meeting.when | date:'d MMM y h:mm:ss a' }}</td>
+            <td>{{meeting.duration | time }}</td>
             <td>{{meeting.where}}</td>
             <td>{{meeting.allowed}}</td>
         </tr>
