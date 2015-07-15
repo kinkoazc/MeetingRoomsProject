@@ -28,11 +28,15 @@
                 }
             },
             {
-                state: 'meetings.all',
+                state: 'meetings.list',
                 config: {
-                    url: '/all',
+                    url: '/list',
                     templateUrl: 'app/meetings/meetings.mru.list.html',
-                    title: 'Meetings list'
+                    title: 'Meetings list',
+                    settings: {
+                        nav: 1,
+                        content: '<i class="fa fa-briefcase"></i> Meetings'
+                    }
                 }
             },
             {
@@ -41,6 +45,22 @@
                     url: '/add',
                     templateUrl: 'app/meetings/meetings.mru.add.html',
                     title: 'Meetings add'
+                }
+            },
+            {
+                state: 'meetings.details',
+                config: {
+                    url: '/details/:id',
+                    templateUrl: 'app/meetings/meetings.mru.details.html',
+                    title: 'Meeting details'
+                }
+            },
+            {
+                state: 'meetings.edit',
+                config: {
+                    url: '/edit/:id',
+                    templateUrl: 'app/meetings/meetings.mru.edit.html',
+                    title: 'Meeting edit'
                 }
             }
         ];

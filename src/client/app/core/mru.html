@@ -7,8 +7,7 @@
         <!--<button type="button" class="btn btn-default" ng-class="{'active': !vm.listActive }"-->
                 <!--ng-click="vm.listActive=!vm.listActive" ui-sref="meetings.add">Add {{vm.section}}-->
         <!--</button>-->
-
-        <button type="button" class="btn btn-default" ng-class="vm.isCurrent(r)" ng-repeat="r in vm.navRoutes">
+        <button type="button" class="btn btn-default" ui-sref-active="active" ng-repeat="r in vm.meetingsNavRoutes"><!-- ng-class="vm.isCurrent(r)"  -->
             <a ui-sref="{{r.name}}">{{r.title}}</a>
         </button>
 
