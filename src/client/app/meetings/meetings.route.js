@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -28,6 +28,7 @@
                     },
                     resolve: {
                         meetings: function () {
+                            console.log('resolve meetings');
                             var meetings = [
                                 {
                                     description: "Scrum meeting",
@@ -55,8 +56,8 @@
                             if ($stateParams.id) {
                                 return this.meetings().when(
                                     function (data) {
-                                        for (var i=0;i<data.length;i++) {
-                                            if ($stateParams.id==data[i].id+"") {
+                                        for (var i = 0; i < data.length; i++) {
+                                            if ($stateParams.id == data[i].id + "") {
                                                 return data[i];
                                             }
                                         }
@@ -79,7 +80,7 @@
                     title: 'Meetings list',
                     settings: {
                         nav: 1,
-                        inMainMenu : true,
+                        inMainMenu: true,
                         content: '<i class="fa fa-briefcase"></i> Meetings'
                     }
                 }
@@ -97,32 +98,47 @@
                 config: {
                     url: '/details/:id',
                     templateUrl: 'app/meetings/meetings.mru.details.html',
-                    title: 'Meeting details'
-                },
-                resolve: {
-                    meeting: function ($stateParams) {
-                        console.log('resolve details');
-                        if ($stateParams.id) {
-                            for (var i=0;i<vm.meetings.length;i++) {
-                                if ($stateParams.id==vm.meetings[i].id+"") {
-                                    return vm.meetings[i];
+                    title: 'Meeting details',
+                    resolve: {
+                        meeting: function (meetings, $stateParams) {
+                            if ($stateParams.id) {
+                                for (var i = 0; i < meetings.length; i++) {
+                                    if ($stateParams.id == meetings[i].id + "") {
+                                        return meetings[i];
+                                    }
                                 }
                             }
                         }
-                    }
-                },
-                controller: function (meeting) {
-                    var vm=this;
-                    vm.meeting=meeting;
-                },
-                controllerAs: 'vm'
+                    },
+                    controller: function (meeting) {
+                        var vm = this;
+                        vm.meeting = meeting;
+                    },
+                    controllerAs: 'vm'
+                }
             },
             {
                 state: 'meetings.edit',
                 config: {
                     url: '/edit/:id',
                     templateUrl: 'app/meetings/meetings.mru.edit.html',
-                    title: 'Meeting edit'
+                    title: 'Meeting edit',
+                    resolve: {
+                        meeting: function (meetings, $stateParams) {
+                            if ($stateParams.id) {
+                                for (var i = 0; i < meetings.length; i++) {
+                                    if ($stateParams.id == meetings[i].id + "") {
+                                        return meetings[i];
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    controller: function (meeting) {
+                        var vm = this;
+                        vm.meeting = meeting;
+                    },
+                    controllerAs: 'vm'
                 }
             }
         ];
