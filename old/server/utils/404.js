@@ -1,8 +1,9 @@
 module.exports = function () {
-    return {
+    var service = {
         notFoundMiddleware: notFoundMiddleware,
         send404: send404
     };
+    return service;
 
     function notFoundMiddleware(req, res, next) {
         send404(req, res, 'API endpoint not found');
