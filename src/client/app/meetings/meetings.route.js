@@ -5,13 +5,13 @@
         .module('app.meetings')
         .run(appRun);
 
-    appRun.$inject = ['$q', '$stateParams', 'routerHelper'];
+    appRun.$inject = ['$q', '$stateParams', '$timeout', '$state', 'routerHelper'];
     /* @ngInject */
-    function appRun($q, $stateParams, routerHelper) {
-        routerHelper.configureStates(getStates($q, $stateParams));
+    function appRun($q, $stateParams, $timeout, $state, routerHelper) {
+        routerHelper.configureStates(getStates($q, $stateParams, $timeout, $state));//, null, ['/meetings', '/meetings/list']
     }
 
-    function getStates($q, $stateParams) {
+    function getStates($q, $stateParams, $timeout, $state) {
         return [
             {
                 state: 'meetings',
@@ -24,8 +24,16 @@
                     abstract: true,
                     settings: {
                         nav: 1,
+                        //inMainMenu: true,
                         content: '<i class="fa fa-briefcase"></i> Meetings'
                     },
+                    //onEnter: function ($state) {
+                    //    console.log('entering meetings');
+                    //    $state.go('meetings.list');
+                    //},
+                    //onExit: function () {
+                    //    console.log('exiting meetings');
+                    //},
                     resolve: {
                         meetings: function () {
                             console.log('resolve meetings');
@@ -50,25 +58,32 @@
                                 }
                             ];
 
-                            return $q.when(meetings);
-                        },
-                        meeting: function ($stateParams) {
-                            if ($stateParams.id) {
-                                return this.meetings().when(
-                                    function (data) {
-                                        for (var i = 0; i < data.length; i++) {
-                                            if ($stateParams.id == data[i].id + "") {
-                                                return data[i];
-                                            }
-                                        }
+                            var deferred=$q.defer();
 
-                                        return {};
-                                    }
-                                )
-                            } else {
-                                return {};
-                            }
+                            $timeout(function () {
+                                deferred.resolve(meetings);
+                            }, 2000);
+
+                            return deferred.promise;//$q.when(meetings);
                         }
+                        //,
+                        //meeting: function ($stateParams) {
+                        //    if ($stateParams.id) {
+                        //        return this.meetings().when(
+                        //            function (data) {
+                        //                for (var i = 0; i < data.length; i++) {
+                        //                    if ($stateParams.id == data[i].id + "") {
+                        //                        return data[i];
+                        //                    }
+                        //                }
+                        //
+                        //                return {};
+                        //            }
+                        //        )
+                        //    } else {
+                        //        return {};
+                        //    }
+                        //}
                     }
                 }
             },

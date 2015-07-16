@@ -43,16 +43,21 @@
 
             ///////////////
 
-            function configureStates(states, otherwisePath) {
+            function configureStates(states, otherwisePath) {//, whenPath
                 states.forEach(function (state) {
                     state.config.resolve =
                         angular.extend(state.config.resolve || {}, config.resolveAlways);
                     $stateProvider.state(state.state, state.config);
                 });
+
                 if (otherwisePath && !hasOtherwise) {
                     hasOtherwise = true;
                     $urlRouterProvider.otherwise(otherwisePath);
                 }
+                //
+                //if (whenPath) {
+                //    $urlRouterProvider.when(whenPath[0], whenPath[1]);
+                //}
             }
 
             function handleRoutingErrors() {

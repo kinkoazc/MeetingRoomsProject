@@ -5,9 +5,9 @@
         .module('app.meetings')
         .controller('MeetingsController', MeetingsController);
 
-    MeetingsController.$inject = ['$rootScope', '$state', 'logger', 'routerHelper', 'meetings', 'meeting'];
+    MeetingsController.$inject = ['$rootScope', '$state', 'logger', 'routerHelper', 'meetings'];
     /* @ngInject */
-    function MeetingsController($rootScope, $state, logger, routerHelper, meetings, meeting) {
+    function MeetingsController($rootScope, $state, logger, routerHelper, meetings) {
         var vm = this,
             states = routerHelper.getStates();
         vm.editForm = editForm;
@@ -24,22 +24,22 @@
             logger.info('Activated Meetings View');
 
             $rootScope.$on('$stateChangeSuccess', function () {
-                //alert('state changed successfully');
+                console.log('state changed successfully');
                 if ($state.params.id) {
                     for (var i=0;i<vm.meetings.length;i++) {
                         if ($state.params.id==vm.meetings[i].id+"") {
                             vm.meeting = vm.meetings[i];
                         }
                     }
+
+                    if (angular.equals({}, vm.meeting)) {
+                        $state.go('meetings.list');
+                    }
                 }
 
-                if (angular.equals({}, vm.meeting)) {
-                    vm.meeting=meeting;
-                }
-
-                if (angular.equals({}, vm.meeting)) {
-                    $state.go('meetings.list');
-                }
+                //if (angular.equals({}, vm.meeting)) {
+                //    vm.meeting=meeting;
+                //}
             });
 
             $rootScope.$on('$stateChangeStart', function (e, toState, toParams, fromState, fromParams) {
