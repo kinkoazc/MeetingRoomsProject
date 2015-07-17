@@ -24,6 +24,7 @@
                     settings: {
                         nav: 4,
                         inMainMenu : true,
+                        authLevel: 1,
                         content: '<i class="fa fa-sign-in"></i> Login/Register'
                     }
                 }

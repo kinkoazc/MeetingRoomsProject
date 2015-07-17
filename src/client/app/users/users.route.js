@@ -24,6 +24,7 @@
                     settings: {
                         nav: 3,
                         inMainMenu : true,
+                        authLevel: 3,
                         content: '<i class="fa fa-users"></i> Users'
                     }
                 }

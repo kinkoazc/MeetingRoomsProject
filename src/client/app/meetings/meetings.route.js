@@ -96,6 +96,7 @@
                     settings: {
                         nav: 1,
                         inMainMenu: true,
+                        authLevel: 2,
                         content: '<i class="fa fa-briefcase"></i> Meetings'
                     }
                 }
@@ -105,7 +106,10 @@
                 config: {
                     url: '/add',
                     templateUrl: 'app/meetings/meetings.mru.add.html',
-                    title: 'Meetings add'
+                    title: 'Meetings add',
+                    settings: {
+                        authLevel: 2
+                    }
                 }
             },
             {
@@ -129,7 +133,10 @@
                         var vm = this;
                         vm.meeting = meeting;
                     }],
-                    controllerAs: 'vm'
+                    controllerAs: 'vm',
+                    settings: {
+                        authLevel: 2
+                    }
                 }
             },
             {
@@ -153,7 +160,10 @@
                         var vm = this;
                         vm.meeting = meeting;
                     }],
-                    controllerAs: 'vm'
+                    controllerAs: 'vm',
+                    settings: {
+                        authLevel: 2
+                    }
                 }
             }
         ];

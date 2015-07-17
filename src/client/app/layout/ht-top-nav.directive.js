@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -7,15 +7,18 @@
 
 
     /* @ngInject */
-    function htTopNav () {
+    function htTopNav() {
 
-        TopNavController.$inject = ['$state', 'routerHelper'];
+        TopNavController.$inject = ['$state', 'auth', 'routerHelper'];
         /* @ngInject */
-        function TopNavController($state, routerHelper) {
-            var vm = this;
+        function TopNavController($state, auth, routerHelper) {
+            var vm = this,
+                states = routerHelper.getStates();
 
-            var states = routerHelper.getStates();
+            vm.isAuthorized = isAuthorized;
             vm.isCurrent = isCurrent;
+            vm.isLoggedIn = auth.isLoggedIn;
+            vm.navRoutes = [];
 
             activate();
 
@@ -24,9 +27,9 @@
             }
 
             function getNavRoutes() {
-                vm.navRoutes = states.filter(function(r) {
-                    return r.settings && r.settings.nav && r.settings.inMainMenu===true;
-                }).sort(function(r1, r2) {
+                vm.navRoutes = states.filter(function (r) {
+                    return r.settings && r.settings.nav && r.settings.inMainMenu === true;
+                }).sort(function (r1, r2) {
                     return r1.settings.nav - r2.settings.nav;
                 });
             }
@@ -37,6 +40,31 @@
                 }
                 var menuName = route.title;
                 return $state.current.title.substr(0, menuName.length) === menuName ? 'active' : '';
+            }
+
+            function isAuthorized(stateAuthLevel) {
+                var currentUser = auth.currentUser();
+
+                if (stateAuthLevel) {
+                    switch (stateAuthLevel) {
+                        case 1: {
+                            return true;
+                        }
+                            break;
+                        case 2: {
+                            if (currentUser) {
+                                return true;
+                            }
+                        }
+                            break;
+                        case 3: {
+                            if (currentUser && currentUser.admin) {
+                                return true;
+                            }
+                        }
+                            break;
+                    }
+                }
             }
         }
 
