@@ -5,6 +5,7 @@
         .module('app.core')
         .run(appRun);
 
+    appRun.$inject = ['routerHelper'];
     /* @ngInject */
     function appRun(routerHelper) {
         routerHelper.configureStates(getStates(), '/meetings/list');

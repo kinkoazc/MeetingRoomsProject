@@ -1,44 +1,53 @@
 angular
     .module('app')
-    .factory('authInterceptor', function (auth) {//$q
-        return {
+    .factory('authInterceptor', authInterceptor)
+    .config(conf);
 
-            'request': function (config) {
-                // do something on success
-                if (auth.isLoggedIn()) {
-                    config.headers['x-access-token'] = 'Bearer ' + auth.getToken();
-                }
+authInterceptor.$inject = ['auth'];
+/* @ngInject */
+function authInterceptor(auth) {//$q
+    return {
 
-                return config;
-            },
-
-            'requestError': function (rejection) {
-                // do something on error
-                //if (canRecover(rejection)) {
-                //    return responseOrNewPromise
-                //}
-                return rejection;//$q(rejection)
-            },
-
-            'response': function (response) {
-                // do something on success
-                if (response.data.token) {
-                    auth.saveToken(response.data.token);
-                }
-
-                return response;
-            },
-
-            'responseError': function (rejection) {
-                // do something on error
-                //if (canRecover(rejection)) {
-                //    return responseOrNewPromise
-                //}
-                return rejection;//$q(rejection)
+        'request': function (config) {
+            // do something on success
+            if (auth.isLoggedIn()) {
+                config.headers['x-access-token'] = 'Bearer ' + auth.getToken();
             }
 
-        };
-    })
-    .config(function ($httpProvider) {
-        $httpProvider.interceptors.push('authInterceptor');
-    });
+            return config;
+        },
+
+        'requestError': function (rejection) {
+            // do something on error
+            //if (canRecover(rejection)) {
+            //    return responseOrNewPromise
+            //}
+            return rejection;//$q(rejection)
+        },
+
+        'response': function (response) {
+            // do something on success
+            if (response.data.token) {
+                auth.saveToken(response.data.token);
+            }
+
+            return response;
+        },
+
+        'responseError': function (rejection) {
+            // do something on error
+            //if (canRecover(rejection)) {
+            //    return responseOrNewPromise
+            //}
+            return rejection;//$q(rejection)
+        }
+
+    };
+}
+
+
+conf.$inject=['$httpProvider'];
+/* @ngInject */
+function conf($httpProvider) {
+    $httpProvider.interceptors.push('authInterceptor');
+}

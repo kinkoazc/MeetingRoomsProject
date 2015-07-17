@@ -5,9 +5,11 @@
         .module('app.layout')
         .directive('htTopNav', htTopNav);
 
+
     /* @ngInject */
     function htTopNav () {
 
+        TopNavController.$inject = ['$state', 'routerHelper'];
         /* @ngInject */
         function TopNavController($state, routerHelper) {
             var vm = this;

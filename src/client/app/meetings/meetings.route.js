@@ -36,7 +36,7 @@
                     //},
                     resolve: {
                         meetings: function () {
-                            console.log('resolve meetings');
+                            //console.log('resolve meetings');
                             var meetings = [
                                 {
                                     description: "Scrum meeting",
@@ -125,10 +125,10 @@
                             }
                         }
                     },
-                    controller: function (meeting) {
+                    controller: ['meeting', function (meeting) {
                         var vm = this;
                         vm.meeting = meeting;
-                    },
+                    }],
                     controllerAs: 'vm'
                 }
             },
@@ -149,10 +149,10 @@
                             }
                         }
                     },
-                    controller: function (meeting) {
+                    controller: ['meeting', function (meeting) {
                         var vm = this;
                         vm.meeting = meeting;
-                    },
+                    }],
                     controllerAs: 'vm'
                 }
             }
