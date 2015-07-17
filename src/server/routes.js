@@ -1,6 +1,10 @@
 var apiRoutes = require('express').Router();
 var four0four = require('./utils/404')();
 var User = require('./models/user');
+var Meeting = require('./models/meeting');
+var Room = require('./models/room');
+var _ = require('lodash');
+var async = require('async');
 //var data = require('./data');
 
 //router.get('/people', getPeople);
@@ -8,19 +12,19 @@ var User = require('./models/user');
 
 // API ROUTES -------------------
 // route to register a user (POST http://localhost:8001/api/register)
-apiRoutes.post('/register', function(req, res, next){
-    if(!req.body.name || !req.body.password){
+apiRoutes.post('/register', function (req, res, next) {
+    if (!req.body.email || !req.body.password) {
         return res.status(400).json({success: false, message: 'Please fill out all fields'});
     }
 
     var user = new User();
 
-    user.name = req.body.name;
+    user.email = req.body.email;
     user.setPassword(req.body.password);
     user.admin = (req.body.admin || false);
 
     user.save(function (err) {
-        if(err) {
+        if (err) {
             return next(err);
         }
 
@@ -29,22 +33,22 @@ apiRoutes.post('/register', function(req, res, next){
 });
 
 // route to authenticate a user (POST http://localhost:8001/api/authenticate)
-apiRoutes.post('/authenticate', function(req, res) {
+apiRoutes.post('/authenticate', function (req, res) {
 
     // find the user
     User.findOne({
-        name: req.body.name
-    }, function(err, user) {
+        email: req.body.email
+    }, function (err, user) {
 
         if (err) throw err;
 
         if (!user) {
-            res.status(401).json({ success: false, message: 'Authentication failed. User not found.' });
+            res.status(401).json({success: false, message: 'Authentication failed. User not found.'});
         } else if (user) {
 
             // check if password matches
             if (!user.validPassword(req.body.password)) {
-                res.status(401).json({ success: false, message: 'Authentication failed. Wrong password.' });
+                res.status(401).json({success: false, message: 'Authentication failed. Wrong password.'});
             } else {
                 // if user is found and password is right
                 // create a token
@@ -54,6 +58,7 @@ apiRoutes.post('/authenticate', function(req, res) {
                 res.status(200).json({
                     success: true,
                     message: 'Enjoy your token!',
+                    email: user.email,
                     token: token
                 });
             }
@@ -62,19 +67,85 @@ apiRoutes.post('/authenticate', function(req, res) {
     });
 });
 
+/* public route */
+//get rooms availability(considering that .get(meetings) and .get(rooms) are restricted routes)
+apiRoutes.get('/room-status', function (req, res) {
+
+    async.parallel([
+        function (callback) {
+            //get rooms
+            Room
+                .find({})
+                .exec(function (err, rooms) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        callback(null, rooms);
+                    }
+                });
+        },
+        function (callback) {
+            Meeting
+                .find({})
+                .populate('who')
+                .populate('allowed')
+                .populate('room')
+                .exec(function (err, meetings) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        callback(null, meetings);
+                    }
+                });
+        }
+    ], function (err, results) {
+        var rooms = _.map(results[0], function (room) {
+            room._doc.occupiedBetween=[];
+            return room._doc;
+        });
+
+        var meetings = _.map(results[1], function (meeting) {
+            return meeting._doc;
+        });
+
+        _.each(meetings, function (meeting) {
+            _.each(rooms, function (room) {
+                if (meeting.room["0"]._doc._id.id===room._id.id) {
+                    room.occupiedBetween.push({
+                        start: meeting.when,
+                        end: meeting.when + meeting.duration
+                    })
+                }
+            });
+        });
+
+        res.json(rooms);
+    });
+
+
+    //get meetings
+
+
+    //process the rooms availability
+
+
+    //return
+
+});
+
+/* protected routes */
 // route middleware to verify a token
-apiRoutes.use(function(req, res, next) {
+apiRoutes.use(function (req, res, next) {
 
     // check header or url parameters or post parameters for token
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
     // decode token
     if (token) {
-
         // verifies secret and checks exp
-        jwt.verify(token, app.get('superSecret'), function(err, decoded) {
+        jwt.verify(token, app.get('superSecret'), function (err, decoded) {
             if (err) {
-                return res.json({ success: false, message: 'Failed to authenticate token.' });
+                return res.json({success: false, message: 'Failed to authenticate token.'});
             } else {
                 // if everything is good, save to request for use in other routes
                 req.decoded = decoded;
@@ -90,21 +161,103 @@ apiRoutes.use(function(req, res, next) {
             success: false,
             message: 'No token provided.'
         });
-
     }
 });
 
 // route to show a random message (GET http://localhost:8001/api/)
-apiRoutes.get('/', function(req, res) {
-    res.json({ message: 'Welcome to the coolest API on earth!' });
+apiRoutes.get('/', function (req, res) {
+    res.json({message: 'Welcome to the coolest API on earth!'});
 });
 
 // route to return all users (GET http://localhost:8001/api/users)
-apiRoutes.get('/users', function(req, res) {
-    User.find({}, function(err, users) {
-        res.json(users);
+//apiRoutes.get('/users', function(req, res) {
+//    User.find({}, function(err, users) {
+//        res.json(users);
+//    });
+//});
+
+apiRoutes.route('/meetings/:id')
+    .get(function (req, res, next) {// /meetings (get all meetings)
+        Meeting
+            .find({})
+            .populate('who')
+            .populate('allowed')
+            .populate('room')
+            .exec(function (err, meetings) {
+                res.json(meetings);
+            });
+    })
+    .post(function (req, res, next) {// /meetings (create a meeting)
+        var meeting = new Meeting({
+            description: req.body.description,
+            who: req.body.who._id,
+            when: req.body.when,
+            duration: req.body.duration,
+            allowed: req.body.allowed_ids,
+            room: req.body.room._id
+        });
+
+        meeting.save(function (err, m) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.json(m);
+            }
+        });
+    })
+    .get(function (req, res, next) {// /meetings/:id (get a meeting)
+        var meetingId = req.params.id;
+
+        Meeting
+            .findOne({
+                _id: meetingId
+            })
+            .populate('who')
+            .populate('allowed')
+            .populate('room')
+            .exec(function (err, meeting) {
+                res.json(meeting);
+            });
+    })
+    .put(function (req, res, next) {// /meetings/:id (edit a meeting)
+        var meetingId = req.params.id;
+
+        Meeting
+            .findOne({
+                _id: meetingId
+            })
+            .populate('who')
+            .populate('allowed')
+            .populate('room')
+            .exec(function (err, meeting) {
+                if (err) {
+                    console.log(err)
+                } else if (meeting) {
+                    _.extend(meeting, req.body);
+
+                    meeting.save(function (err, m) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            res.json(m);
+                        }
+                    });
+                }
+
+                res.json(meeting);
+            });
+    })
+    .delete(function (req, res, next) {// /meetings/:id (delete a meeting)
+        //next(new Error('not implemented'));
+
+        Meeting.findOneAndRemove({_id: req.body.id}, function(err){
+            if (err) {
+                console.log(err);
+            } else {
+                res.json({message: 'Meeting deleted'});
+            }
+        });
     });
-});
 
 apiRoutes.get('/*', four0four.notFoundMiddleware);
 

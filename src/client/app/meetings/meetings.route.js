@@ -62,7 +62,7 @@
 
                             $timeout(function () {
                                 deferred.resolve(meetings);
-                            }, 2000);
+                            }, 100);
 
                             return deferred.promise;//$q.when(meetings);
                         }

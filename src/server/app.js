@@ -43,9 +43,9 @@ app.use(morgan('dev'));
 // routes ================
 // =======================
 // basic route
-app.get('/', function (req, res) {
-    res.send('Hello! The API is at http://localhost:' + port + '/api');
-});
+//app.get('/', function (req, res) {
+//    res.send('Hello! The API is at http://localhost:' + port + '/api');
+//});
 
 app.get('/setup', function (req, res) {
     //// create a sample user
@@ -70,13 +70,13 @@ app.get('/setup', function (req, res) {
             /* Users */
             function (callback) {
                 user1 = {
-                    name: 'Admin',
+                    email: 'admin@gmail.com',
                     password: 'password',
                     isAdmin: true
                 };
 
                 User.findOne({
-                    name: user1.name
+                    email: user1.email
                 }, function (err, user) {
                     if (err) {
                         return callback(err);
@@ -88,7 +88,7 @@ app.get('/setup', function (req, res) {
 
                         user = new User();
 
-                        user.name = user1.name;
+                        user.email = user1.email;
                         user.admin = user1.isAdmin;
                         user.setPassword(user1.password);
 
@@ -104,13 +104,13 @@ app.get('/setup', function (req, res) {
 
             function (arg, callback) {
                 user2 = {
-                    name: 'User',
+                    email: 'user@gmail.com',
                     password: 'passwords',
                     isAdmin: false
                 };
 
                 User.findOne({
-                    name: user2.name
+                    email: user2.email
                 }, function (err, user) {
                     if (err) {
                         return callback(err);
@@ -123,7 +123,7 @@ app.get('/setup', function (req, res) {
 
                         user = new User();
 
-                        user.name = user2.name;
+                        user.email = user2.email;
                         user.admin = user2.isAdmin;
                         user.setPassword(user2.password);
 
@@ -218,7 +218,7 @@ app.get('/setup', function (req, res) {
                 async.parallel([
                         function (callback) {
                             User.findOne({
-                                name: user1.name
+                                email: user1.email
                             }, function (err, user) {
                                 if (err) {
                                     return callback(err);
@@ -229,7 +229,7 @@ app.get('/setup', function (req, res) {
                         },
                         function (callback) {
                             User.findOne({
-                                name: user2.name
+                                email: user2.email
                             }, function (err, user) {
                                 if (err) {
                                     return callback(err);

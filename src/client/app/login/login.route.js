@@ -20,11 +20,11 @@
                     templateUrl: 'app/login/login.html',
                     controller: 'LoginController',
                     controllerAs: 'vm',
-                    title: 'Login',
+                    title: 'Login/Register',
                     settings: {
                         nav: 4,
                         inMainMenu : true,
-                        content: '<i class="fa fa-sign-in"></i> Login'
+                        content: '<i class="fa fa-sign-in"></i> Login/Register'
                     }
                 }
             }
