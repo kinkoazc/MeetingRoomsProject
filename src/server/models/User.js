@@ -1,6 +1,7 @@
 // get an instance of mongoose and mongoose.Schema
 var mongoose = require('mongoose');
 var crypto = require('crypto');
+var _ = require('lodash');
 var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var config = require('../config');
 var Schema = mongoose.Schema;
@@ -31,6 +32,8 @@ UserSchema.methods.generateJWT = function() {
     //var today = new Date();
     //var exp = new Date(today);
     //exp.setDate(today.getDate() + 60);
+
+    _.extend(this._doc, {exp: (Math.round(Date.now()/1000)+1440*60)})
 
     return jwt.sign(this, config.secret, {
         expiresInMinutes: 1440 // expires in 24 hours
