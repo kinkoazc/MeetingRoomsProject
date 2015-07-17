@@ -33,7 +33,7 @@ UserSchema.methods.generateJWT = function() {
     //var exp = new Date(today);
     //exp.setDate(today.getDate() + 60);
 
-    _.extend(this._doc, {exp: (Math.round(Date.now()/1000)+1440*60)})
+    _.extend(this._doc, {exp: (Math.round(Date.now()/1000)+1440*60)});
 
     return jwt.sign(this, config.secret, {
         expiresInMinutes: 1440 // expires in 24 hours

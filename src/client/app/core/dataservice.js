@@ -11,7 +11,8 @@
         return {
             //getPeople: getPeople,
             //getMessageCount: getMessageCount
-            login: login
+            login: login,
+            register: register
         };
 
         //function getMessageCount() {
@@ -51,6 +52,30 @@
                     return data;
                 }).catch(function (reason) {
                     var msg = 'Login failed. ' + reason.data.description;
+                    logger.error(msg);
+
+                    return reason;
+                });
+        }
+
+
+        function register(user) {
+            return $http
+                .post('/api/register', user)
+                .then(function (data) {
+                    var msg='', data=data.data;
+
+                    if (data.success===true) {
+                        msg = 'User was registered successfully. Hello ' + data.email;
+                        logger.success(msg);
+                    } else {
+                        msg = 'Registering failed. '+data.message;
+                        logger.error(msg);
+                    }
+
+                    return data;
+                }).catch(function (reason) {
+                    var msg = 'Registering failed. ' + reason.data.description;
                     logger.error(msg);
 
                     return reason;

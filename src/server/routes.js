@@ -28,7 +28,12 @@ apiRoutes.post('/register', function (req, res, next) {
             return next(err);
         }
 
-        return res.status(200).json({success: true, token: user.generateJWT()});
+        return res.status(200).json({
+            success: true,
+            message: 'Enjoy your token!',
+            email: user.email,
+            token: user.generateJWT()
+        });
     });
 });
 
