@@ -10,7 +10,8 @@
     function MeetingsController($rootScope, $state, $filter, auth, logger, routerHelper, meetings, formatservice) {
         var vm = this,
             states = routerHelper.getStates();
-        vm.editForm = editForm;
+        vm.sendAddForm = sendAddForm;
+        vm.sendEditForm = sendEditForm;
         vm.isCurrent = isCurrent;
         vm.meetings = [];
         vm.meeting = {};
@@ -113,9 +114,21 @@
         //    ];
         //}
 
-        function editForm(e) {
-            console.log('Form submitted! ', e);
-            //alert('Form submitted! ', e);
+        function sendEditForm(e, meeting) {
+            e.preventDefault();
+
+            console.log('Edit meeting form submitted! ', meeting);
+
+            return false;
         }
+
+        function sendAddForm(e, meeting) {
+            e.preventDefault();
+
+            console.log('Add meeting form submitted! ', meeting);
+
+            return false;
+        }
+
     }
 })();

@@ -150,21 +150,21 @@
                     templateUrl: 'app/meetings/meetings.mru.edit.html',
                     title: 'Meeting edit',
                     resolve: {
-                        meeting: function (meetings, $stateParams) {
+                        meeting: function (meetings, $stateParams, formatservice) {
                             if ($stateParams.id) {
                                 for (var i = 0; i < meetings.length; i++) {
                                     if ($stateParams.id === meetings[i]._id) {
-                                        return meetings[i];
+                                        return formatservice.formatMeetingEdit(meetings[i]);
                                     }
                                 }
                             }
                         }
                     },
-                    controller: ['meeting', function (meeting) {
-                        var vm = this;
-                        vm.meeting = meeting;
+                    controller: ['$scope', 'meeting', function ($scope, meeting) {
+                        var vme = this;
+                        vme.meeting = meeting;
                     }],
-                    controllerAs: 'vm',
+                    controllerAs: 'vme',
                     settings: {
                         authLevel: 2
                     }

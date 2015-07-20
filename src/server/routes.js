@@ -195,6 +195,9 @@ apiRoutes.get('/', function (req, res) {
 
 apiRoutes.route('/meetings/:id?')
     .get(function (req, res, next) {// /meetings (get all meetings)
+
+        //check authorization level
+
         Meeting
             .find({})
             .populate('who')
@@ -209,6 +212,8 @@ apiRoutes.route('/meetings/:id?')
             });
     })
     .post(function (req, res, next) {// /meetings (create a meeting)
+        //check authorization level
+
         var meeting = new Meeting({
             description: req.body.description,
             who: req.body.who._id,
@@ -227,6 +232,9 @@ apiRoutes.route('/meetings/:id?')
         });
     })
     .get(function (req, res, next) {// /meetings/:id (get a meeting)
+
+        //check authorization level
+
         var meetingId = req.params.id;
 
         Meeting
@@ -245,6 +253,10 @@ apiRoutes.route('/meetings/:id?')
             });
     })
     .put(function (req, res, next) {// /meetings/:id (edit a meeting)
+
+        //check authorization level(done in .use() part, above)(only the standard and admin users will be let through)
+
+
         var meetingId = req.params.id;
 
         Meeting
@@ -258,6 +270,8 @@ apiRoutes.route('/meetings/:id?')
                 if (err) {
                     console.log(err);
                 } else if (meeting) {
+                    //check if user is among the editors/owner
+
                     _.extend(meeting, req.body);
 
                     meeting.save(function (err, m) {
@@ -274,6 +288,9 @@ apiRoutes.route('/meetings/:id?')
     })
     .delete(function (req, res, next) {// /meetings/:id (delete a meeting)
         //next(new Error('not implemented'));
+
+        //check authorization level
+        //check if user is among the editors/owner
 
         Meeting.findOneAndRemove({_id: req.body.id}, function (err) {
             if (err) {
