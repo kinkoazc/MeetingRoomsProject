@@ -13,7 +13,7 @@ angular
                 inputText = inputText - hours*60*60;
                 minutes = Math.floor(inputText/60);
 
-                return days + " d, " + hours + " h, " + minutes + " m";
+                return days + ' d, ' + hours + ' h, ' + minutes + ' m';
             }
-        }
+        };
     });

@@ -93,7 +93,9 @@ app.get('/setup', function (req, res) {
                         user.setPassword(user1.password);
 
                         user.save(function (err) {
-                            if (err) callback(err);
+                            if (err) {
+                                callback(err);
+                            }
 
                             console.log('User saved successfully');
                             return callback(null, [{success: true, token: user.generateJWT()}]);
@@ -128,7 +130,9 @@ app.get('/setup', function (req, res) {
                         user.setPassword(user2.password);
 
                         user.save(function (err) {
-                            if (err) callback(err);
+                            if (err) {
+                                callback(err);
+                            }
 
                             console.log('User saved successfully');
                             arg.push({success: true, token: user.generateJWT()});
@@ -141,8 +145,8 @@ app.get('/setup', function (req, res) {
             /* Populate with rooms */
             function (arg, callback) {
                 room1 = {
-                    name: "Room 13",
-                    location: "6th Floor, Europe House",
+                    name: 'Room 13',
+                    location: '6th Floor, Europe House',
                     size: 30,
                     hasVideoProjector: false,
                     hasConferenceEquipment: true
@@ -165,7 +169,9 @@ app.get('/setup', function (req, res) {
                         _.extend(room, room1);
 
                         room.save(function (err) {
-                            if (err) callback(err);
+                            if (err) {
+                                callback(err);
+                            }
 
                             console.log('Room saved successfully');
                             arg.push({success: true, message: 'Room saved'});
@@ -177,8 +183,8 @@ app.get('/setup', function (req, res) {
 
             function (arg, callback) {
                 room2 = {
-                    name: "Room 67",
-                    location: "5th Floor, Europe House",
+                    name: 'Room 67',
+                    location: '5th Floor, Europe House',
                     size: 50,
                     hasVideoProjector: true,
                     hasConferenceEquipment: false
@@ -201,7 +207,9 @@ app.get('/setup', function (req, res) {
                         _.extend(room, room2);
 
                         room.save(function (err) {
-                            if (err) callback(err);
+                            if (err) {
+                                callback(err);
+                            }
 
                             console.log('Room saved successfully');
                             arg.push({success: true, message: 'Room saved'});
@@ -268,9 +276,9 @@ app.get('/setup', function (req, res) {
                         }
 
                         var meetingObj = {
-                            description: "Scrum meeting",
+                            description: 'Scrum meeting',
                             who: [results[0]],
-                            when: +(new Date("June 13, 2015 11:30:00")),
+                            when: +(new Date('June 13, 2015 11:30:00')),
                             duration: (1000 * 60) * 80, /* 80 mins */
                             allowed: [results[0], results[1]],
                             room: [results[2]]
@@ -294,7 +302,9 @@ app.get('/setup', function (req, res) {
                                 _.extend(meeting, meetingObj);
 
                                 meeting.save(function (err) {
-                                    if (err) mainCallback(err);
+                                    if (err) {
+                                        mainCallback(err);
+                                    }
 
                                     console.log('Meeting saved successfully');
                                     arg.push({success: true, message: 'Meeting saved'});

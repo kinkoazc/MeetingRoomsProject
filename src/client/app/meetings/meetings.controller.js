@@ -5,9 +5,9 @@
         .module('app.meetings')
         .controller('MeetingsController', MeetingsController);
 
-    MeetingsController.$inject = ['$rootScope', '$state', 'logger', 'routerHelper', 'meetings'];
+    MeetingsController.$inject = ['$rootScope', '$state', '$filter', 'auth', 'logger', 'routerHelper', 'meetings', 'formatservice'];
     /* @ngInject */
-    function MeetingsController($rootScope, $state, logger, routerHelper, meetings) {
+    function MeetingsController($rootScope, $state, $filter, auth, logger, routerHelper, meetings, formatservice) {
         var vm = this,
             states = routerHelper.getStates();
         vm.editForm = editForm;
@@ -16,7 +16,7 @@
         vm.meeting = {};
         vm.meetingsNavRoutes = [];
         vm.title = 'Meetings';
-        vm.user = 'User One';
+        vm.user = {};
 
         activate();
 
@@ -25,9 +25,10 @@
 
             $rootScope.$on('$stateChangeSuccess', function () {
                 //console.log('state changed successfully');
+
                 if ($state.params.id) {
                     for (var i=0;i<vm.meetings.length;i++) {
-                        if ($state.params.id==vm.meetings[i].id+"") {
+                        if ($state.params.id===vm.meetings[i].id+'') {
                             vm.meeting = vm.meetings[i];
                         }
                     }
@@ -52,15 +53,18 @@
             });
 
             getNavRoutes();
-            vm.meetings = meetings;
+            vm.meetings = formatservice.formatMeetingsList(meetings);
+            vm.user = auth.currentUser();
         }
 
         function getNavRoutes(toState) {
             var current = toState || $state.current;
 
-            if (!angular.isObject(current) || current.name.indexOf('meetings.')>-1 && current.url.indexOf(':id')===-1) {
+            if (!angular.isObject(current) || current.name.indexOf('meetings.')>-1 &&
+                current.url.indexOf(':id')===-1) {
                 getMeetingsNavRoutes();
-            } else if (angular.isObject(current) && current.name.indexOf('meetings.')>-1 && current.url.indexOf(':id')>-1) {
+            } else if (angular.isObject(current) && current.name.indexOf('meetings.')>-1 &&
+                current.url.indexOf(':id')>-1) {
                 getMeetingNavRoutes();
             }
         }
@@ -110,7 +114,8 @@
         //}
 
         function editForm(e) {
-            alert('Form submitted! ', e);
+            console.log('Form submitted! ', e);
+            //alert('Form submitted! ', e);
         }
     }
 })();

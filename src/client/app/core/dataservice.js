@@ -11,8 +11,9 @@
         return {
             //getPeople: getPeople,
             //getMessageCount: getMessageCount
-            login: login,
-            register: register
+            loging: loging,
+            registering: registering,
+            gettingMeetings: gettingMeetings
         };
 
         //function getMessageCount() {
@@ -35,13 +36,13 @@
         //    }
         //}
 
-        function login(user) {
+        function loging(user) {
             return $http
                 .post('/api/authenticate', user)
-                .then(function (data) {
-                    var msg='', data=data.data;
+                .then(function (results) {
+                    var msg = '', data = results.data;
 
-                    if (data.success===true) {
+                    if (data.success === true) {
                         msg = 'Login successful. Hello ' + data.email;
                         logger.success(msg);
                     } else {
@@ -59,23 +60,48 @@
         }
 
 
-        function register(user) {
+        function registering(user) {
             return $http
                 .post('/api/register', user)
-                .then(function (data) {
-                    var msg='', data=data.data;
+                .then(function (results) {
+                    var msg = '', data = results.data;
 
-                    if (data.success===true) {
+                    if (data.success === true) {
                         msg = 'User was registered successfully. Hello ' + data.email;
                         logger.success(msg);
                     } else {
-                        msg = 'Registering failed. '+data.message;
+                        msg = 'Registering failed. ' + data.message;
                         logger.error(msg);
                     }
 
                     return data;
                 }).catch(function (reason) {
                     var msg = 'Registering failed. ' + reason.data.description;
+                    logger.error(msg);
+
+                    return reason;
+                });
+        }
+
+
+        function gettingMeetings() {
+            return $http
+                .get('/api/meetings')
+                .then(function (results) {
+                    var msg = '', data = results.data;
+
+                    if (results.status === 200) {
+                        msg = 'Meetings received successfully!';
+                        logger.success(msg);
+                        return data;
+                    } else {
+                        msg = 'Meetings getting failed. ' + data.message;
+                        logger.error(msg);
+                    }
+
+                    return data;
+                }).catch(function (reason) {
+                    var msg = 'Meetings getting failed. ' + reason.data.description;
                     logger.error(msg);
 
                     return reason;

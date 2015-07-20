@@ -5,13 +5,14 @@
         .module('app.meetings')
         .run(appRun);
 
-    appRun.$inject = ['$q', '$stateParams', '$timeout', '$state', 'routerHelper'];
+    appRun.$inject = ['$q', '$stateParams', '$timeout', '$state', 'dataservice', 'routerHelper', 'formatservice'];
     /* @ngInject */
-    function appRun($q, $stateParams, $timeout, $state, routerHelper) {
-        routerHelper.configureStates(getStates($q, $stateParams, $timeout, $state));//, null, ['/meetings', '/meetings/list']
+    function appRun($q, $stateParams, $timeout, $state, dataservice, routerHelper, formatservice) {
+        routerHelper.configureStates(getStates($q, $stateParams,
+            $timeout, $state, dataservice, formatservice));//, null, ['/meetings', '/meetings/list']
     }
 
-    function getStates($q, $stateParams, $timeout, $state) {
+    function getStates($q, $stateParams, $timeout, $state, dataservice, formatservice) {
         return [
             {
                 state: 'meetings',
@@ -37,34 +38,37 @@
                     resolve: {
                         meetings: function () {
                             //console.log('resolve meetings');
-                            var meetings = [
-                                {
-                                    description: "Scrum meeting",
-                                    who: "User One",
-                                    when: 1488323623006,
-                                    duration: 6600000,
-                                    where: "Room 45",
-                                    allowed: "User One, User Three",
-                                    id: 1231241
-                                },
-                                {
-                                    description: "Investors meeting",
-                                    who: "User Three",
-                                    when: 1498323623006,
-                                    duration: 10200000,
-                                    where: "Room 30",
-                                    allowed: "User Three",
-                                    id: 1231256
-                                }
-                            ];
+                            //var meetings = [
+                            //    {
+                            //        description: "Scrum meeting",
+                            //        who: "User One",
+                            //        when: 1488323623006,
+                            //        duration: 6600000,
+                            //        where: "Room 45",
+                            //        allowed: "User One, User Three",
+                            //        id: 1231241
+                            //    },
+                            //    {
+                            //        description: "Investors meeting",
+                            //        who: "User Three",
+                            //        when: 1498323623006,
+                            //        duration: 10200000,
+                            //        where: "Room 30",
+                            //        allowed: "User Three",
+                            //        id: 1231256
+                            //    }
+                            //];
+                            //
+                            //var deferred=$q.defer();
+                            //
+                            //$timeout(function () {
+                            //    deferred.resolve(meetings);
+                            //}, 100);
+                            //
+                            //return deferred.promise;//$q.when(meetings);
 
-                            var deferred=$q.defer();
+                            return dataservice.gettingMeetings();
 
-                            $timeout(function () {
-                                deferred.resolve(meetings);
-                            }, 100);
-
-                            return deferred.promise;//$q.when(meetings);
                         }
                         //,
                         //meeting: function ($stateParams) {
@@ -119,11 +123,11 @@
                     templateUrl: 'app/meetings/meetings.mru.details.html',
                     title: 'Meeting details',
                     resolve: {
-                        meeting: function (meetings, $stateParams) {
+                        meeting: function ($stateParams, meetings, formatservice) {
                             if ($stateParams.id) {
                                 for (var i = 0; i < meetings.length; i++) {
-                                    if ($stateParams.id == meetings[i].id + "") {
-                                        return meetings[i];
+                                    if ($stateParams.id === meetings[i]._id) {
+                                        return formatservice.formatMeetingDetails(meetings[i]);
                                     }
                                 }
                             }
@@ -149,7 +153,7 @@
                         meeting: function (meetings, $stateParams) {
                             if ($stateParams.id) {
                                 for (var i = 0; i < meetings.length; i++) {
-                                    if ($stateParams.id == meetings[i].id + "") {
+                                    if ($stateParams.id === meetings[i]._id) {
                                         return meetings[i];
                                     }
                                 }

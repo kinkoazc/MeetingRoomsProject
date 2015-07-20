@@ -5,6 +5,8 @@ var Meeting = require('./models/meeting');
 var Room = require('./models/room');
 var _ = require('lodash');
 var async = require('async');
+var jwt = require('jsonwebtoken');
+var config = require('./config');
 //var data = require('./data');
 
 //router.get('/people', getPeople);
@@ -45,7 +47,9 @@ apiRoutes.post('/authenticate', function (req, res) {
         email: req.body.email
     }, function (err, user) {
 
-        if (err) throw err;
+        if (err) {
+            throw err;
+        }
 
         if (!user) {
             res.status(401).json({success: false, message: 'Authentication failed. User not found.'});
@@ -105,7 +109,7 @@ apiRoutes.get('/room-status', function (req, res) {
         }
     ], function (err, results) {
         var rooms = _.map(results[0], function (room) {
-            room._doc.occupiedBetween=[];
+            room._doc.occupiedBetween = [];
             return room._doc;
         });
 
@@ -115,11 +119,11 @@ apiRoutes.get('/room-status', function (req, res) {
 
         _.each(meetings, function (meeting) {
             _.each(rooms, function (room) {
-                if (meeting.room["0"]._doc._id.id===room._id.id) {
+                if (meeting.room['0']._doc._id.id === room._id.id) {
                     room.occupiedBetween.push({
                         start: meeting.when,
                         end: meeting.when + meeting.duration
-                    })
+                    });
                 }
             });
         });
@@ -148,8 +152,16 @@ apiRoutes.use(function (req, res, next) {
     // decode token
     if (token) {
         // verifies secret and checks exp
-        jwt.verify(token, app.get('superSecret'), function (err, decoded) {
+
+        token = token.replace('Bearer ', '').trim();//strip 'Bearer '
+
+        //console.log('token: ', token);
+        //console.log('config.secret: ', config.secret);
+        //console.log('typeof jwt: ', typeof jwt);
+
+        jwt.verify(token, config.secret, function (err, decoded) {
             if (err) {
+                console.log('err: ', err);
                 return res.json({success: false, message: 'Failed to authenticate token.'});
             } else {
                 // if everything is good, save to request for use in other routes
@@ -181,7 +193,7 @@ apiRoutes.get('/', function (req, res) {
 //    });
 //});
 
-apiRoutes.route('/meetings/:id')
+apiRoutes.route('/meetings/:id?')
     .get(function (req, res, next) {// /meetings (get all meetings)
         Meeting
             .find({})
@@ -189,7 +201,11 @@ apiRoutes.route('/meetings/:id')
             .populate('allowed')
             .populate('room')
             .exec(function (err, meetings) {
-                res.json(meetings);
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.status(200).json(meetings);
+                }
             });
     })
     .post(function (req, res, next) {// /meetings (create a meeting)
@@ -198,7 +214,7 @@ apiRoutes.route('/meetings/:id')
             who: req.body.who._id,
             when: req.body.when,
             duration: req.body.duration,
-            allowed: req.body.allowed_ids,
+            allowed: req.body.allowedIds,
             room: req.body.room._id
         });
 
@@ -206,7 +222,7 @@ apiRoutes.route('/meetings/:id')
             if (err) {
                 console.log(err);
             } else {
-                res.json(m);
+                res.status(200).json(m);
             }
         });
     })
@@ -221,7 +237,11 @@ apiRoutes.route('/meetings/:id')
             .populate('allowed')
             .populate('room')
             .exec(function (err, meeting) {
-                res.json(meeting);
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.status(200).json(meeting);
+                }
             });
     })
     .put(function (req, res, next) {// /meetings/:id (edit a meeting)
@@ -236,7 +256,7 @@ apiRoutes.route('/meetings/:id')
             .populate('room')
             .exec(function (err, meeting) {
                 if (err) {
-                    console.log(err)
+                    console.log(err);
                 } else if (meeting) {
                     _.extend(meeting, req.body);
 
@@ -244,22 +264,22 @@ apiRoutes.route('/meetings/:id')
                         if (err) {
                             console.log(err);
                         } else {
-                            res.json(m);
+                            res.status(200).json(m);
                         }
                     });
                 }
 
-                res.json(meeting);
+                //res.status(304).json(meeting);
             });
     })
     .delete(function (req, res, next) {// /meetings/:id (delete a meeting)
         //next(new Error('not implemented'));
 
-        Meeting.findOneAndRemove({_id: req.body.id}, function(err){
+        Meeting.findOneAndRemove({_id: req.body.id}, function (err) {
             if (err) {
                 console.log(err);
             } else {
-                res.json({message: 'Meeting deleted'});
+                res.status(200).json({message: 'Meeting deleted'});
             }
         });
     });
