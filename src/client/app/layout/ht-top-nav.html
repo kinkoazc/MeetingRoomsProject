@@ -42,7 +42,7 @@
             <!--<li><a href="#">Page 3</a></li>-->
 
             <!--<ul class="navi">-->
-                <li class="nlightblue fade-selection-animation" ng-class="vm.isCurrent(r)" ng-show="vm.isAuthorized(r.settings.authLevel)" ng-repeat="r in vm.navRoutes | filter:{ name: '!Login' }">
+                <li class="nlightblue fade-selection-animation" ng-class="vm.isCurrent(r)" ng-show="vm.isAuthorized(r.settings.authLevel)" ng-repeat="r in vm.navRoutes | filter:{ name: '!Login'} | filter: {name: '!Logout'}">
                     <a ui-sref="{{r.name}}"
                        ng-bind-html="r.settings.content"></a>
                 </li>
@@ -52,9 +52,11 @@
         <ul class="nav navbar-nav navbar-right">
             <!--<li><a href="#"><span class="glyphicon glyphicon-user"></span>Sign Up</a></li>-->
             <!--<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>-->
-            <li class="nlightblue fade-selection-animation" ng-class="vm.isCurrent(r)" ng-show="vm.isLoggedIn()" ng-repeat="r in vm.navRoutes | filter:{ name: 'Login' }">
-                <a ui-sref="{{r.name}}"
-                   ng-bind-html="r.settings.content"></a>
+            <li class="nlightblue fade-selection-animation" ng-class="vm.isCurrent(r)" ng-hide="vm.isLoggedIn()" ng-repeat="r in vm.navRoutes | filter:{ name: 'Login' }">
+                <a ui-sref="{{r.name}}" ng-bind-html="r.settings.content"></a>
+            </li>
+            <li class="nlightblue fade-selection-animation" ng-class="vm.isCurrent(r)" ng-show="vm.isLoggedIn()" ng-repeat="r in vm.navRoutes | filter:{ name: 'Logout' }">
+                <a ui-sref="{{r.name}}" ng-bind-html="r.settings.content"></a>
             </li>
         </ul>
     </div>

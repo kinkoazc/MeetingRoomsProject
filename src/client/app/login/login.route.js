@@ -5,13 +5,13 @@
         .module('app.login')
         .run(appRun);
 
-    appRun.$inject = ['routerHelper'];
+    appRun.$inject = ['$state', '$timeout', 'auth', 'routerHelper'];
     /* @ngInject */
-    function appRun(routerHelper) {
-        routerHelper.configureStates(getStates());
+    function appRun($state, $timeout, auth, routerHelper) {
+        routerHelper.configureStates(getStates($state, $timeout, auth));
     }
 
-    function getStates() {
+    function getStates($state, $timeout, auth) {
         return [
             {
                 state: 'login',
@@ -26,6 +26,31 @@
                         inMainMenu : true,
                         authLevel: 1,
                         content: '<i class="fa fa-sign-in"></i> Login/Register'
+                    }
+                }
+            },
+            {
+                state: 'logout',
+                config: {
+                    url: '/logout',
+                    templateUrl: 'app/login/logout.html',
+                    controller: 'LoginController',
+                    controllerAs: 'vm',
+                    title: 'Logout',
+                    onEnter: function () {
+                        auth.logOut();
+                        $timeout(function () {
+                            $state.go('meetings.list');
+                        });
+                    },
+                    onExit: function () {
+
+                    },
+                    settings: {
+                        nav: 4,
+                        inMainMenu : true,
+                        authLevel: 2,
+                        content: '<i class="fa fa-sign-in"></i> Logout'
                     }
                 }
             }
