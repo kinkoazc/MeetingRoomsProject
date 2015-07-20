@@ -193,6 +193,8 @@ apiRoutes.get('/', function (req, res) {
 //    });
 //});
 
+
+/* MEETINGS routes */
 apiRoutes.route('/meetings/:id?')
     .get(function (req, res, next) {// /meetings (get all meetings)
 
@@ -214,22 +216,23 @@ apiRoutes.route('/meetings/:id?')
     .post(function (req, res, next) {// /meetings (create a meeting)
         //check authorization level
 
-        var meeting = new Meeting({
-            description: req.body.description,
-            who: req.body.who._id,
-            when: req.body.when,
-            duration: req.body.duration,
-            allowed: req.body.allowedIds,
-            room: req.body.room._id
-        });
+        //var meeting = new Meeting({
+        //    description: req.body.description,
+        //    who: req.body.who._id,
+        //    when: req.body.when,
+        //    duration: req.body.duration,
+        //    allowed: req.body.allowedIds,
+        //    room: req.body.room._id
+        //});
+        //
+        //meeting.save(function (err, m) {
+        //    if (err) {
+        //        console.log(err);
+        //    } else {
+        //        res.status(200).json(m);
+        //    }
+        //});
 
-        meeting.save(function (err, m) {
-            if (err) {
-                console.log(err);
-            } else {
-                res.status(200).json(m);
-            }
-        });
     })
     .get(function (req, res, next) {// /meetings/:id (get a meeting)
 
@@ -257,34 +260,35 @@ apiRoutes.route('/meetings/:id?')
         //check authorization level(done in .use() part, above)(only the standard and admin users will be let through)
 
 
-        var meetingId = req.params.id;
+        //var meetingId = req.params.id;
+        //
+        //Meeting
+        //    .findOne({
+        //        _id: meetingId
+        //    })
+        //    .populate('who')
+        //    .populate('allowed')
+        //    .populate('room')
+        //    .exec(function (err, meeting) {
+        //        if (err) {
+        //            console.log(err);
+        //        } else if (meeting) {
+        //            //check if user is among the editors/owner
+        //
+        //            _.extend(meeting, req.body);
+        //
+        //            meeting.save(function (err, m) {
+        //                if (err) {
+        //                    console.log(err);
+        //                } else {
+        //                    res.status(200).json(m);
+        //                }
+        //            });
+        //        }
+        //
+        //        //res.status(304).json(meeting);
+        //    });
 
-        Meeting
-            .findOne({
-                _id: meetingId
-            })
-            .populate('who')
-            .populate('allowed')
-            .populate('room')
-            .exec(function (err, meeting) {
-                if (err) {
-                    console.log(err);
-                } else if (meeting) {
-                    //check if user is among the editors/owner
-
-                    _.extend(meeting, req.body);
-
-                    meeting.save(function (err, m) {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            res.status(200).json(m);
-                        }
-                    });
-                }
-
-                //res.status(304).json(meeting);
-            });
     })
     .delete(function (req, res, next) {// /meetings/:id (delete a meeting)
         //next(new Error('not implemented'));
@@ -292,15 +296,238 @@ apiRoutes.route('/meetings/:id?')
         //check authorization level
         //check if user is among the editors/owner
 
-        Meeting.findOneAndRemove({_id: req.body.id}, function (err) {
-            if (err) {
-                console.log(err);
-            } else {
-                res.status(200).json({message: 'Meeting deleted'});
-            }
-        });
+        //Meeting.findOneAndRemove({_id: req.body.id}, function (err) {
+        //    if (err) {
+        //        console.log(err);
+        //    } else {
+        //        res.status(200).json({message: 'Meeting deleted'});
+        //    }
+        //});
+
     });
 
+
+/* ROOMS routes */
+apiRoutes.route('/rooms/:id?')
+    .get(function (req, res, next) {// /meetings (get all meetings)
+
+        //check authorization level
+
+        Room
+            .find({})
+            .exec(function (err, rooms) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.status(200).json(rooms);
+                }
+            });
+
+    })
+    .post(function (req, res, next) {// /meetings (create a meeting)
+        //check authorization level
+
+        //var meeting = new Meeting({
+        //    description: req.body.description,
+        //    who: req.body.who._id,
+        //    when: req.body.when,
+        //    duration: req.body.duration,
+        //    allowed: req.body.allowedIds,
+        //    room: req.body.room._id
+        //});
+        //
+        //meeting.save(function (err, m) {
+        //    if (err) {
+        //        console.log(err);
+        //    } else {
+        //        res.status(200).json(m);
+        //    }
+        //});
+
+    })
+    .get(function (req, res, next) {// /meetings/:id (get a meeting)
+
+        //check authorization level
+
+        //var meetingId = req.params.id;
+        //
+        //Meeting
+        //    .findOne({
+        //        _id: meetingId
+        //    })
+        //    .populate('who')
+        //    .populate('allowed')
+        //    .populate('room')
+        //    .exec(function (err, meeting) {
+        //        if (err) {
+        //            console.log(err);
+        //        } else {
+        //            res.status(200).json(meeting);
+        //        }
+        //    });
+
+    })
+    .put(function (req, res, next) {// /meetings/:id (edit a meeting)
+
+        //check authorization level(done in .use() part, above)(only the standard and admin users will be let through)
+
+        //var meetingId = req.params.id;
+        //
+        //Meeting
+        //    .findOne({
+        //        _id: meetingId
+        //    })
+        //    .populate('who')
+        //    .populate('allowed')
+        //    .populate('room')
+        //    .exec(function (err, meeting) {
+        //        if (err) {
+        //            console.log(err);
+        //        } else if (meeting) {
+        //            //check if user is among the editors/owner
+        //
+        //            _.extend(meeting, req.body);
+        //
+        //            meeting.save(function (err, m) {
+        //                if (err) {
+        //                    console.log(err);
+        //                } else {
+        //                    res.status(200).json(m);
+        //                }
+        //            });
+        //        }
+        //
+        //        //res.status(304).json(meeting);
+        //    });
+
+    })
+    .delete(function (req, res, next) {// /meetings/:id (delete a meeting)
+        //next(new Error('not implemented'));
+
+        //check authorization level
+        //check if user is among the editors/owner
+
+        //Meeting.findOneAndRemove({_id: req.body.id}, function (err) {
+        //    if (err) {
+        //        console.log(err);
+        //    } else {
+        //        res.status(200).json({message: 'Meeting deleted'});
+        //    }
+        //});
+
+    });
+
+/* USERS routes */
+apiRoutes.route('/users/:id?')
+    .get(function (req, res, next) {// /meetings (get all meetings)
+
+        //check authorization level
+
+        User
+            .find({})
+            .exec(function (err, users) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.status(200).json(users);
+                }
+            });
+
+    })
+    .post(function (req, res, next) {// /meetings (create a meeting)
+        //check authorization level
+
+        //var meeting = new Meeting({
+        //    description: req.body.description,
+        //    who: req.body.who._id,
+        //    when: req.body.when,
+        //    duration: req.body.duration,
+        //    allowed: req.body.allowedIds,
+        //    room: req.body.room._id
+        //});
+        //
+        //meeting.save(function (err, m) {
+        //    if (err) {
+        //        console.log(err);
+        //    } else {
+        //        res.status(200).json(m);
+        //    }
+        //});
+
+    })
+    .get(function (req, res, next) {// /meetings/:id (get a meeting)
+
+        //check authorization level
+
+        //var meetingId = req.params.id;
+        //
+        //Meeting
+        //    .findOne({
+        //        _id: meetingId
+        //    })
+        //    .populate('who')
+        //    .populate('allowed')
+        //    .populate('room')
+        //    .exec(function (err, meeting) {
+        //        if (err) {
+        //            console.log(err);
+        //        } else {
+        //            res.status(200).json(meeting);
+        //        }
+        //    });
+
+    })
+    .put(function (req, res, next) {// /meetings/:id (edit a meeting)
+
+        //check authorization level(done in .use() part, above)(only the standard and admin users will be let through)
+
+        //var meetingId = req.params.id;
+        //
+        //Meeting
+        //    .findOne({
+        //        _id: meetingId
+        //    })
+        //    .populate('who')
+        //    .populate('allowed')
+        //    .populate('room')
+        //    .exec(function (err, meeting) {
+        //        if (err) {
+        //            console.log(err);
+        //        } else if (meeting) {
+        //            //check if user is among the editors/owner
+        //
+        //            _.extend(meeting, req.body);
+        //
+        //            meeting.save(function (err, m) {
+        //                if (err) {
+        //                    console.log(err);
+        //                } else {
+        //                    res.status(200).json(m);
+        //                }
+        //            });
+        //        }
+        //
+        //        //res.status(304).json(meeting);
+        //    });
+
+    })
+    .delete(function (req, res, next) {// /meetings/:id (delete a meeting)
+        //next(new Error('not implemented'));
+
+        //check authorization level
+        //check if user is among the editors/owner
+
+        //Meeting.findOneAndRemove({_id: req.body.id}, function (err) {
+        //    if (err) {
+        //        console.log(err);
+        //    } else {
+        //        res.status(200).json({message: 'Meeting deleted'});
+        //    }
+        //});
+
+    });
+
+/* 404 route */
 apiRoutes.get('/*', four0four.notFoundMiddleware);
 
 module.exports = apiRoutes;

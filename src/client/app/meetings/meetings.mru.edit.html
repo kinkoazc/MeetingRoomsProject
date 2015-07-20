@@ -16,7 +16,7 @@
 
         <div class="col-sm-10">
             <select name="who" id="who" ng-model="vme.meeting.who"
-                    ng-options="user.name as user.name for user in [{name: 'admin@gmail.com', id: 56},{name: 'user@gmail.com', id: 78}]">
+                    ng-options="user.email as user.email for user in vme.users">
                 <option value="">User</option>
             </select>
         </div>
@@ -39,7 +39,7 @@
 
         <div class="col-sm-10">
             <select name="where" id="where" ng-model="vme.meeting.where"
-                    ng-options="room.name as room.name for room in [{name: 'Room 13', id: 13},{name: 'Room 67', id: 14}]">
+                    ng-options="room.name as room.name for room in vme.rooms">
                 <option value="">Room</option>
             </select>
         </div>
@@ -51,7 +51,7 @@
 
         <div class="col-sm-10">
             <select name="allowed" id="allowed" ng-model="vme.meeting.editors" multiple
-                    ng-options="user.name as user.name for user in [{name: 'admin@gmail.com', id: 56},{name: 'user@gmail.com', id: 78}]">
+                    ng-options="user.email as user.email for user in vme.users">
                 <option value="">Users</option>
             </select>
         </div>

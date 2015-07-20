@@ -111,6 +111,41 @@
                     url: '/add',
                     templateUrl: 'app/meetings/meetings.mru.add.html',
                     title: 'Meetings add',
+                    resolve: {
+                        users: function () {
+
+                            //if ($stateParams.id) {
+                            //    for (var i = 0; i < meetings.length; i++) {
+                            //        if ($stateParams.id === meetings[i]._id) {
+                            //            return formatservice.formatMeetingDetails(meetings[i]);
+                            //        }
+                            //    }
+                            //}
+
+                            return dataservice.gettingUsers();
+                        },
+                        rooms: function () {
+
+                            //if ($stateParams.id) {
+                            //    for (var i = 0; i < meetings.length; i++) {
+                            //        if ($stateParams.id === meetings[i]._id) {
+                            //            return formatservice.formatMeetingDetails(meetings[i]);
+                            //        }
+                            //    }
+                            //}
+
+                            return dataservice.gettingRooms();
+                        }
+                    },
+                    controller: ['users', 'rooms', function (users, rooms) {
+                        var vma = this;
+
+                        vma.users = users;
+                        vma.rooms = rooms;
+                        console.log('users: ', users);
+                        console.log('rooms: ', rooms);
+                    }],
+                    controllerAs: 'vma',
                     settings: {
                         authLevel: 2
                     }
@@ -158,11 +193,38 @@
                                     }
                                 }
                             }
+                        },
+                        users: function () {
+
+                            //if ($stateParams.id) {
+                            //    for (var i = 0; i < meetings.length; i++) {
+                            //        if ($stateParams.id === meetings[i]._id) {
+                            //            return formatservice.formatMeetingDetails(meetings[i]);
+                            //        }
+                            //    }
+                            //}
+
+                            return dataservice.gettingUsers();
+                        },
+                        rooms: function () {
+
+                            //if ($stateParams.id) {
+                            //    for (var i = 0; i < meetings.length; i++) {
+                            //        if ($stateParams.id === meetings[i]._id) {
+                            //            return formatservice.formatMeetingDetails(meetings[i]);
+                            //        }
+                            //    }
+                            //}
+
+                            return dataservice.gettingRooms();
                         }
                     },
-                    controller: ['$scope', 'meeting', function ($scope, meeting) {
+                    controller: ['$scope', 'meeting', 'users', 'rooms', function ($scope, meeting, users, rooms) {
                         var vme = this;
+
                         vme.meeting = meeting;
+                        vme.users = users;
+                        vme.rooms = rooms;
                     }],
                     controllerAs: 'vme',
                     settings: {

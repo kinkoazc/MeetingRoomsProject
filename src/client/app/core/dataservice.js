@@ -13,7 +13,9 @@
             //getMessageCount: getMessageCount
             loging: loging,
             registering: registering,
-            gettingMeetings: gettingMeetings
+            gettingMeetings: gettingMeetings,
+            gettingRooms: gettingRooms,
+            gettingUsers: gettingUsers
         };
 
         //function getMessageCount() {
@@ -102,6 +104,54 @@
                     return data;
                 }).catch(function (reason) {
                     var msg = 'Meetings getting failed. ' + reason.data.description;
+                    logger.error(msg);
+
+                    return reason;
+                });
+        }
+
+        function gettingRooms() {
+            return $http
+                .get('/api/rooms')
+                .then(function (results) {
+                    var msg = '', data = results.data;
+
+                    if (results.status === 200) {
+                        msg = 'Rooms received successfully!';
+                        logger.success(msg);
+                        return data;
+                    } else {
+                        msg = 'Rooms getting failed. ' + data.message;
+                        logger.error(msg);
+                    }
+
+                    return data;
+                }).catch(function (reason) {
+                    var msg = 'Rooms getting failed. ' + reason.data.description;
+                    logger.error(msg);
+
+                    return reason;
+                });
+        }
+
+        function gettingUsers() {
+            return $http
+                .get('/api/users')
+                .then(function (results) {
+                    var msg = '', data = results.data;
+
+                    if (results.status === 200) {
+                        msg = 'Users received successfully!';
+                        logger.success(msg);
+                        return data;
+                    } else {
+                        msg = 'Users getting failed. ' + data.message;
+                        logger.error(msg);
+                    }
+
+                    return data;
+                }).catch(function (reason) {
+                    var msg = 'Users getting failed. ' + reason.data.description;
                     logger.error(msg);
 
                     return reason;
