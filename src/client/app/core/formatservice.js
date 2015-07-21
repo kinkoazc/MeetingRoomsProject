@@ -59,10 +59,9 @@
 
             meeting.description = originalMeeting.description || '';
             meeting.who = originalMeeting.who[0].email || '';
-            meeting.whenDate = new Date(Math.floor(originalMeeting.when / 86400000) * 86400000);
-            meeting.whenStartTime = new Date(originalMeeting.when % 86400000);
-            meeting.whenEndTime = new Date(originalMeeting.when % 86400000 + originalMeeting.duration);
-            //meeting.duration = $filter('time')(meeting.whenEndTime-meeting.whenStartTime);
+            meeting.whenDate = new Date(originalMeeting.when);
+            meeting.whenStartTime = new Date(originalMeeting.when);
+            meeting.whenEndTime = new Date(originalMeeting.when + originalMeeting.duration);
             meeting.where = originalMeeting.room[0].name || '';
             meeting.editors = originalMeeting.allowed.map(function (user) {
                 return user.email;
