@@ -5,12 +5,10 @@
         .module('app.core')
         .factory('dataservice', dataservice);
 
-    dataservice.$inject = ['$http', '$q', '$state', 'logger'];
+    dataservice.$inject = ['$http', '$q', '$state', 'Meeting', 'Room', 'User', 'logger'];
     /* @ngInject */
-    function dataservice($http, $q, $state, logger) {
+    function dataservice($http, $q, $state, Meeting, Room, User, logger) {
         return {
-            //getPeople: getPeople,
-            //getMessageCount: getMessageCount
             loging: loging,
             registering: registering,
             gettingMeetings: gettingMeetings,
@@ -87,27 +85,29 @@
 
 
         function gettingMeetings() {
-            return $http
-                .get('/api/meetings')
-                .then(function (results) {
-                    var msg = '', data = results.data;
+            return Meeting.query();
 
-                    if (results.status === 200) {
-                        msg = 'Meetings received successfully!';
-                        logger.success(msg);
-                        return data;
-                    } else {
-                        msg = 'Meetings getting failed. ' + data.message;
-                        logger.error(msg);
-                    }
-
-                    return data;
-                }).catch(function (reason) {
-                    var msg = 'Meetings getting failed. ' + reason.data.description;
-                    logger.error(msg);
-
-                    return reason;
-                });
+            //$http
+            //    .get('/api/meetings')
+            //    .then(function (results) {
+            //        var msg = '', data = results.data;
+            //
+            //        if (results.status === 200) {
+            //            msg = 'Meetings received successfully!';
+            //            logger.success(msg);
+            //            return data;
+            //        } else {
+            //            msg = 'Meetings getting failed. ' + data.message;
+            //            logger.error(msg);
+            //        }
+            //
+            //        return data;
+            //    }).catch(function (reason) {
+            //        var msg = 'Meetings getting failed. ' + reason.data.description;
+            //        logger.error(msg);
+            //
+            //        return reason;
+            //    });
         }
 
         function gettingRooms() {

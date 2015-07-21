@@ -189,7 +189,7 @@
                             if ($stateParams.id) {
                                 for (var i = 0; i < meetings.length; i++) {
                                     if ($stateParams.id === meetings[i]._id) {
-                                        return formatservice.formatMeetingEdit(meetings[i]);
+                                        return formatservice.formatMeetingEditIn(meetings[i]);
                                     }
                                 }
                             }

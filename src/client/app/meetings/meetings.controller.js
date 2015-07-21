@@ -125,7 +125,7 @@
         function sendAddForm(e, meeting) {
             e.preventDefault();
 
-            console.log('Add meeting form submitted! ', meeting);
+            console.log('Add meeting form submitted! ', formatservice.formatMeetingAddOut(meeting));
 
             return false;
         }
