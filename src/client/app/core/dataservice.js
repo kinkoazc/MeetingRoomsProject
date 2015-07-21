@@ -12,6 +12,8 @@
             loging: loging,
             registering: registering,
             gettingMeetings: gettingMeetings,
+            addingMeeting: addingMeeting,
+            editingMeeting: editingMeeting,
             gettingRooms: gettingRooms,
             gettingUsers: gettingUsers
         };
@@ -36,6 +38,7 @@
         //    }
         //}
 
+        /* USER */
         function loging(user) {
             return $http
                 .post('/api/authenticate', user)
@@ -84,6 +87,8 @@
         }
 
 
+        /* MEETINGS */
+        /* GET ALL */
         function gettingMeetings() {
             return Meeting.query();
 
@@ -110,52 +115,68 @@
             //    });
         }
 
-        function gettingRooms() {
-            return $http
-                .get('/api/rooms')
-                .then(function (results) {
-                    var msg = '', data = results.data;
-
-                    if (results.status === 200) {
-                        msg = 'Rooms received successfully!';
-                        logger.success(msg);
-                        return data;
-                    } else {
-                        msg = 'Rooms getting failed. ' + data.message;
-                        logger.error(msg);
-                    }
-
-                    return data;
-                }).catch(function (reason) {
-                    var msg = 'Rooms getting failed. ' + reason.data.description;
-                    logger.error(msg);
-
-                    return reason;
-                });
+        /* POST */
+        function addingMeeting(meeting) {
+            return Meeting.save(meeting);
         }
 
+        /* PUT */
+        function editingMeeting(meeting) {
+            return Meeting.update({id: $state.params.id}, meeting);
+        }
+
+        /* ROOMS */
+        function gettingRooms() {
+            return Room.query();
+
+            //return $http
+            //    .get('/api/rooms')
+            //    .then(function (results) {
+            //        var msg = '', data = results.data;
+            //
+            //        if (results.status === 200) {
+            //            msg = 'Rooms received successfully!';
+            //            logger.success(msg);
+            //            return data;
+            //        } else {
+            //            msg = 'Rooms getting failed. ' + data.message;
+            //            logger.error(msg);
+            //        }
+            //
+            //        return data;
+            //    }).catch(function (reason) {
+            //        var msg = 'Rooms getting failed. ' + reason.data.description;
+            //        logger.error(msg);
+            //
+            //        return reason;
+            //    });
+        }
+
+        /* USERS */
         function gettingUsers() {
-            return $http
-                .get('/api/users')
-                .then(function (results) {
-                    var msg = '', data = results.data;
+            return User.query();
 
-                    if (results.status === 200) {
-                        msg = 'Users received successfully!';
-                        logger.success(msg);
-                        return data;
-                    } else {
-                        msg = 'Users getting failed. ' + data.message;
-                        logger.error(msg);
-                    }
-
-                    return data;
-                }).catch(function (reason) {
-                    var msg = 'Users getting failed. ' + reason.data.description;
-                    logger.error(msg);
-
-                    return reason;
-                });
+            //return $http
+            //    .get('/api/users')
+            //    .then(function (results) {
+            //        var msg = '', data = results.data;
+            //
+            //        if (results.status === 200) {
+            //            msg = 'Users received successfully!';
+            //            logger.success(msg);
+            //            return data;
+            //        } else {
+            //            msg = 'Users getting failed. ' + data.message;
+            //            logger.error(msg);
+            //        }
+            //
+            //        return data;
+            //    }).catch(function (reason) {
+            //        var msg = 'Users getting failed. ' + reason.data.description;
+            //        logger.error(msg);
+            //
+            //        return reason;
+            //    });
         }
 
     }

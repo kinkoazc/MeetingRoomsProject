@@ -8,7 +8,7 @@ function Meeting($resource) {
 
     return $resource('/api/meetings/:id', null,
         {
-            'update': { method:'PUT' }
+            'update': {method: 'PUT'}
         });
 
 }

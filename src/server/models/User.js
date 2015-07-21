@@ -7,33 +7,33 @@ var config = require('../config');
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
-    email: { type: String, required: true, unique: true},
+    email: {type: String, required: true, unique: true},
     hash: String,
     salt: String,
-    admin: {type: Boolean, default:false},
-    updatedOn: {type: Date, default:Date.now}
+    admin: {type: Boolean, default: false},
+    updatedOn: {type: Date, default: Date.now}
 });
 
 //set up methods on the User schema
-UserSchema.methods.setPassword = function(password){
+UserSchema.methods.setPassword = function (password) {
     this.salt = crypto.randomBytes(16).toString('hex');
     this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
 };
 
-UserSchema.methods.validPassword = function(password) {
+UserSchema.methods.validPassword = function (password) {
     var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
 
     return this.hash === hash;
 };
 
-UserSchema.methods.generateJWT = function() {
+UserSchema.methods.generateJWT = function () {
 
     // set expiration to 60 days
     //var today = new Date();
     //var exp = new Date(today);
     //exp.setDate(today.getDate() + 60);
 
-    _.extend(this._doc, {exp: (Math.round(Date.now()/1000)+1440*60)});
+    _.extend(this._doc, {exp: (Math.round(Date.now() / 1000) + 1440 * 60)});
 
     return jwt.sign(this, config.secret, {
         expiresInMinutes: 1440 // expires in 24 hours

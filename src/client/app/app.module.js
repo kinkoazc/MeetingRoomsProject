@@ -11,5 +11,4 @@
         //'app.dashboard',
         'app.layout'
     ]);
-
 })();

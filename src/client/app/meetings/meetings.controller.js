@@ -5,9 +5,11 @@
         .module('app.meetings')
         .controller('MeetingsController', MeetingsController);
 
-    MeetingsController.$inject = ['$rootScope', '$state', '$filter', 'auth', 'logger', 'routerHelper', 'meetings', 'formatservice'];
+    MeetingsController.$inject = ['$rootScope', '$state',
+        '$filter', '$timeout', 'auth', 'logger', 'routerHelper', 'meetings', 'dataservice', 'formatservice'];
     /* @ngInject */
-    function MeetingsController($rootScope, $state, $filter, auth, logger, routerHelper, meetings, formatservice) {
+    function MeetingsController($rootScope, $state,
+                                $filter, $timeout, auth, logger, routerHelper, meetings, dataservice, formatservice) {
         var vm = this,
             states = routerHelper.getStates();
         vm.sendAddForm = sendAddForm;
@@ -28,8 +30,8 @@
                 //console.log('state changed successfully');
 
                 if ($state.params.id) {
-                    for (var i=0;i<vm.meetings.length;i++) {
-                        if ($state.params.id===vm.meetings[i].id+'') {
+                    for (var i = 0; i < vm.meetings.length; i++) {
+                        if ($state.params.id === vm.meetings[i].id + '') {
                             vm.meeting = vm.meetings[i];
                         }
                     }
@@ -48,7 +50,7 @@
                 getNavRoutes(toState);
 
                 if (fromParams && fromParams.id && !toParams.id) {
-                    toParams.id=fromParams.id;
+                    toParams.id = fromParams.id;
                 }
 
             });
@@ -61,24 +63,24 @@
         function getNavRoutes(toState) {
             var current = toState || $state.current;
 
-            if (!angular.isObject(current) || current.name.indexOf('meetings.')>-1 &&
-                current.url.indexOf(':id')===-1) {
+            if (!angular.isObject(current) || current.name.indexOf('meetings.') > -1 &&
+                current.url.indexOf(':id') === -1) {
                 getMeetingsNavRoutes();
-            } else if (angular.isObject(current) && current.name.indexOf('meetings.')>-1 &&
-                current.url.indexOf(':id')>-1) {
+            } else if (angular.isObject(current) && current.name.indexOf('meetings.') > -1 &&
+                current.url.indexOf(':id') > -1) {
                 getMeetingNavRoutes();
             }
         }
 
         function getMeetingsNavRoutes() {
             vm.meetingsNavRoutes = states.filter(function (r) {
-                return (r.name.indexOf('meetings.') === 0 && r.url.indexOf(':id')===-1);
+                return (r.name.indexOf('meetings.') === 0 && r.url.indexOf(':id') === -1);
             });
         }
 
         function getMeetingNavRoutes() {
             vm.meetingsNavRoutes = states.filter(function (r) {
-                return (r.name.indexOf('meetings.') === 0 && r.url.indexOf(':id')>-1);
+                return (r.name.indexOf('meetings.') === 0 && r.url.indexOf(':id') > -1);
             });
         }
 
@@ -114,18 +116,36 @@
         //    ];
         //}
 
-        function sendEditForm(e, meeting) {
+        function sendEditForm(e, meeting, cb) {
             e.preventDefault();
 
-            console.log('Edit meeting form submitted! ', meeting);
+            //console.log('Edit meeting form submitted! ', meeting);
+            dataservice.editingMeeting(formatservice.formatMeetingEditOut(meeting)).$promise.then(function (data) {
+                logger.success('Meeting updated successfully.', data, 'Success!');
+
+                // reset the form
+                cb();
+                //e.target.reset();
+            }, function (reason) {
+                logger.error('Meeting not updated.', reason, 'Error!');
+            });
 
             return false;
         }
 
-        function sendAddForm(e, meeting) {
+        function sendAddForm(e, meeting, cb) {
             e.preventDefault();
 
-            console.log('Add meeting form submitted! ', formatservice.formatMeetingAddOut(meeting));
+            //console.log('Add meeting form submitted! ', formatservice.formatMeetingAddOut(meeting));
+            dataservice.addingMeeting(formatservice.formatMeetingAddOut(meeting)).$promise.then(function (data) {
+                logger.success('Meeting saved successfully.', data, 'Success!');
+
+                // reset the form
+                cb();
+                //e.target.reset();
+            }, function (reason) {
+                logger.error('Meeting not saved.', reason, 'Error!');
+            });
 
             return false;
         }

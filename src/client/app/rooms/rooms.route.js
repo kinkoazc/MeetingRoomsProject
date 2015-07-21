@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -23,7 +23,7 @@
                     title: 'Rooms',
                     settings: {
                         nav: 2,
-                        inMainMenu : true,
+                        inMainMenu: true,
                         authLevel: 1,//TODO create separate state for room status, and change this to 3(admin)
                         content: '<i class="fa fa-random"></i> Rooms'
                     }

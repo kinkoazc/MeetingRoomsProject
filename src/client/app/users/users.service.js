@@ -8,7 +8,6 @@ function User($resource) {
 
     return $resource('/api/users/:id', null,
         {
-            'update': { method:'PUT' }
+            'update': {method: 'PUT'}
         });
-
 }

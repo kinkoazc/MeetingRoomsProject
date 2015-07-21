@@ -1,4 +1,4 @@
-<form action="#" ng-submit="vm.sendAddForm($event, vma.meeting)" class="form-horizontal">
+<form action="" ng-submit="vm.sendAddForm($event, vma.meeting, vma.addMeetingFormCb)" class="form-horizontal">
 
     <!-- Description -->
     <div class="form-group">
@@ -15,10 +15,11 @@
         <label for="who" class="col-sm-2 control-label">Who</label>
 
         <div class="col-sm-10">
-            <select name="who" id="who" ng-model="vma.meeting.who"
-                    ng-options="user._id as user.email for user in vma.users">
-                <option value="">User</option>
-            </select>
+            <!--<select name="who" id="who" ng-model="vma.meeting.who"-->
+            <!--ng-options="user._id as user.email for user in vma.users">-->
+            <!--<option value="">User</option>-->
+            <!--</select>-->
+            <input type="text" id="who" ng-model="vm.user.email" disabled="disabled"/>
         </div>
     </div>
 
@@ -27,9 +28,12 @@
         <label for="when" class="col-sm-2 control-label">When(date, start time, end time)</label>
 
         <div class="col-sm-10">
-            <input type="date" class="form-control" ng-model="vma.meeting.whenDate" id="when" placeholder="When(day)"><br/>
-            <input type="time" class="form-control" ng-model="vma.meeting.whenStartTime" id="when2" placeholder="When(starting time)"><br/>
-            <input type="time" class="form-control" ng-model="vma.meeting.whenEndTime" id="when3" placeholder="When(ending time)">
+            <input type="date" class="form-control" ng-model="vma.meeting.whenDate" id="when"
+                   placeholder="When(day)"><br/>
+            <input type="time" class="form-control" ng-model="vma.meeting.whenStartTime" id="when2"
+                   placeholder="When(starting time)"><br/>
+            <input type="time" class="form-control" ng-model="vma.meeting.whenEndTime" id="when3"
+                   placeholder="When(ending time)">
         </div>
     </div>
 
