@@ -310,13 +310,20 @@ apiRoutes.route('/meetings/:id?')
         //check authorization level
         //check if user is among the editors/owner
 
-        //Meeting.findOneAndRemove({_id: req.body.id}, function (err) {
-        //    if (err) {
-        //        console.log(err);
-        //    } else {
-        //        res.status(200).json({message: 'Meeting deleted'});
-        //    }
-        //});
+        console.log('------ deleting meeting');
+
+        var meetingId = req.params.id;
+
+        if (meetingId) {
+            Meeting.findOneAndRemove({_id: meetingId}, function (err) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log('------ meeting deleted');
+                    res.status(200).json({message: 'Meeting deleted'});
+                }
+            });
+        }
 
     });
 

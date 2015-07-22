@@ -5,19 +5,20 @@
         .module('app.meetings')
         .controller('MeetingsController', MeetingsController);
 
-    MeetingsController.$inject = ['$rootScope', '$state',
+    MeetingsController.$inject = ['$rootScope', '$state', '$window',
         '$filter', '$timeout', 'auth', 'logger', 'routerHelper', 'meetings', 'dataservice', 'formatservice'];
     /* @ngInject */
-    function MeetingsController($rootScope, $state,
+    function MeetingsController($rootScope, $state, $window,
                                 $filter, $timeout, auth, logger, routerHelper, meetings, dataservice, formatservice) {
         var vm = this,
             states = routerHelper.getStates();
-        vm.sendAddForm = sendAddForm;
-        vm.sendEditForm = sendEditForm;
+        vm.deleteMeeting = deleteMeeting;
         vm.isCurrent = isCurrent;
         vm.meetings = [];
         vm.meeting = {};
         vm.meetingsNavRoutes = [];
+        vm.sendAddForm = sendAddForm;
+        vm.sendEditForm = sendEditForm;
         vm.title = 'Meetings';
         vm.user = {};
 
@@ -150,5 +151,19 @@
             return false;
         }
 
+        function deleteMeeting(id) {
+            if ($window.confirm('Are you sure you want to delete the entry?')) {
+                dataservice.deletingMeeting(id).$promise.then(function (data) {
+                    logger.success('Meeting deleted successfully.', data, 'Success!');
+                    if ($state.is('meetings.list')) {
+                        $state.reload();
+                    } else {
+                        $state.go('meetings.list');
+                    }
+                }, function (reason) {
+                    logger.error('Meeting not deleted.', reason, 'Error!');
+                });
+            }
+        }
     }
 })();

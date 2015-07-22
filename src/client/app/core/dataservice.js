@@ -14,6 +14,7 @@
             gettingMeetings: gettingMeetings,
             addingMeeting: addingMeeting,
             editingMeeting: editingMeeting,
+            deletingMeeting: deletingMeeting,
             gettingRooms: gettingRooms,
             gettingUsers: gettingUsers
         };
@@ -86,12 +87,18 @@
                 });
         }
 
-
         /* MEETINGS */
         /* GET ALL */
         function gettingMeetings() {
-            return Meeting.query();
+            var meeting = Meeting.resource.query();
 
+            meeting.$promise.then(function (data) {
+                //Meeting.setMeeting(data);
+
+                return data;
+            });
+
+            return meeting;
             //$http
             //    .get('/api/meetings')
             //    .then(function (results) {
@@ -114,16 +121,46 @@
             //        return reason;
             //    });
         }
-
         /* POST */
-        function addingMeeting(meeting) {
-            return Meeting.save(meeting);
+        function addingMeeting(mtg) {
+            var meeting = Meeting.resource.save(mtg);
+
+            meeting.$promise.then(function (data) {
+                //gettingMeetings();
+
+                return data;
+            });
+
+            return meeting;
+        }
+        /* PUT */
+        function editingMeeting(mtg) {
+            var meeting = Meeting.resource.update({id: $state.params.id}, mtg);
+
+            meeting.$promise.then(function (data) {
+                //Meeting.setMeeting(data);
+                //gettingMeetings();
+
+                return data;
+            });
+
+            return meeting;
+        }
+        /* DELETE */
+        function deletingMeeting(i) {
+            var id=i || $state.params.id,
+                meeting = Meeting.resource.delete({id: id});
+
+            meeting.$promise.then(function (data) {
+                //gettingMeetings();
+
+                return data;
+            });
+
+
+            return meeting;
         }
 
-        /* PUT */
-        function editingMeeting(meeting) {
-            return Meeting.update({id: $state.params.id}, meeting);
-        }
 
         /* ROOMS */
         function gettingRooms() {
@@ -151,6 +188,7 @@
             //        return reason;
             //    });
         }
+
 
         /* USERS */
         function gettingUsers() {

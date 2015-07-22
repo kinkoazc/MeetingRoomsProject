@@ -8,6 +8,7 @@
         <th>Duration</th>
         <th>Where</th>
         <th>Allowed</th>
+        <th>Delete</th>
     </tr>
     </thead>
     <tbody>
@@ -23,7 +24,9 @@
         <td>{{meeting.duration}}</td>
         <td>{{meeting.where}}</td>
         <td ng-bind-html="meeting.allowed"></td>
-        <!-- {{ meeting.allowed }} -->
+        <td>
+            <button class="btn btn-danger" ng-click="vm.deleteMeeting(meeting.id)">Delete</button>
+        </td>
     </tr>
     </tbody>
 </table>

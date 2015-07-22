@@ -1,10 +1,10 @@
-<form action="#" ng-submit="vm.sendEditForm($event, vme.meeting, vme.editMeetingFormCb)" class="form-horizontal">
+<form action="#" ng-submit="vm.sendEditForm($event, vme.meeting, vme.editMeetingFormCb)"><!--  class="form-horizontal" -->
 
     <!-- Description -->
     <div class="form-group">
-        <label for="description" class="col-sm-2 control-label">Description</label>
+        <label for="description" class="control-label">Description</label>
 
-        <div class="col-sm-10">
+        <div class="">
             <input type="text" class="form-control" ng-model="vme.meeting.description" id="description"
                    placeholder="Description">
         </div>
@@ -12,9 +12,9 @@
 
     <!-- Who -->
     <div class="form-group">
-        <label for="who" class="col-sm-2 control-label">Who</label>
+        <label for="who" class="control-label">Who</label>
 
-        <div class="col-sm-10">
+        <div class="">
             <select name="who" id="who" ng-model="vme.meeting.who"
                     ng-options="user._id as user.email for user in vme.users">
                 <option value="">User</option>
@@ -24,9 +24,9 @@
 
     <!-- When(date, start time, end time) -->
     <div class="form-group">
-        <label for="when" class="col-sm-2 control-label">When(date, start time, end time)</label>
+        <label for="when" class="control-label">When(date, start time, end time)</label>
 
-        <div class="col-sm-10">
+        <div class="">
             <input type="date" class="form-control" ng-model="vme.meeting.whenDate" id="when"
                    placeholder="When(day)"><br/>
             <input type="time" class="form-control" ng-model="vme.meeting.whenStartTime" id="when2"
@@ -38,9 +38,9 @@
 
     <!-- Where -->
     <div class="form-group">
-        <label for="where" class="col-sm-2 control-label">Where</label>
+        <label for="where" class="control-label">Where</label>
 
-        <div class="col-sm-10">
+        <div class="">
             <select name="where" id="where" ng-model="vme.meeting.where"
                     ng-options="room._id as room.name for room in vme.rooms">
                 <option value="">Room</option>
@@ -50,9 +50,9 @@
 
     <!-- Allowed to edit -->
     <div class="form-group">
-        <label for="allowed" class="col-sm-2 control-label">Allowed to edit</label>
+        <label for="allowed" class="control-label">Allowed to edit</label>
 
-        <div class="col-sm-10">
+        <div class="">
             <select name="allowed" id="allowed" ng-model="vme.meeting.editors" multiple
                     ng-options="user._id as user.email for user in vme.users">
                 <option value="">Users</option>
@@ -61,10 +61,17 @@
     </div>
 
     <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
+        <div class="">
             <button type="submit" class="btn btn-default">Submit</button>
             <button type="reset" class="btn btn-warning">Reset</button>
         </div>
     </div>
 
 </form>
+
+<div class="form-group" style="margin: 10px;">
+    <div class="">
+        <button ng-click="vm.deleteMeeting()" class="btn btn-danger">Delete</button>
+    </div>
+</div>
+
