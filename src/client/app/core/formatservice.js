@@ -171,14 +171,11 @@
         function formatRoomDetails(originalRoom) {
             var room = {};
 
-            room.description = originalRoom.description || '';
-            room.creator = originalRoom.who[0].email || '';
-            room.when = $filter('date')(originalRoom.when, 'd MMM y h:mm:ss a');
-            room.duration = $filter('time')(originalRoom.duration);
-            room.where = originalRoom.room[0].name + ' - ' + originalRoom.room[0].location;
-            room.editors = originalRoom.allowed.map(function (user) {
-                return user.email;
-            }).join(',<br />');
+            room.location = originalRoom.location || '';
+            room.name = originalRoom.name || '';
+            room.size = originalRoom.size || '';
+            room["has conference equipment"] = (originalRoom.hasConferenceEquipment || false) ? "Yes":"No";
+            room["has video projector"] = (originalRoom.hasVideoProjector || false) ? "Yes":"No";
 
             return room;
         }
@@ -186,31 +183,33 @@
         function formatRoomEditIn(originalRoom) {
             var room = {};
 
-            room.description = originalRoom.description || '';
-            room.who = originalRoom.who[0]._id || '';
-            room.whenDate = new Date(originalRoom.when);
-            room.whenStartTime = new Date(originalRoom.when);
-            room.whenEndTime = new Date(originalRoom.when + originalRoom.duration);
-            room.where = originalRoom.room[0]._id || '';
-            room.editors = originalRoom.allowed.map(function (user) {
-                return user._id;
-            });
+            room.location = originalRoom.location || '';
+            room.name = originalRoom.name || '';
+            room.size = originalRoom.size || '';
+            room.hasConferenceEquipment = originalRoom.hasConferenceEquipment || false;
+            room.hasVideoProjector = originalRoom.hasVideoProjector || false;
 
             return room;
         }
 
-        function formatRoomEditOut(mtg) {
+        function formatRoomEditOut(rm) {
             var room = {};
 
-            room.description = mtg.description;
-            if (mtg.editors.indexOf(mtg.who) === -1) {
-                mtg.editors.push(mtg.who);
-            }
-            room.allowed = mtg.editors;
-            room.who = mtg.who;
-            room.when = Math.round(mtg.whenDate / 86400000) * 86400000 + mtg.whenStartTime % 86400000;
-            room.duration = mtg.whenEndTime - mtg.whenStartTime;
-            room.room = mtg.where;
+            //room.description = rm.description;
+            //if (rm.editors.indexOf(rm.who) === -1) {
+            //    rm.editors.push(rm.who);
+            //}
+            //room.allowed = rm.editors;
+            //room.who = rm.who;
+            //room.when = Math.round(rm.whenDate / 86400000) * 86400000 + rm.whenStartTime % 86400000;
+            //room.duration = rm.whenEndTime - rm.whenStartTime;
+            //room.room = rm.where;
+
+            room.location = rm.location || '';
+            room.name = rm.name || '';
+            room.size = rm.size || '';
+            room.hasConferenceEquipment = rm.hasConferenceEquipment || false;
+            room.hasVideoProjector = rm.hasVideoProjector || false;
 
             return room;
         }

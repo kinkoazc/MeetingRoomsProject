@@ -1,64 +1,108 @@
 <form action="#" ng-submit="vm.sendEditForm($event, vme.room, vme.editRoomFormCb)"><!--  class="form-horizontal" -->
 
-    <!-- Description -->
+    <!-- Name -->
     <div class="form-group">
-        <label for="description" class="control-label">Description</label>
+        <label for="name" class="control-label">Name</label>
 
         <div class="">
-            <input type="text" class="form-control" ng-model="vme.room.description" id="description"
-                   placeholder="Description">
+            <input type="text" class="form-control" ng-model="vme.room.name" id="name"
+                   placeholder="Name">
         </div>
     </div>
 
-    <!-- Who -->
+    <!-- Location -->
     <div class="form-group">
-        <label for="who" class="control-label">Who</label>
+        <label for="location" class="control-label">Location</label>
 
         <div class="">
-            <select name="who" id="who" ng-model="vme.room.who"
-                    ng-options="user._id as user.email for user in vme.users">
-                <option value="">User</option>
-            </select>
+            <input type="text" class="form-control" ng-model="vme.room.location" id="location"
+                   placeholder="Location">
         </div>
     </div>
 
-    <!-- When(date, start time, end time) -->
+    <!-- Size -->
     <div class="form-group">
-        <label for="when" class="control-label">When(date, start time, end time)</label>
+        <label for="size" class="control-label">Size</label>
 
         <div class="">
-            <input type="date" class="form-control" ng-model="vme.room.whenDate" id="when"
-                   placeholder="When(day)"><br/>
-            <input type="time" class="form-control" ng-model="vme.room.whenStartTime" id="when2"
-                   placeholder="When(starting time)"><br/>
-            <input type="time" class="form-control" ng-model="vme.room.whenEndTime" id="when3"
-                   placeholder="When(ending time)">
+            <input type="number" min="0" class="form-control" ng-model="vme.room.size" id="size"
+                   placeholder="Size">
         </div>
     </div>
 
-    <!-- Where -->
-    <div class="form-group">
-        <label for="where" class="control-label">Where</label>
-
-        <div class="">
-            <select name="where" id="where" ng-model="vme.room.where"
-                    ng-options="room._id as room.name for room in vme.rooms">
-                <option value="">Room</option>
-            </select>
-        </div>
+    <!-- Has conference equipment -->
+    <div class="checkbox">
+        <label for="confEquipment">
+            <input type="checkbox" ng-model="vme.room.hasConferenceEquipment" id="confEquipment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Has Conference Equipment
+        </label>
     </div>
 
-    <!-- Allowed to edit -->
-    <div class="form-group">
-        <label for="allowed" class="control-label">Allowed to edit</label>
-
-        <div class="">
-            <select name="allowed" id="allowed" ng-model="vme.room.editors" multiple
-                    ng-options="user._id as user.email for user in vme.users">
-                <option value="">Users</option>
-            </select>
-        </div>
+    <!-- Has video projector -->
+    <div class="checkbox">
+        <label for="videoProjector">
+            <input type="checkbox" ng-model="vme.room.hasVideoProjector" id="videoProjector">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Has Video Projector
+        </label>
     </div>
+
+    <!--&lt;!&ndash; Description &ndash;&gt;-->
+    <!--<div class="form-group">-->
+        <!--<label for="description" class="control-label">Description</label>-->
+
+        <!--<div class="">-->
+            <!--<input type="text" class="form-control" ng-model="vme.room.description" id="description"-->
+                   <!--placeholder="Description">-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <!--&lt;!&ndash; Who &ndash;&gt;-->
+    <!--<div class="form-group">-->
+        <!--<label for="who" class="control-label">Who</label>-->
+
+        <!--<div class="">-->
+            <!--<select name="who" id="who" ng-model="vme.room.who"-->
+                    <!--ng-options="user._id as user.email for user in vme.users">-->
+                <!--<option value="">User</option>-->
+            <!--</select>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <!--&lt;!&ndash; When(date, start time, end time) &ndash;&gt;-->
+    <!--<div class="form-group">-->
+        <!--<label for="when" class="control-label">When(date, start time, end time)</label>-->
+
+        <!--<div class="">-->
+            <!--<input type="date" class="form-control" ng-model="vme.room.whenDate" id="when"-->
+                   <!--placeholder="When(day)"><br/>-->
+            <!--<input type="time" class="form-control" ng-model="vme.room.whenStartTime" id="when2"-->
+                   <!--placeholder="When(starting time)"><br/>-->
+            <!--<input type="time" class="form-control" ng-model="vme.room.whenEndTime" id="when3"-->
+                   <!--placeholder="When(ending time)">-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <!--&lt;!&ndash; Where &ndash;&gt;-->
+    <!--<div class="form-group">-->
+        <!--<label for="where" class="control-label">Where</label>-->
+
+        <!--<div class="">-->
+            <!--<select name="where" id="where" ng-model="vme.room.where"-->
+                    <!--ng-options="room._id as room.name for room in vme.rooms">-->
+                <!--<option value="">Room</option>-->
+            <!--</select>-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <!--&lt;!&ndash; Allowed to edit &ndash;&gt;-->
+    <!--<div class="form-group">-->
+        <!--<label for="allowed" class="control-label">Allowed to edit</label>-->
+
+        <!--<div class="">-->
+            <!--<select name="allowed" id="allowed" ng-model="vme.room.editors" multiple-->
+                    <!--ng-options="user._id as user.email for user in vme.users">-->
+                <!--<option value="">Users</option>-->
+            <!--</select>-->
+        <!--</div>-->
+    <!--</div>-->
 
     <div class="form-group">
         <div class="">

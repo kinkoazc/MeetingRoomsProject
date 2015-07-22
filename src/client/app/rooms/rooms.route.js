@@ -211,9 +211,9 @@
                         vma.room = {};
                         vma.room.name = 'Room ' + Math.round(Math.random() * 10000);
                         vma.room.location = Math.round(Math.random() * 15)+'th Floor, Europe House';
-                        vma.room.size = 45;
-                        vma.room.hasConferenceEquipment = true;
-                        vma.room.hasVideoProjector = false;
+                        vma.room.size = Math.round(Math.random() * 100);
+                        vma.room.hasConferenceEquipment = Math.round(Math.random()) ? true:false;
+                        vma.room.hasVideoProjector = Math.round(Math.random()) ? true:false;
 
                         function addRoomFormCb() {
                             vma.room = {};
@@ -323,7 +323,8 @@
                         vme.rooms = rooms;
 
                         function editRoomFormCb() {
-                            $state.reload();
+                            //$state.reload();
+                            $state.go('rooms.details');
                             //var who = angular.copy(vme.room.who);
                             //vme.room = {};
                             //vme.room.who = who;

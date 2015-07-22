@@ -334,7 +334,8 @@
                         vme.rooms = rooms;
 
                         function editMeetingFormCb() {
-                            $state.reload();
+                            //$state.reload();
+                            $state.go('meetings.details');
                             //var who = angular.copy(vme.meeting.who);
                             //vme.meeting = {};
                             //vme.meeting.who = who;
