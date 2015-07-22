@@ -330,225 +330,282 @@ apiRoutes.delete('/meetings/:id', function (req, res, next) {// /meetings/:id (d
 
 });
 
-/* ROOMS routes */
-apiRoutes.route('/rooms/:id?')
-    .get(function (req, res, next) {// /meetings (get all meetings)
 
-        //check authorization level
+apiRoutes.get('/rooms', function (req, res, next) {// /rooms (get all rooms)
 
-        Room
-            .find({})
-            .exec(function (err, rooms) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    res.status(200).json(rooms);
-                }
-            });
+    //var meetingId = req.params.id;
+    //
+    //if (meetingId) {/* GET one room case */
+    //    next();
+    //}
 
-    })
-    .post(function (req, res, next) {// /meetings (create a meeting)
-        //check authorization level
+    console.log('-------- getting rooms');
 
-        //var meeting = new Meeting({
-        //    description: req.body.description,
-        //    who: req.body.who._id,
-        //    when: req.body.when,
-        //    duration: req.body.duration,
-        //    allowed: req.body.allowedIds,
-        //    room: req.body.room._id
-        //});
-        //
-        //meeting.save(function (err, m) {
-        //    if (err) {
-        //        console.log(err);
-        //    } else {
-        //        res.status(200).json(m);
-        //    }
-        //});
+    //check authorization level
 
-    })
-    .get(function (req, res, next) {// /meetings/:id (get a meeting)
-
-        //check authorization level
-
-        //var meetingId = req.params.id;
-        //
-        //Meeting
-        //    .findOne({
-        //        _id: meetingId
-        //    })
-        //    .populate('who')
-        //    .populate('allowed')
-        //    .populate('room')
-        //    .exec(function (err, meeting) {
-        //        if (err) {
-        //            console.log(err);
-        //        } else {
-        //            res.status(200).json(meeting);
-        //        }
-        //    });
-
-    })
-    .put(function (req, res, next) {// /meetings/:id (edit a meeting)
-
-        //check authorization level(done in .use() part, above)(only the standard and admin users will be let through)
-
-        //var meetingId = req.params.id;
-        //
-        //Meeting
-        //    .findOne({
-        //        _id: meetingId
-        //    })
-        //    .populate('who')
-        //    .populate('allowed')
-        //    .populate('room')
-        //    .exec(function (err, meeting) {
-        //        if (err) {
-        //            console.log(err);
-        //        } else if (meeting) {
-        //            //check if user is among the editors/owner
-        //
-        //            _.extend(meeting, req.body);
-        //
-        //            meeting.save(function (err, m) {
-        //                if (err) {
-        //                    console.log(err);
-        //                } else {
-        //                    res.status(200).json(m);
-        //                }
-        //            });
-        //        }
-        //
-        //        //res.status(304).json(meeting);
-        //    });
-
-    })
-    .delete(function (req, res, next) {// /meetings/:id (delete a meeting)
-        //next(new Error('not implemented'));
-
-        //check authorization level
-        //check if user is among the editors/owner
-
-        //Meeting.findOneAndRemove({_id: req.body.id}, function (err) {
-        //    if (err) {
-        //        console.log(err);
-        //    } else {
-        //        res.status(200).json({message: 'Meeting deleted'});
-        //    }
-        //});
-
-    });
+    Room
+        .find({})
+        .exec(function (err, rooms) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.status(200).json(rooms);
+            }
+        });
+});
 
 /* USERS routes */
-apiRoutes.route('/users/:id?')
-    .get(function (req, res, next) {// /meetings (get all meetings)
+apiRoutes.get('/users', function (req, res, next) {// /users (get all users)
 
-        //check authorization level
+    //var meetingId = req.params.id;
+    //
+    //if (meetingId) {/* GET one user case */
+    //    next();
+    //}
 
-        User
-            .find({})
-            .exec(function (err, users) {
+    console.log('-------- getting users');
+
+    //check authorization level
+
+    User
+        .find({})
+        .exec(function (err, users) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.status(200).json(users);
+            }
+        });
+});
+
+
+/* ADMIN only routes */
+apiRoutes.use(function (req, res, next) {
+
+    if (!req.decoded || !req.decoded.admin) {
+        return res.status(403).send({
+            success: false,
+            message: 'Not authorized.'
+        });
+    } else {
+        next();
+    }
+});
+
+
+/* ROOMS routes */
+apiRoutes.post('/rooms', function (req, res, next) {// /rooms (create a room)
+    //check authorization level
+
+    console.log('-------- adding room');
+
+    var room = new Room({
+        location: req.body.location,
+        name: req.body.name,
+        updatedOn: req.body.updatedOn,
+        hasConferenceEquipment: req.body.hasConferenceEquipment,
+        hasVideoProjector: req.body.hasVideoProjector,
+        size: req.body.size
+    });
+
+    room.save(function (err, m) {
+        if (err) {
+            console.log(err);
+        } else {
+            //console.log('room added: ', m);
+            res.status(200).json(m);
+        }
+    });
+
+});
+
+apiRoutes.get('/rooms/:id', function (req, res, next) {// /rooms/:id (get a room)
+
+    //check authorization level
+
+    console.log('-------- getting room');
+
+    var roomId = req.params.id;
+
+    Room
+        .findOne({
+            _id: roomId
+        })
+        .exec(function (err, room) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.status(200).json(room);
+            }
+        });
+});
+
+apiRoutes.put('/rooms/:id', function (req, res, next) {// /rooms/:id (edit a room)
+    //check authorization level(done in .use() part, above)(only the standard and admin users will be let through)
+
+    console.log('-------- updating room');
+
+    var roomId = req.params.id;
+
+    Room
+        .findOne({
+            _id: roomId
+        })
+        .exec(function (err, room) {
+            if (err) {
+                console.log(err);
+            } else if (room) {
+                //check if user is among the editors/owner
+                //...
+
+                _.extend(room, req.body);
+
+                room.save(function (err, m) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log('-------- room updated successfully');
+                        res.status(200).json(m);
+                    }
+                });
+            }
+
+            //res.status(304).json(room);
+        });
+});
+
+apiRoutes.delete('/rooms/:id', function (req, res, next) {// /rooms/:id (delete a room)
+    //next(new Error('not implemented'));
+
+    //check authorization level
+    //check if user is among the editors/owner
+
+    console.log('------ deleting room');
+
+    var roomId = req.params.id;
+
+    if (roomId) {
+        Room
+            .findOneAndRemove({
+                _id: roomId
+            },
+            function (err) {
                 if (err) {
                     console.log(err);
                 } else {
-                    res.status(200).json(users);
+                    console.log('------ room deleted');
+                    res.status(200).json({message: 'Room deleted'});
                 }
             });
+    }
+});
 
-    })
-    .post(function (req, res, next) {// /meetings (create a meeting)
-        //check authorization level
+//apiRoutes.post('/users', function (req, res, next) {// /users (create a user)
+//    //check authorization level
+//
+//    console.log('-------- adding user');
+//
+//    var user = new User({
+//        location: req.body.location,
+//        name: req.body.name,
+//        updatedOn: req.body.updatedOn,
+//        hasConferenceEquipment: req.body.hasConferenceEquipment,
+//        hasVideoProjector: req.body.hasVideoProjector,
+//        size: req.body.size
+//    });
+//
+//    user.save(function (err, m) {
+//        if (err) {
+//            console.log(err);
+//        } else {
+//            //console.log('user added: ', m);
+//            res.status(200).json(m);
+//        }
+//    });
+//
+//});
 
-        //var meeting = new Meeting({
-        //    description: req.body.description,
-        //    who: req.body.who._id,
-        //    when: req.body.when,
-        //    duration: req.body.duration,
-        //    allowed: req.body.allowedIds,
-        //    room: req.body.room._id
-        //});
-        //
-        //meeting.save(function (err, m) {
-        //    if (err) {
-        //        console.log(err);
-        //    } else {
-        //        res.status(200).json(m);
-        //    }
-        //});
+/* USERS routes */
+apiRoutes.get('/users/:id', function (req, res, next) {// /users/:id (get a user)
 
-    })
-    .get(function (req, res, next) {// /meetings/:id (get a meeting)
+    //check authorization level
 
-        //check authorization level
+    console.log('-------- getting user');
 
-        //var meetingId = req.params.id;
-        //
-        //Meeting
-        //    .findOne({
-        //        _id: meetingId
-        //    })
-        //    .populate('who')
-        //    .populate('allowed')
-        //    .populate('room')
-        //    .exec(function (err, meeting) {
-        //        if (err) {
-        //            console.log(err);
-        //        } else {
-        //            res.status(200).json(meeting);
-        //        }
-        //    });
+    var userId = req.params.id;
 
-    })
-    .put(function (req, res, next) {// /meetings/:id (edit a meeting)
+    User
+        .findOne({
+            _id: userId
+        })
+        .exec(function (err, user) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.status(200).json(user);
+            }
+        });
+});
 
-        //check authorization level(done in .use() part, above)(only the standard and admin users will be let through)
+apiRoutes.put('/users/:id', function (req, res, next) {// /users/:id (edit a user)
+    //check authorization level(done in .use() part, above)(only the standard and admin users will be let through)
 
-        //var meetingId = req.params.id;
-        //
-        //Meeting
-        //    .findOne({
-        //        _id: meetingId
-        //    })
-        //    .populate('who')
-        //    .populate('allowed')
-        //    .populate('room')
-        //    .exec(function (err, meeting) {
-        //        if (err) {
-        //            console.log(err);
-        //        } else if (meeting) {
-        //            //check if user is among the editors/owner
-        //
-        //            _.extend(meeting, req.body);
-        //
-        //            meeting.save(function (err, m) {
-        //                if (err) {
-        //                    console.log(err);
-        //                } else {
-        //                    res.status(200).json(m);
-        //                }
-        //            });
-        //        }
-        //
-        //        //res.status(304).json(meeting);
-        //    });
+    console.log('-------- updating user');
 
-    })
-    .delete(function (req, res, next) {// /meetings/:id (delete a meeting)
-        //next(new Error('not implemented'));
+    var userId = req.params.id;
 
-        //check authorization level
-        //check if user is among the editors/owner
+    User
+        .findOne({
+            _id: userId
+        })
+        .exec(function (err, user) {
+            if (err) {
+                console.log(err);
+            } else if (user) {
+                //check if user is among the editors/owner
+                //...
 
-        //Meeting.findOneAndRemove({_id: req.body.id}, function (err) {
-        //    if (err) {
-        //        console.log(err);
-        //    } else {
-        //        res.status(200).json({message: 'Meeting deleted'});
-        //    }
-        //});
+                _.extend(user, req.body);
 
-    });
+                user.save(function (err, m) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log('-------- user updated successfully');
+                        res.status(200).json(m);
+                    }
+                });
+            }
+
+            //res.status(304).json(user);
+        });
+});
+
+apiRoutes.delete('/users/:id', function (req, res, next) {// /users/:id (delete a user)
+    //next(new Error('not implemented'));
+
+    //check authorization level
+    //check if user is among the editors/owner
+
+    console.log('------ deleting user');
+
+    var userId = req.params.id;
+
+    if (userId) {
+        User
+            .findOneAndRemove({
+                _id: userId
+            },
+            function (err) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log('------ user deleted');
+                    res.status(200).json({message: 'User deleted'});
+                }
+            });
+    }
+});
 
 /* 404 route */
 apiRoutes.get('/*', four0four.notFoundMiddleware);

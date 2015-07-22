@@ -31,17 +31,17 @@
             $rootScope.$on('$stateChangeSuccess', function () {
                 //console.log('state changed successfully');
 
-                if ($state.params.id) {
-                    for (var i = 0; i < vm.meetings.length; i++) {
-                        if ($state.params.id === vm.meetings[i].id + '') {
-                            vm.meeting = vm.meetings[i];
-                        }
-                    }
-
-                    if (angular.equals({}, vm.meeting)) {
-                        $state.go('meetings.list');
-                    }
-                }
+                //if ($state.params.id) {
+                //    for (var i = 0; i < vm.meetings.length; i++) {
+                //        if ($state.params.id === vm.meetings[i].id + '') {
+                //            vm.meeting = vm.meetings[i];
+                //        }
+                //    }
+                //
+                //    if (angular.equals({}, vm.meeting)) {
+                //        $state.go('meetings.list');
+                //    }
+                //}
 
                 //if (angular.equals({}, vm.meeting)) {
                 //    vm.meeting=meeting;
