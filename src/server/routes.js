@@ -437,7 +437,6 @@ apiRoutes.use(function (req, res, next) {
 /* ROOMS routes */
 apiRoutes.post('/rooms', function (req, res, next) {// /rooms (create a room)
     //check authorization level
-
     console.log('-------- adding room');
 
     var room = new Room({

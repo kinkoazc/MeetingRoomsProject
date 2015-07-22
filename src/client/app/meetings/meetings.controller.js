@@ -8,6 +8,7 @@
     MeetingsController.$inject = ['$rootScope', '$state', '$window',
         '$filter', '$timeout', 'auth', 'logger', 'routerHelper', 'meetings', 'dataservice', 'formatservice'];
     /* @ngInject */
+    /*jshint maxparams: 15 */
     function MeetingsController($rootScope, $state, $window,
         $filter, $timeout, auth, logger, routerHelper, meetings, dataservice, formatservice) {
 
