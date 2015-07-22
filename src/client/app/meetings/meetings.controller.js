@@ -22,7 +22,7 @@
         vm.sendAddForm = sendAddForm;
         vm.sendEditForm = sendEditForm;
         vm.title = 'Meetings';
-        vm.user = {};
+        //vm.user = {};
 
         activate();
 
@@ -60,7 +60,7 @@
 
             getNavRoutes();
             //vm.meetings = formatservice.formatMeetingsList(meetings);
-            vm.user = auth.currentUser();
+            //vm.user = auth.currentUser();
         }
 
         function getNavRoutes(toState) {
