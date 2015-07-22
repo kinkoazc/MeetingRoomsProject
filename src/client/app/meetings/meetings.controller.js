@@ -9,7 +9,8 @@
         '$filter', '$timeout', 'auth', 'logger', 'routerHelper', 'meetings', 'dataservice', 'formatservice'];
     /* @ngInject */
     function MeetingsController($rootScope, $state, $window,
-                                $filter, $timeout, auth, logger, routerHelper, meetings, dataservice, formatservice) {
+        $filter, $timeout, auth, logger, routerHelper, meetings, dataservice, formatservice) {
+
         var vm = this,
             states = routerHelper.getStates();
         vm.deleteMeeting = deleteMeeting;

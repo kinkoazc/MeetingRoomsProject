@@ -12,6 +12,7 @@
             loging: loging,
             registering: registering,
             gettingMeetings: gettingMeetings,
+            gettingMeeting: gettingMeeting,
             addingMeeting: addingMeeting,
             editingMeeting: editingMeeting,
             deletingMeeting: deletingMeeting,
@@ -91,6 +92,39 @@
         /* GET ALL */
         function gettingMeetings() {
             var meeting = Meeting.resource.query();
+
+            meeting.$promise.then(function (data) {
+                //Meeting.setMeeting(data);
+
+                return data;
+            });
+
+            return meeting;
+            //$http
+            //    .get('/api/meetings')
+            //    .then(function (results) {
+            //        var msg = '', data = results.data;
+            //
+            //        if (results.status === 200) {
+            //            msg = 'Meetings received successfully!';
+            //            logger.success(msg);
+            //            return data;
+            //        } else {
+            //            msg = 'Meetings getting failed. ' + data.message;
+            //            logger.error(msg);
+            //        }
+            //
+            //        return data;
+            //    }).catch(function (reason) {
+            //        var msg = 'Meetings getting failed. ' + reason.data.description;
+            //        logger.error(msg);
+            //
+            //        return reason;
+            //    });
+        }
+        /* GET ONE */
+        function gettingMeeting(id) {
+            var meeting = Meeting.resource.get({id: id});
 
             meeting.$promise.then(function (data) {
                 //Meeting.setMeeting(data);

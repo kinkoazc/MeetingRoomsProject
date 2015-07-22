@@ -160,8 +160,10 @@
                     controller: ['$scope', 'meetings', function ($scope, meetings) {
                         var vml = this;
 
+                        vml.meetings = [];
                         meetings.$promise.then(function (data) {
-                            $scope.$parent.vm.meetings = formatservice.formatMeetingsList(data);
+                            //$scope.$parent.vm.meetings
+                            vml.meetings= formatservice.formatMeetingsList(data);
                         });
 
                     }],
@@ -240,23 +242,29 @@
                     templateUrl: 'app/meetings/meetings.mru.details.html',
                     title: 'Meeting details',
                     resolve: {
-                        meeting: function ($stateParams, meetings, formatservice) {
+                        meeting: function ($stateParams, formatservice) {//meetings,
                             if ($stateParams.id) {
 
-                                return meetings.$promise.then(function (data) {
-                                    for (var i = 0; i < data.length; i++) {
-                                        if ($stateParams.id === data[i]._id) {
-                                            return formatservice.formatMeetingDetails(data[i]);
-                                        }
-                                    }
-                                });
+                                //get only one meeting
+                                return dataservice.gettingMeeting($stateParams.id);
+
+                                //return meetings.$promise.then(function (data) {
+                                //    for (var i = 0; i < data.length; i++) {
+                                //        if ($stateParams.id === data[i]._id) {
+                                //            return formatservice.formatMeetingDetails(data[i]);
+                                //        }
+                                //    }
+                                //});
                             }
                         }
                     },
                     controller: ['$scope', 'meeting', function ($scope, meeting) {
                         var vmd = this;
 
-                        vmd.meeting = meeting;//$scope.$parent.
+                        meeting.$promise.then(function (data) {
+                            vmd.meeting = formatservice.formatMeetingDetails(data);
+                        });
+
                     }],
                     controllerAs: 'vmd',
                     settings: {
@@ -274,13 +282,17 @@
                         meeting: function (meetings, $stateParams, formatservice) {
                             if ($stateParams.id) {
 
-                                return meetings.$promise.then(function (data) {
-                                    for (var i = 0; i < data.length; i++) {
-                                        if ($stateParams.id === data[i]._id) {
-                                            return formatservice.formatMeetingEditIn(data[i]);
-                                        }
-                                    }
-                                });
+                                //return meetings.$promise.then(function (data) {
+                                //    for (var i = 0; i < data.length; i++) {
+                                //        if ($stateParams.id === data[i]._id) {
+                                //            return formatservice.formatMeetingEditIn(data[i]);
+                                //        }
+                                //    }
+                                //});
+
+                                //get only one meeting
+                                return dataservice.gettingMeeting($stateParams.id);
+
                             }
                         },
                         users: function () {
@@ -310,7 +322,12 @@
                         var vme = this;
 
                         vme.editMeetingFormCb = editMeetingFormCb;
-                        vme.meeting = meeting;
+
+                        meeting.$promise.then(function (data) {
+                            vme.meeting = formatservice.formatMeetingEditIn(data);
+                        });
+
+                        //vme.meeting = meeting;
                         vme.users = users;
                         vme.rooms = rooms;
 
