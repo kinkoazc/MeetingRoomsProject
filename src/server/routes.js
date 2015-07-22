@@ -325,37 +325,39 @@ apiRoutes.delete('/meetings/:id', function (req, res, next) {// /meetings/:id (d
     //check authorization level
     //check if user is among the editors/owner
 
-    console.log('------ deleting meeting');
-
     var meetingId = req.params.id;
 
     if (meetingId) {
 
-        Meeting.findOne({
-            _id: meetingId
-        }, function (err, meeting) {
-            if (err) {
-                console.log(err);
-            } else if (meeting) {
-                if (funcs.allowed(req.decoded, _(meeting.allowed).concat(meeting.who).value())) {
-                    console.log('------ meeting deletion allowed');
-                    meeting.remove(function (err) {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            console.log('------ meeting deleted');
-                            res.status(200).json({message: 'Meeting deleted'});
-                        }
-                    });
-                } else {
-                    console.log('------ meeting deletion not allowed');
-                    res.status(403).send({
-                        success: false,
-                        message: 'Not authorized.'
-                    });
+        Meeting
+            .findOne({
+                _id: meetingId
+            })
+            .populate('who')
+            .populate('allowed')
+            .populate('room')
+            .exec(function (err, meeting) {
+                if (err) {
+                    console.log(err);
+                } else if (meeting) {
+                    if (funcs.allowed(req.decoded, _(meeting.allowed).concat(meeting.who).value())) {
+                        meeting.remove(function (err) {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                console.log('------ meeting deleted');
+                                res.status(200).json({message: 'Meeting deleted'});
+                            }
+                        });
+                    } else {
+                        console.log('------ meeting deletion not allowed');
+                        res.status(403).send({
+                            success: false,
+                            message: 'Not authorized.'
+                        });
+                    }
                 }
-            }
-        });
+            });
 
         //Meeting.findOneAndRemove({_id: meetingId}, function (err) {
         //    if (err) {

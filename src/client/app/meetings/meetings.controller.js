@@ -124,7 +124,7 @@
             //console.log('Edit meeting form submitted! ', meeting);
             dataservice.editingMeeting(formatservice.formatMeetingEditOut(meeting)).$promise.then(function (data) {
                 if (data.message==='Not authorized.') {
-                    logger.error('You are not authorized to edit the meeting.', data, 'Error!');
+                    logger.error('You are not authorized to edit this meeting.', data, 'Error!');
                 } else {
                     logger.success('Meeting updated successfully.', data, 'Success!');
                 }
@@ -159,7 +159,13 @@
         function deleteMeeting(id) {
             if ($window.confirm('Are you sure you want to delete the entry?')) {
                 dataservice.deletingMeeting(id).$promise.then(function (data) {
-                    logger.success('Meeting deleted successfully.', data, 'Success!');
+                    if (data.message==='Not authorized.') {
+                        logger.error('You are not authorized to delete this meeting.', data, 'Error!');
+                    } else {
+                        logger.success('Meeting deleted successfully.', data, 'Success!');
+                    }
+
+
                     if ($state.is('meetings.list')) {
                         $state.reload();
                     } else {

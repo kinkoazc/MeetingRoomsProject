@@ -4,7 +4,7 @@ module.exports = function () {
     };
 
     function allowed(reference, usersArr) {
-        for (var i=0;i<usersArr.length;i++) {
+        for (var i = 0; i < usersArr.length; i++) {
             if (reference.hash === usersArr[i].hash) {
                 return true;
             }
