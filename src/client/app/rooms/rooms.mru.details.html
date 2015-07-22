@@ -1,0 +1,32 @@
+<div class="list-group">
+    <a href="#" class="list-group-item" ng-repeat="(key, value) in vmd.room">
+        <h4 class="list-group-item-heading"><b>{{key | uppercase}}</b></h4>
+
+        <p class="list-group-item-text" ng-bind-html="value"></p><!-- {{value}} -->
+    </a>
+</div>
+
+<!--<table class="table table-striped table-condensed">-->
+<!--<thead>-->
+<!--<tr>-->
+<!--<th>Description</th>-->
+<!--<th>Who</th>-->
+<!--<th>When</th>-->
+<!--<th>Duration</th>-->
+<!--<th>Where</th>-->
+<!--<th>Allowed</th>-->
+<!--</tr>-->
+<!--</thead>-->
+<!--<tbody>-->
+<!--<tr ng-repeat="room in vm.rooms" ng-class="{warning: room.allowed.indexOf(vm.user)>-1 && room.who.indexOf(vm.user)===-1, success: room.who.indexOf(vm.user)>-1}">-->
+<!--<td>-->
+<!--<a ui-sref="rooms.details({id : room.id})">{{room.description}}</a>-->
+<!--</td>-->
+<!--<td>{{room.who}}</td>-->
+<!--<td>{{room.when}}</td>-->
+<!--<td>{{room.duration}}</td>-->
+<!--<td>{{room.where}}</td>-->
+<!--<td>{{room.allowed}}</td>-->
+<!--</tr>-->
+<!--</tbody>-->
+<!--</table>-->

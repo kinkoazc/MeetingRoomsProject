@@ -1,0 +1,77 @@
+<form action="#" ng-submit="vm.sendEditForm($event, vme.room, vme.editRoomFormCb)"><!--  class="form-horizontal" -->
+
+    <!-- Description -->
+    <div class="form-group">
+        <label for="description" class="control-label">Description</label>
+
+        <div class="">
+            <input type="text" class="form-control" ng-model="vme.room.description" id="description"
+                   placeholder="Description">
+        </div>
+    </div>
+
+    <!-- Who -->
+    <div class="form-group">
+        <label for="who" class="control-label">Who</label>
+
+        <div class="">
+            <select name="who" id="who" ng-model="vme.room.who"
+                    ng-options="user._id as user.email for user in vme.users">
+                <option value="">User</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- When(date, start time, end time) -->
+    <div class="form-group">
+        <label for="when" class="control-label">When(date, start time, end time)</label>
+
+        <div class="">
+            <input type="date" class="form-control" ng-model="vme.room.whenDate" id="when"
+                   placeholder="When(day)"><br/>
+            <input type="time" class="form-control" ng-model="vme.room.whenStartTime" id="when2"
+                   placeholder="When(starting time)"><br/>
+            <input type="time" class="form-control" ng-model="vme.room.whenEndTime" id="when3"
+                   placeholder="When(ending time)">
+        </div>
+    </div>
+
+    <!-- Where -->
+    <div class="form-group">
+        <label for="where" class="control-label">Where</label>
+
+        <div class="">
+            <select name="where" id="where" ng-model="vme.room.where"
+                    ng-options="room._id as room.name for room in vme.rooms">
+                <option value="">Room</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Allowed to edit -->
+    <div class="form-group">
+        <label for="allowed" class="control-label">Allowed to edit</label>
+
+        <div class="">
+            <select name="allowed" id="allowed" ng-model="vme.room.editors" multiple
+                    ng-options="user._id as user.email for user in vme.users">
+                <option value="">Users</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="">
+            <button type="submit" class="btn btn-default">Submit</button>
+            <button type="reset" class="btn btn-warning">Reset</button>
+        </div>
+    </div>
+
+</form>
+
+<div class="form-group" style="margin: 10px;">
+    <div class="">
+        <button ng-click="vm.deleteRoom()" class="btn btn-danger">Delete</button>
+    </div>
+</div>
+

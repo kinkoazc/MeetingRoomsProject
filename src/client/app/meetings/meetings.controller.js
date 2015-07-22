@@ -18,7 +18,7 @@
         vm.isCurrent = isCurrent;
         vm.meetings = [];
         vm.meeting = {};
-        vm.meetingsNavRoutes = [];
+        vm.navRoutes = [];
         vm.sendAddForm = sendAddForm;
         vm.sendEditForm = sendEditForm;
         vm.title = 'Meetings';
@@ -76,13 +76,13 @@
         }
 
         function getMeetingsNavRoutes() {
-            vm.meetingsNavRoutes = states.filter(function (r) {
+            vm.navRoutes = states.filter(function (r) {
                 return (r.name.indexOf('meetings.') === 0 && r.url.indexOf(':id') === -1);
             });
         }
 
         function getMeetingNavRoutes() {
-            vm.meetingsNavRoutes = states.filter(function (r) {
+            vm.navRoutes = states.filter(function (r) {
                 return (r.name.indexOf('meetings.') === 0 && r.url.indexOf(':id') > -1);
             });
         }

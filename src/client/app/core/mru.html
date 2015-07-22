@@ -1,54 +1,14 @@
 <div class="panel panel-body">
 
     <div class="btn-group" role="group" aria-label="...">
-        <!--<button type="button" class="btn btn-default" ng-class="{'active': vm.listActive }"-->
-                <!--ng-click="vm.listActive=!vm.listActive" ui-sref="meetings.all">List {{vm.section}}s-->
-        <!--</button>-->
-        <!--<button type="button" class="btn btn-default" ng-class="{'active': !vm.listActive }"-->
-                <!--ng-click="vm.listActive=!vm.listActive" ui-sref="meetings.add">Add {{vm.section}}-->
-        <!--</button>-->
-        <button type="button" class="btn btn-default" ui-sref-active="active" ng-repeat="r in vm.meetingsNavRoutes"><!-- ng-class="vm.isCurrent(r)"  -->
+        <button type="button" class="btn btn-default" ui-sref-active="active" ng-repeat="r in vm.navRoutes"><!-- ng-class="vm.isCurrent(r)"  -->
             <a ui-sref="{{r.name}}">{{r.title}}</a>
         </button>
-
     </div>
 
     <br/>
     <br/>
 
     <div ui-view></div>
-
-    <!--<div ng-switch="vm.listActive">-->
-        <!--<div ng-switch-when="true" class="well">-->
-            <!--&lt;!&ndash; List &ndash;&gt;-->
-            <!--<div ng-switch="vm.section">-->
-                <!--<div ng-switch-when="'meeting'">-->
-                    <!--<div ng-include="'app/meetings/meetings.mru.list.html'"></div>-->
-                <!--</div>-->
-                <!--<div ng-switch-when="'room'">-->
-                    <!--<div ng-include=""></div>-->
-                <!--</div>-->
-                <!--<div ng-switch-when="'user'">-->
-                    <!--<div ng-include=""></div>-->
-                <!--</div>-->
-            <!--</div>-->
-
-
-        <!--</div>-->
-        <!--<div ng-switch-when="false" class="well">-->
-            <!--&lt;!&ndash; Add &ndash;&gt;-->
-            <!--<div ng-switch="vm.section">-->
-                <!--<div ng-switch-when="'meeting'">-->
-                    <!--<div ng-include="'app/meetings/meetings.mru.add.html'"></div>-->
-                <!--</div>-->
-                <!--<div ng-switch-when="'room'">-->
-                    <!--<div ng-include=""></div>-->
-                <!--</div>-->
-                <!--<div ng-switch-when="'user'">-->
-                    <!--<div ng-include=""></div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
 
 </div>

@@ -16,7 +16,13 @@
             addingMeeting: addingMeeting,
             editingMeeting: editingMeeting,
             deletingMeeting: deletingMeeting,
+
             gettingRooms: gettingRooms,
+            gettingRoom: gettingRoom,
+            addingRoom: addingRoom,
+            editingRoom: editingRoom,
+            deletingRoom: deletingRoom,
+
             gettingUsers: gettingUsers
         };
 
@@ -197,10 +203,18 @@
 
 
         /* ROOMS */
+        /* GET ALL */
         function gettingRooms() {
-            return Room.query();
+            var room = Room.resource.query();
 
-            //return $http
+            room.$promise.then(function (data) {
+                //Room.setRoom(data);
+
+                return data;
+            });
+
+            return room;
+            //$http
             //    .get('/api/rooms')
             //    .then(function (results) {
             //        var msg = '', data = results.data;
@@ -221,6 +235,78 @@
             //
             //        return reason;
             //    });
+        }
+        /* GET ONE */
+        function gettingRoom(id) {
+            var room = Room.resource.get({id: id});
+
+            room.$promise.then(function (data) {
+                //Room.setRoom(data);
+
+                return data;
+            });
+
+            return room;
+            //$http
+            //    .get('/api/rooms')
+            //    .then(function (results) {
+            //        var msg = '', data = results.data;
+            //
+            //        if (results.status === 200) {
+            //            msg = 'Rooms received successfully!';
+            //            logger.success(msg);
+            //            return data;
+            //        } else {
+            //            msg = 'Rooms getting failed. ' + data.message;
+            //            logger.error(msg);
+            //        }
+            //
+            //        return data;
+            //    }).catch(function (reason) {
+            //        var msg = 'Rooms getting failed. ' + reason.data.description;
+            //        logger.error(msg);
+            //
+            //        return reason;
+            //    });
+        }
+        /* POST */
+        function addingRoom(mtg) {
+            var room = Room.resource.save(mtg);
+
+            room.$promise.then(function (data) {
+                //gettingRooms();
+
+                return data;
+            });
+
+            return room;
+        }
+        /* PUT */
+        function editingRoom(mtg) {
+            var room = Room.resource.update({id: $state.params.id}, mtg);
+
+            room.$promise.then(function (data) {
+                //Room.setRoom(data);
+                //gettingRooms();
+
+                return data;
+            });
+
+            return room;
+        }
+        /* DELETE */
+        function deletingRoom(i) {
+            var id=i || $state.params.id,
+                room = Room.resource.delete({id: id});
+
+            room.$promise.then(function (data) {
+                //gettingRooms();
+
+                return data;
+            });
+
+
+            return room;
         }
 
 
