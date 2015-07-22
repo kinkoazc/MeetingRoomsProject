@@ -48,7 +48,7 @@
             dataservice.loging({email: e.target['email'].value, password: e.target['password'].value})
                 .then(function (data) {
                     if (data.success === true) {
-                        $state.go('meetings.list');
+                        $state.go('login');
                     }
                 }, function (reason) {
 
@@ -61,7 +61,7 @@
             dataservice.registering({email: e.target['email'].value, password: e.target['password'].value})
                 .then(function (data) {
                     if (data.success === true) {
-                        $state.go('meetings.list');
+                        $state.go('login');
                     }
                 }, function (reason) {
 

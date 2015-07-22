@@ -318,7 +318,8 @@
                             return dataservice.gettingRooms();
                         }
                     },
-                    controller: ['$scope', 'meeting', 'users', 'rooms', function ($scope, meeting, users, rooms) {
+                    controller: ['$scope', '$state', 'meeting', 'users', 'rooms',
+                        function ($scope, $state, meeting, users, rooms) {
                         var vme = this;
 
                         vme.editMeetingFormCb = editMeetingFormCb;
@@ -332,6 +333,7 @@
                         vme.rooms = rooms;
 
                         function editMeetingFormCb() {
+                            $state.reload();
                             //var who = angular.copy(vme.meeting.who);
                             //vme.meeting = {};
                             //vme.meeting.who = who;

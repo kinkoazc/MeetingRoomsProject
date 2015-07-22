@@ -123,7 +123,11 @@
 
             //console.log('Edit meeting form submitted! ', meeting);
             dataservice.editingMeeting(formatservice.formatMeetingEditOut(meeting)).$promise.then(function (data) {
-                logger.success('Meeting updated successfully.', data, 'Success!');
+                if (data.message==='Not authorized.') {
+                    logger.error('You are not authorized to edit the meeting.', data, 'Error!');
+                } else {
+                    logger.success('Meeting updated successfully.', data, 'Success!');
+                }
 
                 // reset the form
                 cb();

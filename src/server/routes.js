@@ -7,6 +7,7 @@ var _ = require('lodash');
 var async = require('async');
 var jwt = require('jsonwebtoken');
 var config = require('./config');
+var funcs = require('./utils/funcs')();
 //var data = require('./data');
 
 //router.get('/people', getPeople);
@@ -288,19 +289,30 @@ apiRoutes.put('/meetings/:id', function (req, res, next) {// /meetings/:id (edit
             if (err) {
                 console.log(err);
             } else if (meeting) {
+                ////console.log('----- meeting: ', meeting);
+                //console.log('----- meeting.allowed.length: ', meeting.allowed.length);
+                //console.log('----- meeting.who.length: ', meeting.who.length);
+                //console.log('----- concat meetings length: ', _(meeting.allowed).concat(meeting.who).value().length);
+                ////console.log('----- req.decoded: ', req.decoded);
+
                 //check if user is among the editors/owner
-                //...
+                if (funcs.allowed(req.decoded, _(meeting.allowed).concat(meeting.who).value())) {
+                    _.extend(meeting, req.body);
 
-                _.extend(meeting, req.body);
-
-                meeting.save(function (err, m) {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        console.log('-------- meeting updated successfully');
-                        res.status(200).json(m);
-                    }
-                });
+                    meeting.save(function (err, m) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            console.log('-------- meeting updated successfully');
+                            res.status(200).json(m);
+                        }
+                    });
+                } else {
+                    res.status(403).send({
+                        success: false,
+                        message: 'Not authorized.'
+                    });
+                }
             }
 
             //res.status(304).json(meeting);
@@ -318,14 +330,41 @@ apiRoutes.delete('/meetings/:id', function (req, res, next) {// /meetings/:id (d
     var meetingId = req.params.id;
 
     if (meetingId) {
-        Meeting.findOneAndRemove({_id: meetingId}, function (err) {
+
+        Meeting.findOne({
+            _id: meetingId
+        }, function (err, meeting) {
             if (err) {
                 console.log(err);
-            } else {
-                console.log('------ meeting deleted');
-                res.status(200).json({message: 'Meeting deleted'});
+            } else if (meeting) {
+                if (funcs.allowed(req.decoded, _(meeting.allowed).concat(meeting.who).value())) {
+                    console.log('------ meeting deletion allowed');
+                    meeting.remove(function (err) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            console.log('------ meeting deleted');
+                            res.status(200).json({message: 'Meeting deleted'});
+                        }
+                    });
+                } else {
+                    console.log('------ meeting deletion not allowed');
+                    res.status(403).send({
+                        success: false,
+                        message: 'Not authorized.'
+                    });
+                }
             }
         });
+
+        //Meeting.findOneAndRemove({_id: meetingId}, function (err) {
+        //    if (err) {
+        //        console.log(err);
+        //    } else {
+        //        console.log('------ meeting deleted');
+        //        res.status(200).json({message: 'Meeting deleted'});
+        //    }
+        //});
     }
 
 });

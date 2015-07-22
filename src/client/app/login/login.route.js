@@ -40,7 +40,7 @@
                     onEnter: function () {
                         auth.logOut();
                         $timeout(function () {
-                            $state.go('meetings.list');
+                            $state.go('login');
                         });
                     },
                     onExit: function () {
