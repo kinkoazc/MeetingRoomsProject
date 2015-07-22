@@ -35,41 +35,41 @@
                     //onExit: function () {
                     //    console.log('exiting meetings');
                     //},
-                    resolve: {
-                        meetings: function () {
-                            //console.log('resolve meetings');
-                            //var meetings = [
-                            //    {
-                            //        description: 'Scrum meeting',
-                            //        who: 'User One',
-                            //        when: 1488323623006,
-                            //        duration: 6600000,
-                            //        where: 'Room 45',
-                            //        allowed: 'User One, User Three',
-                            //        id: 1231241
-                            //    },
-                            //    {
-                            //        description: 'Investors meeting',
-                            //        who: 'User Three',
-                            //        when: 1498323623006,
-                            //        duration: 10200000,
-                            //        where: 'Room 30',
-                            //        allowed: 'User Three',
-                            //        id: 1231256
-                            //    }
-                            //];
-                            //
-                            //var deferred=$q.defer();
-                            //
-                            //$timeout(function () {
-                            //    deferred.resolve(meetings);
-                            //}, 100);
-                            //
-                            //return deferred.promise;//$q.when(meetings);
-
-                            return dataservice.gettingMeetings();
-
-                        }
+                    //resolve: {
+                    //    meetings: function () {
+                    //        //console.log('resolve meetings');
+                    //        //var meetings = [
+                    //        //    {
+                    //        //        description: 'Scrum meeting',
+                    //        //        who: 'User One',
+                    //        //        when: 1488323623006,
+                    //        //        duration: 6600000,
+                    //        //        where: 'Room 45',
+                    //        //        allowed: 'User One, User Three',
+                    //        //        id: 1231241
+                    //        //    },
+                    //        //    {
+                    //        //        description: 'Investors meeting',
+                    //        //        who: 'User Three',
+                    //        //        when: 1498323623006,
+                    //        //        duration: 10200000,
+                    //        //        where: 'Room 30',
+                    //        //        allowed: 'User Three',
+                    //        //        id: 1231256
+                    //        //    }
+                    //        //];
+                    //        //
+                    //        //var deferred=$q.defer();
+                    //        //
+                    //        //$timeout(function () {
+                    //        //    deferred.resolve(meetings);
+                    //        //}, 100);
+                    //        //
+                    //        //return deferred.promise;//$q.when(meetings);
+                    //
+                    //        return dataservice.gettingMeetings();
+                    //
+                    //    }
                         //,
                         //meeting: function ($stateParams) {
                         //    if ($stateParams.id) {
@@ -88,7 +88,7 @@
                         //        return {};
                         //    }
                         //}
-                    }
+                    //}
                 }
             },
             {
@@ -280,7 +280,7 @@
                     templateUrl: 'app/meetings/meetings.mru.edit.html',
                     title: 'Meeting edit',
                     resolve: {
-                        meeting: function (meetings, $stateParams, formatservice) {
+                        meeting: function ($stateParams, formatservice) {
                             if ($stateParams.id) {
 
                                 //return meetings.$promise.then(function (data) {

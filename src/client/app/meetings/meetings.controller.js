@@ -6,18 +6,18 @@
         .controller('MeetingsController', MeetingsController);
 
     MeetingsController.$inject = ['$rootScope', '$state', '$window',
-        '$filter', '$timeout', 'auth', 'logger', 'routerHelper', 'meetings', 'dataservice', 'formatservice'];
+        '$filter', '$timeout', 'auth', 'logger', 'routerHelper', 'dataservice', 'formatservice'];
     /* @ngInject */
     /*jshint maxparams: 15 */
     function MeetingsController($rootScope, $state, $window,
-        $filter, $timeout, auth, logger, routerHelper, meetings, dataservice, formatservice) {
+        $filter, $timeout, auth, logger, routerHelper, dataservice, formatservice) {
 
         var vm = this,
             states = routerHelper.getStates();
         vm.deleteMeeting = deleteMeeting;
         vm.isCurrent = isCurrent;
-        vm.meetings = [];
-        vm.meeting = {};
+        //vm.meetings = [];
+        //vm.meeting = {};
         vm.navRoutes = [];
         vm.sendAddForm = sendAddForm;
         vm.sendEditForm = sendEditForm;
@@ -59,7 +59,7 @@
             });
 
             getNavRoutes();
-            vm.meetings = formatservice.formatMeetingsList(meetings);
+            //vm.meetings = formatservice.formatMeetingsList(meetings);
             vm.user = auth.currentUser();
         }
 

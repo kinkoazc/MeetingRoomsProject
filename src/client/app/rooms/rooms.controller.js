@@ -6,18 +6,18 @@
         .controller('RoomsController', RoomsController);
 
     RoomsController.$inject = ['$rootScope', '$state', '$window',
-        '$filter', '$timeout', 'auth', 'logger', 'routerHelper', 'rooms', 'dataservice', 'formatservice'];
+        '$filter', '$timeout', 'auth', 'logger', 'routerHelper', 'dataservice', 'formatservice'];
     /* @ngInject */
     /*jshint maxparams: 15 */
     function RoomsController($rootScope, $state, $window,
-        $filter, $timeout, auth, logger, routerHelper, rooms, dataservice, formatservice) {
+        $filter, $timeout, auth, logger, routerHelper, dataservice, formatservice) {
 
         var vm = this,
             states = routerHelper.getStates();
         vm.deleteRoom = deleteRoom;
         vm.isCurrent = isCurrent;
-        vm.rooms = [];
-        vm.room = {};
+        //vm.rooms = [];
+        //vm.room = {};
         vm.navRoutes = [];
         vm.sendAddForm = sendAddForm;
         vm.sendEditForm = sendEditForm;
@@ -59,7 +59,7 @@
             });
 
             getNavRoutes();
-            vm.rooms = formatservice.formatRoomsList(rooms);
+            //vm.rooms = formatservice.formatRoomsList(rooms);
             vm.user = auth.currentUser();
         }
 

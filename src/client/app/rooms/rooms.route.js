@@ -27,7 +27,7 @@
                         nav: 1,
                         //inMainMenu: true,
                         content: '<i class="fa fa-briefcase"></i> Rooms'
-                    },
+                    }
                     //onEnter: function ($state) {
                     //    console.log('entering rooms');
                     //    $state.go('rooms.list');
@@ -35,41 +35,41 @@
                     //onExit: function () {
                     //    console.log('exiting rooms');
                     //},
-                    resolve: {
-                        rooms: function () {
-                            //console.log('resolve rooms');
-                            //var rooms = [
-                            //    {
-                            //        description: 'Scrum room',
-                            //        who: 'User One',
-                            //        when: 1488323623006,
-                            //        duration: 6600000,
-                            //        where: 'Room 45',
-                            //        allowed: 'User One, User Three',
-                            //        id: 1231241
-                            //    },
-                            //    {
-                            //        description: 'Investors room',
-                            //        who: 'User Three',
-                            //        when: 1498323623006,
-                            //        duration: 10200000,
-                            //        where: 'Room 30',
-                            //        allowed: 'User Three',
-                            //        id: 1231256
-                            //    }
-                            //];
-                            //
-                            //var deferred=$q.defer();
-                            //
-                            //$timeout(function () {
-                            //    deferred.resolve(rooms);
-                            //}, 100);
-                            //
-                            //return deferred.promise;//$q.when(rooms);
-
-                            return dataservice.gettingRooms();
-
-                        }
+                    //resolve: {
+                    //    rooms: function () {
+                    //        //console.log('resolve rooms');
+                    //        //var rooms = [
+                    //        //    {
+                    //        //        description: 'Scrum room',
+                    //        //        who: 'User One',
+                    //        //        when: 1488323623006,
+                    //        //        duration: 6600000,
+                    //        //        where: 'Room 45',
+                    //        //        allowed: 'User One, User Three',
+                    //        //        id: 1231241
+                    //        //    },
+                    //        //    {
+                    //        //        description: 'Investors room',
+                    //        //        who: 'User Three',
+                    //        //        when: 1498323623006,
+                    //        //        duration: 10200000,
+                    //        //        where: 'Room 30',
+                    //        //        allowed: 'User Three',
+                    //        //        id: 1231256
+                    //        //    }
+                    //        //];
+                    //        //
+                    //        //var deferred=$q.defer();
+                    //        //
+                    //        //$timeout(function () {
+                    //        //    deferred.resolve(rooms);
+                    //        //}, 100);
+                    //        //
+                    //        //return deferred.promise;//$q.when(rooms);
+                    //
+                    //        return dataservice.gettingRooms();
+                    //
+                    //    }
                         //,
                         //room: function ($stateParams) {
                         //    if ($stateParams.id) {
@@ -88,7 +88,7 @@
                         //        return {};
                         //    }
                         //}
-                    }
+                    //}
                 }
             },
             {
@@ -176,58 +176,47 @@
                     url: '/add',
                     templateUrl: 'app/rooms/rooms.mru.add.html',
                     title: 'Room add',
-                    resolve: {
-                        users: function () {
-
-                            //if ($stateParams.id) {
-                            //    for (var i = 0; i < rooms.length; i++) {
-                            //        if ($stateParams.id === rooms[i]._id) {
-                            //            return formatservice.formatRoomDetails(rooms[i]);
-                            //        }
-                            //    }
-                            //}
-
-                            return dataservice.gettingUsers();
-                        },
-                        rooms: function () {
-
-                            //if ($stateParams.id) {
-                            //    for (var i = 0; i < rooms.length; i++) {
-                            //        if ($stateParams.id === rooms[i]._id) {
-                            //            return formatservice.formatRoomDetails(rooms[i]);
-                            //        }
-                            //    }
-                            //}
-
-                            return dataservice.gettingRooms();
-                        }
-                    },
-                    controller: ['users', 'rooms', 'auth', function (users, rooms, auth) {
+                    //resolve: {
+                    //    users: function () {
+                    //
+                    //        //if ($stateParams.id) {
+                    //        //    for (var i = 0; i < rooms.length; i++) {
+                    //        //        if ($stateParams.id === rooms[i]._id) {
+                    //        //            return formatservice.formatRoomDetails(rooms[i]);
+                    //        //        }
+                    //        //    }
+                    //        //}
+                    //
+                    //        return dataservice.gettingUsers();
+                    //    },
+                    //    rooms: function () {
+                    //
+                    //        //if ($stateParams.id) {
+                    //        //    for (var i = 0; i < rooms.length; i++) {
+                    //        //        if ($stateParams.id === rooms[i]._id) {
+                    //        //            return formatservice.formatRoomDetails(rooms[i]);
+                    //        //        }
+                    //        //    }
+                    //        //}
+                    //
+                    //        return dataservice.gettingRooms();
+                    //    }
+                    //},
+                    controller: ['auth', function (auth) {
                         var vma = this;
 
-                        vma.users = users;
-                        vma.rooms = rooms;
                         vma.addRoomFormCb = addRoomFormCb;
 
                         /* TODO erase/comment this; for testing purposes only */
                         vma.room = {};
-                        vma.room.description = 'one two three ' + Math.round(Math.random() * 10000);
-                        vma.room.editors = [
-                            '55a8e758781779641a5526e6',
-                            '55a912cd012489b814275a9b',
-                            '55a91364012489b814275a9c'
-                        ];
-                        //vma.room.who = '55a8e757781779641a5526e5';
-                        vma.room.who = auth.currentUser();
-                        vma.room.whenDate = new Date('2015-07-21T21:00:00.000Z');
-                        vma.room.whenStartTime = new Date('1970-01-01T09:20:00.000Z');
-                        vma.room.whenEndTime = new Date('1970-01-01T11:40:00.000Z');
-                        vma.room.where = '55a8e758781779641a5526e7';
+                        vma.room.name = 'Room ' + Math.round(Math.random() * 10000);
+                        vma.room.location = Math.round(Math.random() * 15)+'th Floor, Europe House';
+                        vma.room.size = 45;
+                        vma.room.hasConferenceEquipment = true;
+                        vma.room.hasVideoProjector = false;
 
                         function addRoomFormCb() {
-                            var who = angular.copy(vma.room.who);
                             vma.room = {};
-                            vma.room.who = who;
                         }
                     }],
                     controllerAs: 'vma',
@@ -280,7 +269,7 @@
                     templateUrl: 'app/rooms/rooms.mru.edit.html',
                     title: 'Room edit',
                     resolve: {
-                        room: function (rooms, $stateParams, formatservice) {
+                        room: function ($stateParams, formatservice) {
                             if ($stateParams.id) {
 
                                 //return rooms.$promise.then(function (data) {

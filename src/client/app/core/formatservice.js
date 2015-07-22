@@ -143,7 +143,7 @@
 
             var rooms = [], room = {};
 
-            originalRooms.forEach(function (m) {
+            originalRooms.forEach(function (r) {
 
                 //_id: "55a8e758781779641a5526e7"
                 //hasConferenceEquipment: true
@@ -155,12 +155,12 @@
 
                 room = {};
 
-                room.id = m._id;
-                room.location = m.location || '';
-                room.name = m.name || '';
-                room.size = m.size || '';
-                room.hasConferenceEquipment = (m.hasConferenceEquipment || false) ? "Yes":"No";
-                room.hasVideoProjector = (m.hasVideoProjector || false) ? "Yes":"No";
+                room.id = r._id;
+                room.location = r.location || '';
+                room.name = r.name || '';
+                room.size = r.size || '';
+                room.hasConferenceEquipment = (r.hasConferenceEquipment || false) ? "Yes":"No";
+                room.hasVideoProjector = (r.hasVideoProjector || false) ? "Yes":"No";
 
                 rooms.push(room);
             });
@@ -215,7 +215,7 @@
             return room;
         }
 
-        function formatRoomAddOut(mtg) {
+        function formatRoomAddOut(rm) {
             /*
              IN:
              description [String]
@@ -237,15 +237,21 @@
 
             var room = {};
 
-            room.description = mtg.description;
-            if (mtg.editors.indexOf(mtg.who) === -1) {
-                mtg.editors.push(mtg.who);
-            }
-            room.allowed = mtg.editors;
-            room.who = mtg.who._id;
-            room.when = Math.round(mtg.whenDate / 86400000) * 86400000 + mtg.whenStartTime % 86400000;
-            room.duration = mtg.whenEndTime - mtg.whenStartTime;
-            room.room = mtg.where;
+            //room.description = mtg.description;
+            //if (mtg.editors.indexOf(mtg.who) === -1) {
+            //    mtg.editors.push(mtg.who);
+            //}
+            //room.allowed = mtg.editors;
+            //room.who = mtg.who._id;
+            //room.when = Math.round(mtg.whenDate / 86400000) * 86400000 + mtg.whenStartTime % 86400000;
+            //room.duration = mtg.whenEndTime - mtg.whenStartTime;
+            //room.room = mtg.where;
+
+            room.location = rm.location || '';
+            room.name = rm.name || '';
+            room.size = rm.size || '';
+            room.hasConferenceEquipment = rm.hasConferenceEquipment || false;
+            room.hasVideoProjector = rm.hasVideoProjector || false;
 
             return room;
         }
