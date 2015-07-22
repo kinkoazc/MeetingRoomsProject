@@ -175,7 +175,7 @@
                 config: {
                     url: '/add',
                     templateUrl: 'app/rooms/rooms.mru.add.html',
-                    title: 'Rooms add',
+                    title: 'Room add',
                     resolve: {
                         users: function () {
 

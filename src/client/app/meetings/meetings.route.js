@@ -175,7 +175,7 @@
                 config: {
                     url: '/add',
                     templateUrl: 'app/meetings/meetings.mru.add.html',
-                    title: 'Meetings add',
+                    title: 'Meeting add',
                     resolve: {
                         users: function () {
 
