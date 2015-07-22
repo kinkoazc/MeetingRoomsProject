@@ -284,32 +284,32 @@
                                 return dataservice.gettingRoom($stateParams.id);
 
                             }
-                        },
-                        users: function () {
-                            //if ($stateParams.id) {
-                            //    for (var i = 0; i < rooms.length; i++) {
-                            //        if ($stateParams.id === rooms[i]._id) {
-                            //            return formatservice.formatRoomDetails(rooms[i]);
-                            //        }
-                            //    }
-                            //}
-
-                            return dataservice.gettingUsers();
-                        },
-                        rooms: function () {
-                            //if ($stateParams.id) {
-                            //    for (var i = 0; i < rooms.length; i++) {
-                            //        if ($stateParams.id === rooms[i]._id) {
-                            //            return formatservice.formatRoomDetails(rooms[i]);
-                            //        }
-                            //    }
-                            //}
-
-                            return dataservice.gettingRooms();
                         }
+                        //users: function () {
+                        //    //if ($stateParams.id) {
+                        //    //    for (var i = 0; i < rooms.length; i++) {
+                        //    //        if ($stateParams.id === rooms[i]._id) {
+                        //    //            return formatservice.formatRoomDetails(rooms[i]);
+                        //    //        }
+                        //    //    }
+                        //    //}
+                        //
+                        //    return dataservice.gettingUsers();
+                        //},
+                        //rooms: function () {
+                        //    //if ($stateParams.id) {
+                        //    //    for (var i = 0; i < rooms.length; i++) {
+                        //    //        if ($stateParams.id === rooms[i]._id) {
+                        //    //            return formatservice.formatRoomDetails(rooms[i]);
+                        //    //        }
+                        //    //    }
+                        //    //}
+                        //
+                        //    return dataservice.gettingRooms();
+                        //}
                     },
-                    controller: ['$scope', '$state', 'room', 'users', 'rooms',
-                        function ($scope, $state, room, users, rooms) {
+                    controller: ['$scope', '$state', 'room',
+                        function ($scope, $state, room) {//, users, rooms
                         var vme = this;
 
                         vme.editRoomFormCb = editRoomFormCb;
@@ -319,8 +319,8 @@
                         });
 
                         //vme.room = room;
-                        vme.users = users;
-                        vme.rooms = rooms;
+                        //vme.users = users;
+                        //vme.rooms = rooms;
 
                         function editRoomFormCb() {
                             //$state.reload();

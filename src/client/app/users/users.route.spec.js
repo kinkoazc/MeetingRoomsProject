@@ -1,11 +1,11 @@
 ///* jshint -W117, -W030 */
-//describe('users routes', function () {
+//describe('meetings routes', function () {
 //    describe('state', function () {
 //        var controller;
-//        var view = 'app/users/users.html';
+//        var view = 'app/meetings/meetings.html';
 //
 //        beforeEach(function() {
-//            module('app.users', bard.fakeToastr);
+//            module('app.meetings', bard.fakeToastr);
 //            bard.inject('$httpBackend', '$location', '$rootScope', '$state', '$templateCache');
 //        });
 //
@@ -13,18 +13,18 @@
 //            $templateCache.put(view, '');
 //        });
 //
-//        it('should map state users to url /users ', function() {
-//            expect($state.href('users', {})).to.equal('/users');
+//        it('should map state meetings to url /meetings ', function() {
+//            expect($state.href('meetings', {})).to.equal('/meetings');
 //        });
 //
-//        it('should map /users route to users View template', function () {
-//            expect($state.get('users').templateUrl).to.equal(view);
+//        it('should map /meetings route to meetings View template', function () {
+//            expect($state.get('meetings').templateUrl).to.equal(view);
 //        });
 //
-//        it('of users should work with $state.go', function () {
-//            $state.go('users');
+//        it('of meetings should work with $state.go', function () {
+//            $state.go('meetings');
 //            $rootScope.$apply();
-//            expect($state.is('users'));
+//            expect($state.is('meetings'));
 //        });
 //    });
 //});
