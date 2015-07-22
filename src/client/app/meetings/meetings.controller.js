@@ -145,7 +145,11 @@
 
             //console.log('Add meeting form submitted! ', formatservice.formatMeetingAddOut(meeting));
             dataservice.addingMeeting(formatservice.formatMeetingAddOut(meeting)).$promise.then(function (data) {
-                logger.success('Meeting saved successfully.', data, 'Success!');
+                if (data.message==='Not authorized.') {
+                    logger.error('You are not authorized to add this meeting.', data, 'Error!');
+                } else {
+                    logger.success('Meeting saved successfully.', data, 'Success!');
+                }
 
                 // reset the form
                 cb();

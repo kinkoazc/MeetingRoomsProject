@@ -145,7 +145,11 @@
 
             //console.log('Add room form submitted! ', formatservice.formatRoomAddOut(room));
             dataservice.addingRoom(formatservice.formatRoomAddOut(room)).$promise.then(function (data) {
-                logger.success('Room saved successfully.', data, 'Success!');
+                if (data.message==='Not authorized.') {
+                    logger.error('You are not authorized to add this room.', data, 'Error!');
+                } else {
+                    logger.success('Room saved successfully.', data, 'Success!');
+                }
 
                 // reset the form
                 cb();
