@@ -39,8 +39,11 @@
                 if (!route.title || !$state.current || !$state.current.title) {
                     return '';
                 }
-                var menuName = route.title;
-                return $state.current.title.substr(0, menuName.length) === menuName ? 'active' : '';
+
+                var menuName = route.name;
+                if (menuName && $state.current.name) {
+                    return menuName.split('.')[0] === $state.current.name.split('.')[0] ? 'active' : '';
+                }
             }
 
             function isAuthorized(stateAuthLevel) {
