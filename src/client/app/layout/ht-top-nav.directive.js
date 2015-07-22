@@ -15,6 +15,7 @@
             var vm = this,
                 states = routerHelper.getStates();
 
+            vm.auth = auth;
             vm.isAuthorized = isAuthorized;
             vm.isCurrent = isCurrent;
             vm.isLoggedIn = auth.isLoggedIn;

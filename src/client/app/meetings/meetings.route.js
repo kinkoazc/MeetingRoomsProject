@@ -202,7 +202,7 @@
                             return dataservice.gettingRooms();
                         }
                     },
-                    controller: ['users', 'rooms', function (users, rooms) {
+                    controller: ['users', 'rooms', 'auth', function (users, rooms, auth) {
                         var vma = this;
 
                         vma.users = users;
@@ -217,7 +217,8 @@
                             '55a912cd012489b814275a9b',
                             '55a91364012489b814275a9c'
                         ];
-                        vma.meeting.who = '55a8e757781779641a5526e5';
+                        //vma.meeting.who = '55a8e757781779641a5526e5';
+                        vma.meeting.who = auth.currentUser();
                         vma.meeting.whenDate = new Date('2015-07-21T21:00:00.000Z');
                         vma.meeting.whenStartTime = new Date('1970-01-01T09:20:00.000Z');
                         vma.meeting.whenEndTime = new Date('1970-01-01T11:40:00.000Z');

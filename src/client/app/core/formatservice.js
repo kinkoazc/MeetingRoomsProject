@@ -31,7 +31,7 @@
                 meeting.isCreator = m.who.some(isAmongUsers);
 
                 meeting.description = m.description || '';
-                meeting.who = m.who[0].email || '';
+                meeting.who = (m.who[0] && m.who[0].email) || '';
                 meeting.when = $filter('date')(m.when, 'd MMM y h:mm:ss a');
                 meeting.duration = $filter('time')(m.duration);
                 meeting.where = m.room[0].name + ' - ' + m.room[0].location;
@@ -119,7 +119,7 @@
                 mtg.editors.push(mtg.who);
             }
             meeting.allowed = mtg.editors;
-            meeting.who = mtg.who;
+            meeting.who = mtg.who._id;
             meeting.when = Math.round(mtg.whenDate / 86400000) * 86400000 + mtg.whenStartTime % 86400000;
             meeting.duration = mtg.whenEndTime - mtg.whenStartTime;
             meeting.room = mtg.where;

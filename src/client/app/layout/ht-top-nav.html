@@ -56,7 +56,7 @@
                 <a ui-sref="{{r.name}}" ng-bind-html="r.settings.content"></a>
             </li>
             <li class="nlightblue fade-selection-animation" ng-class="vm.isCurrent(r)" ng-show="vm.isLoggedIn()" ng-repeat="r in vm.navRoutes | filter:{ name: 'Logout' }">
-                <a ui-sref="{{r.name}}" ng-bind-html="r.settings.content"></a>
+                <a ui-sref="{{r.name}}" bind-html-compile="r.settings.content"></a>
             </li>
         </ul>
     </div>
