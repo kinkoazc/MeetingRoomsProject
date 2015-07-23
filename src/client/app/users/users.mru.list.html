@@ -2,11 +2,10 @@
     <thead>
     <tr>
         <th>No</th>
-        <th>Name</th>
-        <th>Location</th>
-        <th>Size</th>
-        <th>Conference Equipment</th>
-        <th>Video Projector</th>
+        <th>Email</th>
+        <th>Is admin</th>
+        <th>Created/Updated on</th>
+        <th>Delete</th>
     </tr>
     </thead>
     <tbody>
@@ -15,12 +14,10 @@
             {{$index +1}}
         </td>
         <td>
-            <a ui-sref="users.details({id : user.id})">{{user.name}}</a>
+            <a ui-sref="users.details({id : user.id})">{{user.email}}</a>
         </td>
-        <td>{{user.location}}</td>
-        <td>{{user.size}}</td>
-        <td>{{user.hasConferenceEquipment}}</td>
-        <td>{{user.hasVideoProjector}}</td>
+        <td>{{user.admin}}</td>
+        <td>{{user.createdUpdatedOn | date}}</td>
         <td>
             <button class="btn btn-danger" ng-click="vm.deleteUser(user.id)">Delete</button>
         </td>

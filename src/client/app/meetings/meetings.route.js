@@ -202,7 +202,7 @@
                             return dataservice.gettingRooms();
                         }
                     },
-                    controller: ['users', 'rooms', 'auth', function (users, rooms, auth) {
+                    controller: ['$state', 'users', 'rooms', 'auth', function ($state, users, rooms, auth) {
                         var vma = this;
 
                         vma.users = users;
@@ -228,6 +228,7 @@
                             var who = angular.copy(vma.meeting.who);
                             vma.meeting = {};
                             vma.meeting.who = who;
+                            $state.go('meetings.list');
                         }
                     }],
                     controllerAs: 'vma',

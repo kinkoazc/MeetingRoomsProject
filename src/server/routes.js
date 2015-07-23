@@ -540,32 +540,30 @@ apiRoutes.delete('/rooms/:id', function (req, res, next) {// /rooms/:id (delete 
     }
 });
 
-//apiRoutes.post('/users', function (req, res, next) {// /users (create a user)
-//    //check authorization level
-//
-//    console.log('-------- adding user');
-//
-//    var user = new User({
-//        location: req.body.location,
-//        name: req.body.name,
-//        updatedOn: req.body.updatedOn,
-//        hasConferenceEquipment: req.body.hasConferenceEquipment,
-//        hasVideoProjector: req.body.hasVideoProjector,
-//        size: req.body.size
-//    });
-//
-//    user.save(function (err, m) {
-//        if (err) {
-//            console.log(err);
-//        } else {
-//            //console.log('user added: ', m);
-//            res.status(200).json(m);
-//        }
-//    });
-//
-//});
-
 /* USERS routes */
+apiRoutes.post('/users', function (req, res, next) {// /users (create a user)
+    //check authorization level
+    console.log('-------- adding user');
+
+    if (!req.body.email || !req.body.password) {
+        return res.status(400).json({success: false, message: 'Please fill out all fields'});
+    }
+
+    var user = new User();
+
+    user.email = req.body.email;
+    user.setPassword(req.body.password);
+    user.admin = (req.body.admin || false);
+
+    user.save(function (err, u) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.status(200).json(u);
+        }
+    });
+});
+
 apiRoutes.get('/users/:id', function (req, res, next) {// /users/:id (get a user)
 
     //check authorization level

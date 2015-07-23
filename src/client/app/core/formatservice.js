@@ -19,7 +19,13 @@
             formatRoomDetails: formatRoomDetails,
             formatRoomEditIn: formatRoomEditIn,
             formatRoomEditOut: formatRoomEditOut,
-            formatRoomAddOut: formatRoomAddOut
+            formatRoomAddOut: formatRoomAddOut,
+
+            formatUsersList: formatUsersList,
+            formatUserDetails: formatUserDetails,
+            formatUserEditIn: formatUserEditIn,
+            formatUserEditOut: formatUserEditOut,
+            formatUserAddOut: formatUserAddOut
         };
 
         /* MEETINGS formatters */
@@ -159,8 +165,8 @@
                 room.location = r.location || '';
                 room.name = r.name || '';
                 room.size = r.size || '';
-                room.hasConferenceEquipment = (r.hasConferenceEquipment || false) ? "Yes":"No";
-                room.hasVideoProjector = (r.hasVideoProjector || false) ? "Yes":"No";
+                room.hasConferenceEquipment = (r.hasConferenceEquipment || false) ? 'Yes':'No';
+                room.hasVideoProjector = (r.hasVideoProjector || false) ? 'Yes':'No';
 
                 rooms.push(room);
             });
@@ -174,8 +180,8 @@
             room.location = originalRoom.location || '';
             room.name = originalRoom.name || '';
             room.size = originalRoom.size || '';
-            room["has conference equipment"] = (originalRoom.hasConferenceEquipment || false) ? "Yes":"No";
-            room["has video projector"] = (originalRoom.hasVideoProjector || false) ? "Yes":"No";
+            room['has conference equipment'] = (originalRoom.hasConferenceEquipment || false) ? 'Yes':'No';
+            room['has video projector'] = (originalRoom.hasVideoProjector || false) ? 'Yes':'No';
 
             return room;
         }
@@ -255,6 +261,93 @@
             return room;
         }
 
+
+        /* USERS formatters */
+        function formatUsersList(originalUsers) {
+            if (!angular.isArray(originalUsers)) {
+                return originalUsers;
+            }
+
+            var users = [], user = {};
+
+            originalUsers.forEach(function (u) {
+                //_id: "55a8e757781779641a5526e5"
+                //admin: true
+                //email: "admin@gmail.com"
+                //hash: "953fb91763a97c41071de72ce94e638c1b9745a949994f
+                // 607a854097f0f475f88c6a19a6192657280eb9c0c2efdab9ab0369131f3c124dc2755a5e3aa19ed4ba"
+                //salt: "940be0eeaa00f7b5e817bc315b8da29a"
+                //updatedOn: "2015-07-17T11:30:31.546Z"
+
+                user = {};
+
+                user.id = u._id;
+                user.admin = (u.admin || false) ? 'Yes':'No';
+                user.email = u.email || '';
+                user.createdUpdatedOn = $filter('date')(u.updatedOn, 'd MMM y h:mm:ss a');//new Date(u.updatedOn);
+
+                users.push(user);
+            });
+
+            return users;
+        }
+
+        function formatUserDetails(originalUser) {
+            var user = {};
+
+            user.location = originalUser.location || '';
+            user.name = originalUser.name || '';
+            user.size = originalUser.size || '';
+            user['has conference equipment'] = (originalUser.hasConferenceEquipment || false) ? 'Yes':'No';
+            user['has video projector'] = (originalUser.hasVideoProjector || false) ? 'Yes':'No';
+
+            return user;
+        }
+
+        function formatUserEditIn(originalUser) {
+            var user = {};
+
+            user.location = originalUser.location || '';
+            user.name = originalUser.name || '';
+            user.size = originalUser.size || '';
+            user.hasConferenceEquipment = originalUser.hasConferenceEquipment || false;
+            user.hasVideoProjector = originalUser.hasVideoProjector || false;
+
+            return user;
+        }
+
+        function formatUserEditOut(rm) {
+            var user = {};
+
+            //user.description = rm.description;
+            //if (rm.editors.indexOf(rm.who) === -1) {
+            //    rm.editors.push(rm.who);
+            //}
+            //user.allowed = rm.editors;
+            //user.who = rm.who;
+            //user.when = Math.round(rm.whenDate / 86400000) * 86400000 + rm.whenStartTime % 86400000;
+            //user.duration = rm.whenEndTime - rm.whenStartTime;
+            //user.user = rm.where;
+
+            user.location = rm.location || '';
+            user.name = rm.name || '';
+            user.size = rm.size || '';
+            user.hasConferenceEquipment = rm.hasConferenceEquipment || false;
+            user.hasVideoProjector = rm.hasVideoProjector || false;
+
+            return user;
+        }
+
+        function formatUserAddOut(us) {
+
+            var user = {};
+
+            user.admin = (us.admin || false);
+            user.email = us.email || '';
+            user.password = us.password || '';
+
+            return user;
+        }
 
 
         /* UTILS */

@@ -143,6 +143,12 @@
         function sendAddForm(e, user, cb) {
             e.preventDefault();
 
+
+            if (user.password!==user.password2) {
+                logger.warning('Passwords are not the same!',user,'Password error');
+                return;
+            }
+
             //console.log('Add user form submitted! ', formatservice.formatUserAddOut(user));
             dataservice.addingUser(formatservice.formatUserAddOut(user)).$promise.then(function (data) {
                 if (data.message==='Not authorized.') {

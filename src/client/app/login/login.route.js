@@ -50,7 +50,8 @@
                         nav: 4,
                         inMainMenu : true,
                         authLevel: 2,
-                        content: '<i class="fa fa-sign-in"></i> Logout <span ng-bind="vm.auth.currentUser().email"></span>'
+                        content: '<i class="fa fa-sign-in"></i> Logout ' +
+                        '<span ng-bind="vm.auth.currentUser().email"></span>'
                     }
                 }
             }

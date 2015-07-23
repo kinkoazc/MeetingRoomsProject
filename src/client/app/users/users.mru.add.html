@@ -1,46 +1,39 @@
 <form action="" ng-submit="vm.sendAddForm($event, vma.user, vma.addUserFormCb)"><!--  class="form-horizontal" -->
 
-    <!-- Name -->
+    <!-- Email -->
     <div class="form-group">
-        <label for="name" class="control-label">Name</label>
+        <label for="email" class="control-label">Email</label>
 
         <div class="">
-            <input type="text" class="form-control" ng-model="vma.user.name" id="name"
-                   placeholder="Name">
+            <input type="text" class="form-control" ng-model="vma.user.email" id="email"
+                   placeholder="Email">
         </div>
     </div>
 
-    <!-- Location -->
+    <!-- Password -->
     <div class="form-group">
-        <label for="location" class="control-label">Location</label>
+        <label for="password" class="control-label">Password</label>
 
         <div class="">
-            <input type="text" class="form-control" ng-model="vma.user.location" id="location"
-                   placeholder="Location">
+            <input type="password" class="form-control" ng-model="vma.user.password" id="password"
+                   placeholder="Password">
         </div>
     </div>
 
-    <!-- Size -->
+    <!-- Retyped password -->
     <div class="form-group">
-        <label for="size" class="control-label">Size</label>
+        <label for="password2" class="control-label">Retype password</label>
 
         <div class="">
-            <input type="number" min="0" class="form-control" ng-model="vma.user.size" id="size"
-                   placeholder="Size">
+            <input type="password" class="form-control" ng-model="vma.user.password2" id="password2"
+                   placeholder="Retype password">
         </div>
     </div>
 
     <!-- Has conference equipment -->
     <div class="checkbox">
-        <label for="confEquipment">
-        <input type="checkbox" ng-model="vma.user.hasConferenceEquipment" id="confEquipment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Has Conference Equipment
-        </label>
-    </div>
-
-    <!-- Has video projector -->
-    <div class="checkbox">
-        <label for="videoProjector">
-            <input type="checkbox" ng-model="vma.user.hasVideoProjector" id="videoProjector">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Has Video Projector
+        <label for="isAdmin">
+        <input type="checkbox" ng-model="vma.user.admin" id="isAdmin">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Is admin?
         </label>
     </div>
 

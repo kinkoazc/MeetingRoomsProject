@@ -202,7 +202,7 @@
                     //        return dataservice.gettingRooms();
                     //    }
                     //},
-                    controller: ['auth', function (auth) {
+                    controller: ['$state', 'auth', function ($state, auth) {
                         var vma = this;
 
                         vma.addRoomFormCb = addRoomFormCb;
@@ -217,6 +217,7 @@
 
                         function addRoomFormCb() {
                             vma.room = {};
+                            $state.go('rooms.list');
                         }
                     }],
                     controllerAs: 'vma',

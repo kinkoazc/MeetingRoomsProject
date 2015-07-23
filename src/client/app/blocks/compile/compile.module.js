@@ -5,6 +5,3 @@
     angular.module('blocks.compile', []);
 
 })();
-
-
-

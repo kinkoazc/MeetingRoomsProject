@@ -70,24 +70,24 @@
                     //        return dataservice.gettingUsers();
                     //
                     //    }
-                        //,
-                        //user: function ($stateParams) {
-                        //    if ($stateParams.id) {
-                        //        return this.users().when(
-                        //            function (data) {
-                        //                for (var i = 0; i < data.length; i++) {
-                        //                    if ($stateParams.id == data[i].id + '") {
-                        //                        return data[i];
-                        //                    }
-                        //                }
-                        //
-                        //                return {};
-                        //            }
-                        //        )
-                        //    } else {
-                        //        return {};
-                        //    }
-                        //}
+                    //,
+                    //user: function ($stateParams) {
+                    //    if ($stateParams.id) {
+                    //        return this.users().when(
+                    //            function (data) {
+                    //                for (var i = 0; i < data.length; i++) {
+                    //                    if ($stateParams.id == data[i].id + '") {
+                    //                        return data[i];
+                    //                    }
+                    //                }
+                    //
+                    //                return {};
+                    //            }
+                    //        )
+                    //    } else {
+                    //        return {};
+                    //    }
+                    //}
                     //}
                 }
             },
@@ -163,7 +163,7 @@
                         vml.users = [];
                         users.$promise.then(function (data) {
                             //$scope.$parent.vm.users
-                            vml.users= formatservice.formatUsersList(data);
+                            vml.users = formatservice.formatUsersList(data);
                         });
 
                     }],
@@ -202,21 +202,28 @@
                     //        return dataservice.gettingUsers();
                     //    }
                     //},
-                    controller: ['auth', function (auth) {
+                    controller: ['$state', 'auth', function ($state, auth) {
                         var vma = this;
 
                         vma.addUserFormCb = addUserFormCb;
 
                         /* TODO erase/comment this; for testing purposes only */
                         vma.user = {};
-                        vma.user.name = 'User ' + Math.round(Math.random() * 10000);
-                        vma.user.location = Math.round(Math.random() * 15)+'th Floor, Europe House';
-                        vma.user.size = Math.round(Math.random() * 100);
-                        vma.user.hasConferenceEquipment = Math.round(Math.random()) ? true:false;
-                        vma.user.hasVideoProjector = Math.round(Math.random()) ? true:false;
+                        //vma.user.name = 'User ' + Math.round(Math.random() * 10000);
+                        //vma.user.location = Math.round(Math.random() * 15)+'th Floor, Europe House';
+                        //vma.user.size = Math.round(Math.random() * 100);
+                        //vma.user.hasConferenceEquipment = Math.round(Math.random()) ? true:false;
+                        //vma.user.hasVideoProjector = Math.round(Math.random()) ? true:false;
+
+                        vma.user.admin = Math.round(Math.random()) ? true : false;
+                        vma.user.email = (vma.user.admin ? 'admin' : 'user') +
+                            '@gmail.com' + Math.round(Math.random() * 1000);
+                        vma.user.password = 'password';
+                        vma.user.password2 = 'password';
 
                         function addUserFormCb() {
                             vma.user = {};
+                            $state.go('users.list');
                         }
                     }],
                     controllerAs: 'vma',
@@ -310,26 +317,26 @@
                     },
                     controller: ['$scope', '$state', 'user',
                         function ($scope, $state, user) {//, users, users
-                        var vme = this;
+                            var vme = this;
 
-                        vme.editUserFormCb = editUserFormCb;
+                            vme.editUserFormCb = editUserFormCb;
 
-                        user.$promise.then(function (data) {
-                            vme.user = formatservice.formatUserEditIn(data);
-                        });
+                            user.$promise.then(function (data) {
+                                vme.user = formatservice.formatUserEditIn(data);
+                            });
 
-                        //vme.user = user;
-                        //vme.users = users;
-                        //vme.users = users;
+                            //vme.user = user;
+                            //vme.users = users;
+                            //vme.users = users;
 
-                        function editUserFormCb() {
-                            //$state.reload();
-                            $state.go('users.details');
-                            //var who = angular.copy(vme.user.who);
-                            //vme.user = {};
-                            //vme.user.who = who;
-                        }
-                    }],
+                            function editUserFormCb() {
+                                //$state.reload();
+                                $state.go('users.details');
+                                //var who = angular.copy(vme.user.who);
+                                //vme.user = {};
+                                //vme.user.who = who;
+                            }
+                        }],
                     controllerAs: 'vme',
                     settings: {
                         authLevel: 3

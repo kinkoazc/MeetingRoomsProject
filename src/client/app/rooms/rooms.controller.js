@@ -10,7 +10,7 @@
     /* @ngInject */
     /*jshint maxparams: 15 */
     function RoomsController($rootScope, $state, $window,
-        $filter, $timeout, auth, logger, routerHelper, dataservice, formatservice) {
+                             $filter, $timeout, auth, logger, routerHelper, dataservice, formatservice) {
 
         var vm = this,
             states = routerHelper.getStates();
@@ -124,7 +124,7 @@
 
             //console.log('Edit room form submitted! ', room);
             dataservice.editingRoom(formatservice.formatRoomEditOut(room)).$promise.then(function (data) {
-                if (data.message==='Not authorized.') {
+                if (data.message === 'Not authorized.') {
                     logger.error('You are not authorized to edit this room.', data, 'Error!');
                 } else {
                     logger.success('Room updated successfully.', data, 'Success!');
@@ -145,7 +145,7 @@
 
             //console.log('Add room form submitted! ', formatservice.formatRoomAddOut(room));
             dataservice.addingRoom(formatservice.formatRoomAddOut(room)).$promise.then(function (data) {
-                if (data.message==='Not authorized.') {
+                if (data.message === 'Not authorized.') {
                     logger.error('You are not authorized to add this room.', data, 'Error!');
                 } else {
                     logger.success('Room saved successfully.', data, 'Success!');
@@ -164,7 +164,7 @@
         function deleteRoom(id) {
             if ($window.confirm('Are you sure you want to delete the entry?')) {
                 dataservice.deletingRoom(id).$promise.then(function (data) {
-                    if (data.message==='Not authorized.') {
+                    if (data.message === 'Not authorized.') {
                         logger.error('You are not authorized to delete this room.', data, 'Error!');
                     } else {
                         logger.success('Room deleted successfully.', data, 'Success!');

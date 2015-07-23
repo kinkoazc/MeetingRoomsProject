@@ -23,7 +23,11 @@
             editingRoom: editingRoom,
             deletingRoom: deletingRoom,
 
-            gettingUsers: gettingUsers
+            gettingUsers: gettingUsers,
+            gettingUser: gettingUser,
+            addingUser: addingUser,
+            editingUser: editingUser,
+            deletingUser: deletingUser
         };
 
         //function getMessageCount() {
@@ -311,10 +315,18 @@
 
 
         /* USERS */
+        /* GET ALL */
         function gettingUsers() {
-            return User.query();
+            var user = User.resource.query();
 
-            //return $http
+            user.$promise.then(function (data) {
+                //User.setUser(data);
+
+                return data;
+            });
+
+            return user;
+            //$http
             //    .get('/api/users')
             //    .then(function (results) {
             //        var msg = '', data = results.data;
@@ -335,6 +347,78 @@
             //
             //        return reason;
             //    });
+        }
+        /* GET ONE */
+        function gettingUser(id) {
+            var user = User.resource.get({id: id});
+
+            user.$promise.then(function (data) {
+                //User.setUser(data);
+
+                return data;
+            });
+
+            return user;
+            //$http
+            //    .get('/api/users')
+            //    .then(function (results) {
+            //        var msg = '', data = results.data;
+            //
+            //        if (results.status === 200) {
+            //            msg = 'Users received successfully!';
+            //            logger.success(msg);
+            //            return data;
+            //        } else {
+            //            msg = 'Users getting failed. ' + data.message;
+            //            logger.error(msg);
+            //        }
+            //
+            //        return data;
+            //    }).catch(function (reason) {
+            //        var msg = 'Users getting failed. ' + reason.data.description;
+            //        logger.error(msg);
+            //
+            //        return reason;
+            //    });
+        }
+        /* POST */
+        function addingUser(mtg) {
+            var user = User.resource.save(mtg);
+
+            user.$promise.then(function (data) {
+                //gettingUsers();
+
+                return data;
+            });
+
+            return user;
+        }
+        /* PUT */
+        function editingUser(mtg) {
+            var user = User.resource.update({id: $state.params.id}, mtg);
+
+            user.$promise.then(function (data) {
+                //User.setUser(data);
+                //gettingUsers();
+
+                return data;
+            });
+
+            return user;
+        }
+        /* DELETE */
+        function deletingUser(i) {
+            var id=i || $state.params.id,
+                user = User.resource.delete({id: id});
+
+            user.$promise.then(function (data) {
+                //gettingUsers();
+
+                return data;
+            });
+
+
+            return user;
         }
 
     }
