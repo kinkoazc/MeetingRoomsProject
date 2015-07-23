@@ -107,26 +107,9 @@
         }
 
         function formatMeetingAddOut(mtg) {
-            /*
-             IN:
-             description [String]
-             editors [[String, $oid]]
-             who [String, $oid]
-             whenDate [Date]
-             whenEndTime [Date]
-             whenStartTime [Date]
-             where [String, $oid]
-
-             OUT:
-             description [String]
-             allowed [[$oid]]
-             who [$oid]
-             when [Number, ms]
-             duration [Number, ms]
-             room [$oid]
-             */
-
-            var meeting = {};
+            var meeting = {}, day, startTime;
+            day = new Date(mtg.whenDate);
+            startTime = new Date(mtg.whenStartTime);
 
             meeting.description = mtg.description;
             if (mtg.editors.indexOf(mtg.who) === -1) {
@@ -134,7 +117,7 @@
             }
             meeting.allowed = mtg.editors;
             meeting.who = mtg.who._id;
-            meeting.when = Math.round(mtg.whenDate / 86400000) * 86400000 + mtg.whenStartTime % 86400000;
+            meeting.when = +new Date(day.getFullYear(), day.getMonth(), day.getDate(), startTime.getHours(), startTime.getMinutes(), 0, 0);//Math.round(mtg.whenDate / 86400000) * 86400000 + mtg.whenStartTime % 86400000;
             meeting.duration = mtg.whenEndTime - mtg.whenStartTime;
             meeting.room = mtg.where;
 
@@ -237,36 +220,7 @@
         }
 
         function formatRoomAddOut(rm) {
-            /*
-             IN:
-             description [String]
-             editors [[String, $oid]]
-             who [String, $oid]
-             whenDate [Date]
-             whenEndTime [Date]
-             whenStartTime [Date]
-             where [String, $oid]
-
-             OUT:
-             description [String]
-             allowed [[$oid]]
-             who [$oid]
-             when [Number, ms]
-             duration [Number, ms]
-             room [$oid]
-             */
-
             var room = {};
-
-            //room.description = mtg.description;
-            //if (mtg.editors.indexOf(mtg.who) === -1) {
-            //    mtg.editors.push(mtg.who);
-            //}
-            //room.allowed = mtg.editors;
-            //room.who = mtg.who._id;
-            //room.when = Math.round(mtg.whenDate / 86400000) * 86400000 + mtg.whenStartTime % 86400000;
-            //room.duration = mtg.whenEndTime - mtg.whenStartTime;
-            //room.room = mtg.where;
 
             room.location = rm.location || '';
             room.name = rm.name || '';

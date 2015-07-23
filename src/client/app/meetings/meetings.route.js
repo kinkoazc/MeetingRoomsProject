@@ -234,9 +234,10 @@
                         ];
                         //vma.meeting.who = '55a8e757781779641a5526e5';
                         vma.meeting.who = auth.currentUser();
-                        vma.meeting.whenDate = new Date('2015-07-21T21:00:00.000Z');
-                        vma.meeting.whenStartTime = new Date('1970-01-01T09:20:00.000Z');
-                        vma.meeting.whenEndTime = new Date('1970-01-01T11:40:00.000Z');
+                        var date = new Date();
+                        vma.meeting.whenDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()-1, 0, 0, 0, 0);//new Date('2015-07-21T21:00:00.000Z');
+                        vma.meeting.whenStartTime = new Date(1970, 0, 1, 11, 20, 0 ,0);//'1970-01-01T09:20:00.000Z'
+                        vma.meeting.whenEndTime = new Date(1970, 0, 1, 13, 20, 0 ,0);//'1970-01-01T11:40:00.000Z'
                         vma.meeting.where = '55a8e758781779641a5526e7';
 
                         function addMeetingFormCb() {
