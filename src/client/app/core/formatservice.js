@@ -295,11 +295,9 @@
         function formatUserDetails(originalUser) {
             var user = {};
 
-            user.location = originalUser.location || '';
-            user.name = originalUser.name || '';
-            user.size = originalUser.size || '';
-            user['has conference equipment'] = (originalUser.hasConferenceEquipment || false) ? 'Yes':'No';
-            user['has video projector'] = (originalUser.hasVideoProjector || false) ? 'Yes':'No';
+            user.admin = (originalUser.admin || false) ? 'Yes':'No';
+            user.email = originalUser.email || '';
+            user['Created/Updated on'] = $filter('date')(originalUser.updatedOn, 'd MMM y h:mm:ss a');
 
             return user;
         }
@@ -307,16 +305,13 @@
         function formatUserEditIn(originalUser) {
             var user = {};
 
-            user.location = originalUser.location || '';
-            user.name = originalUser.name || '';
-            user.size = originalUser.size || '';
-            user.hasConferenceEquipment = originalUser.hasConferenceEquipment || false;
-            user.hasVideoProjector = originalUser.hasVideoProjector || false;
+            user.admin = originalUser.admin || false;
+            user.email = originalUser.email || '';
 
             return user;
         }
 
-        function formatUserEditOut(rm) {
+        function formatUserEditOut(us) {
             var user = {};
 
             //user.description = rm.description;
@@ -329,11 +324,8 @@
             //user.duration = rm.whenEndTime - rm.whenStartTime;
             //user.user = rm.where;
 
-            user.location = rm.location || '';
-            user.name = rm.name || '';
-            user.size = rm.size || '';
-            user.hasConferenceEquipment = rm.hasConferenceEquipment || false;
-            user.hasVideoProjector = rm.hasVideoProjector || false;
+            user.admin = us.admin || false;
+            user.email = us.email || '';
 
             return user;
         }

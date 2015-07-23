@@ -603,7 +603,9 @@ apiRoutes.put('/users/:id', function (req, res, next) {// /users/:id (edit a use
                 //check if user is among the editors/owner
                 //...
 
-                _.extend(user, req.body);
+                user.email=req.body.email;
+                user.admin=req.body.admin;
+                //_.extend(user, req.body);
 
                 user.save(function (err, m) {
                     if (err) {

@@ -14,6 +14,15 @@ var UserSchema = new Schema({
     updatedOn: {type: Date, default: Date.now}
 });
 
+UserSchema.pre('save', function(next){
+    var now = new Date();
+    this.updatedOn = now;
+    //if ( !this.createdAt ) {
+    //    this.createdAt = now;
+    //}
+    next();
+});
+
 //set up methods on the User schema
 UserSchema.methods.setPassword = function (password) {
     this.salt = crypto.randomBytes(16).toString('hex');

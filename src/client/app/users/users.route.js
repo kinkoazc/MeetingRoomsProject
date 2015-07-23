@@ -244,14 +244,6 @@
 
                                 //get only one user
                                 return dataservice.gettingUser($stateParams.id);
-
-                                //return users.$promise.then(function (data) {
-                                //    for (var i = 0; i < data.length; i++) {
-                                //        if ($stateParams.id === data[i]._id) {
-                                //            return formatservice.formatUserDetails(data[i]);
-                                //        }
-                                //    }
-                                //});
                             }
                         }
                     },
