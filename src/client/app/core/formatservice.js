@@ -16,6 +16,7 @@
             formatMeetingAddOut: formatMeetingAddOut,
 
             formatRoomsList: formatRoomsList,
+            formatRoomsStatusList: formatRoomsStatusList,
             formatRoomDetails: formatRoomDetails,
             formatRoomEditIn: formatRoomEditIn,
             formatRoomEditOut: formatRoomEditOut,
@@ -150,23 +151,38 @@
             var rooms = [], room = {};
 
             originalRooms.forEach(function (r) {
-
-                //_id: "55a8e758781779641a5526e7"
-                //hasConferenceEquipment: true
-                //hasVideoProjector: false
-                //location: "6th Floor, Europe House"
-                //name: "Room 13"
-                //size: 30
-                //updatedOn: "2015-07-17T11:30:32.224Z"
-
                 room = {};
 
                 room.id = r._id;
                 room.location = r.location || '';
                 room.name = r.name || '';
                 room.size = r.size || '';
-                room.hasConferenceEquipment = (r.hasConferenceEquipment || false) ? 'Yes':'No';
-                room.hasVideoProjector = (r.hasVideoProjector || false) ? 'Yes':'No';
+                room.hasConferenceEquipment = (r.hasConferenceEquipment || false) ? 'Yes' : 'No';
+                room.hasVideoProjector = (r.hasVideoProjector || false) ? 'Yes' : 'No';
+
+                rooms.push(room);
+            });
+
+            return rooms;
+        }
+
+        function formatRoomsStatusList(originalRooms) {
+            if (!angular.isArray(originalRooms)) {
+                return originalRooms;
+            }
+
+            var rooms = [], room = {};
+
+            originalRooms.forEach(function (r) {
+                room = {};
+
+                room.id = r._id;
+                room.location = r.location || '';
+                room.name = r.name || '';
+                room.size = r.size || '';
+                room.hasConferenceEquipment = (r.hasConferenceEquipment || false) ? 'Yes' : 'No';
+                room.hasVideoProjector = (r.hasVideoProjector || false) ? 'Yes' : 'No';
+                room.occupiedBetween = r.occupiedBetween;
 
                 rooms.push(room);
             });
@@ -180,8 +196,8 @@
             room.location = originalRoom.location || '';
             room.name = originalRoom.name || '';
             room.size = originalRoom.size || '';
-            room['has conference equipment'] = (originalRoom.hasConferenceEquipment || false) ? 'Yes':'No';
-            room['has video projector'] = (originalRoom.hasVideoProjector || false) ? 'Yes':'No';
+            room['has conference equipment'] = (originalRoom.hasConferenceEquipment || false) ? 'Yes' : 'No';
+            room['has video projector'] = (originalRoom.hasVideoProjector || false) ? 'Yes' : 'No';
 
             return room;
         }
@@ -282,7 +298,7 @@
                 user = {};
 
                 user.id = u._id;
-                user.admin = (u.admin || false) ? 'Yes':'No';
+                user.admin = (u.admin || false) ? 'Yes' : 'No';
                 user.email = u.email || '';
                 user.createdUpdatedOn = $filter('date')(u.updatedOn, 'd MMM y h:mm:ss a');//new Date(u.updatedOn);
 
@@ -295,7 +311,7 @@
         function formatUserDetails(originalUser) {
             var user = {};
 
-            user.admin = (originalUser.admin || false) ? 'Yes':'No';
+            user.admin = (originalUser.admin || false) ? 'Yes' : 'No';
             user.email = originalUser.email || '';
             user['Created/Updated on'] = $filter('date')(originalUser.updatedOn, 'd MMM y h:mm:ss a');
 

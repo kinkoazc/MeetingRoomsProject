@@ -95,6 +95,7 @@ apiRoutes.get('/room-status', function (req, res) {
                 });
         },
         function (callback) {
+            //get meetings
             Meeting
                 .find({})
                 .populate('who')
@@ -110,7 +111,7 @@ apiRoutes.get('/room-status', function (req, res) {
         }
     ], function (err, results) {
         var rooms = _.map(results[0], function (room) {
-            room._doc.occupiedBetween = [];
+            room._doc.occupiedBetween = [];//add field
             return room._doc;
         });
 
@@ -129,7 +130,7 @@ apiRoutes.get('/room-status', function (req, res) {
             });
         });
 
-        res.json(rooms);
+        res.status(200).json(rooms);
     });
 
 

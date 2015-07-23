@@ -13,7 +13,7 @@
     }
 
     function getStates($q, $stateParams, $timeout, $state, dataservice, formatservice) {
-        return [
+        var config = [
             {
                 state: 'meetings',
                 config: {
@@ -25,13 +25,30 @@
                     abstract: true,
                     settings: {
                         nav: 1,
+                        authLevel: 2,
                         //inMainMenu: true,
                         content: '<i class="fa fa-briefcase"></i> Meetings'
-                    },
-                    //onEnter: function ($state) {
+                    }
+                    //onEnter: ['$state', function ($state) {
                     //    console.log('entering meetings');
-                    //    $state.go('meetings.list');
-                    //},
+                    //    $state.go('rooms.status');
+                    //}],
+                    //resolve: {
+                    //    checkAuth: ['$state', 'auth', function ($state, auth) {
+                    //        var deferred = $q.defer();
+                    //
+                    //        if (auth.isAuthorized(config.settings.authLevel)) {
+                    //
+                    //            deferred.resolve();
+                    //        } else {
+                    //            console.log('--redirected');
+                    //            $state.go('rooms.status');
+                    //            //deferred.reject();
+                    //        }
+                    //
+                    //        return deferred.promise;
+                    //    }]
+                    //}
                     //onExit: function () {
                     //    console.log('exiting meetings');
                     //},
@@ -70,24 +87,24 @@
                     //        return dataservice.gettingMeetings();
                     //
                     //    }
-                        //,
-                        //meeting: function ($stateParams) {
-                        //    if ($stateParams.id) {
-                        //        return this.meetings().when(
-                        //            function (data) {
-                        //                for (var i = 0; i < data.length; i++) {
-                        //                    if ($stateParams.id == data[i].id + '") {
-                        //                        return data[i];
-                        //                    }
-                        //                }
-                        //
-                        //                return {};
-                        //            }
-                        //        )
-                        //    } else {
-                        //        return {};
-                        //    }
-                        //}
+                    //,
+                    //meeting: function ($stateParams) {
+                    //    if ($stateParams.id) {
+                    //        return this.meetings().when(
+                    //            function (data) {
+                    //                for (var i = 0; i < data.length; i++) {
+                    //                    if ($stateParams.id == data[i].id + '") {
+                    //                        return data[i];
+                    //                    }
+                    //                }
+                    //
+                    //                return {};
+                    //            }
+                    //        )
+                    //    } else {
+                    //        return {};
+                    //    }
+                    //}
                     //}
                 }
             },
@@ -322,26 +339,26 @@
                     },
                     controller: ['$scope', '$state', 'meeting', 'users', 'rooms',
                         function ($scope, $state, meeting, users, rooms) {
-                        var vme = this;
+                            var vme = this;
 
-                        vme.editMeetingFormCb = editMeetingFormCb;
+                            vme.editMeetingFormCb = editMeetingFormCb;
 
-                        meeting.$promise.then(function (data) {
-                            vme.meeting = formatservice.formatMeetingEditIn(data);
-                        });
+                            meeting.$promise.then(function (data) {
+                                vme.meeting = formatservice.formatMeetingEditIn(data);
+                            });
 
-                        //vme.meeting = meeting;
-                        vme.users = users;
-                        vme.rooms = rooms;
+                            //vme.meeting = meeting;
+                            vme.users = users;
+                            vme.rooms = rooms;
 
-                        function editMeetingFormCb() {
-                            //$state.reload();
-                            $state.go('meetings.details');
-                            //var who = angular.copy(vme.meeting.who);
-                            //vme.meeting = {};
-                            //vme.meeting.who = who;
-                        }
-                    }],
+                            function editMeetingFormCb() {
+                                //$state.reload();
+                                $state.go('meetings.details');
+                                //var who = angular.copy(vme.meeting.who);
+                                //vme.meeting = {};
+                                //vme.meeting.who = who;
+                            }
+                        }],
                     controllerAs: 'vme',
                     settings: {
                         authLevel: 2
@@ -349,5 +366,7 @@
                 }
             }
         ];
+
+        return config;
     }
 })();

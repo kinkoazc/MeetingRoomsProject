@@ -8,7 +8,7 @@
     appRun.$inject = ['routerHelper'];
     /* @ngInject */
     function appRun(routerHelper) {
-        routerHelper.configureStates(getStates(), '/meetings/list');
+        routerHelper.configureStates(getStates(), '/rooms/status');
     }
 
     function getStates() {

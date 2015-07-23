@@ -16,6 +16,7 @@
             states = routerHelper.getStates();
         vm.deleteUser = deleteUser;
         vm.isCurrent = isCurrent;
+        vm.isAuthorized = auth.isAuthorized;
         //vm.users = [];
         //vm.user = {};
         vm.navRoutes = [];

@@ -5,9 +5,9 @@
         .module('app.core')
         .factory('dataservice', dataservice);
 
-    dataservice.$inject = ['$http', '$q', '$state', 'Meeting', 'Room', 'User', 'logger'];
+    dataservice.$inject = ['$http', '$q', '$state', '$resource', 'Meeting', 'Room', 'User', 'logger'];
     /* @ngInject */
-    function dataservice($http, $q, $state, Meeting, Room, User, logger) {
+    function dataservice($http, $q, $state, $resource, Meeting, Room, User, logger) {
         return {
             loging: loging,
             registering: registering,
@@ -18,6 +18,7 @@
             deletingMeeting: deletingMeeting,
 
             gettingRooms: gettingRooms,
+            gettingRoomsStatus: gettingRoomsStatus,
             gettingRoom: gettingRoom,
             addingRoom: addingRoom,
             editingRoom: editingRoom,
@@ -132,6 +133,7 @@
             //        return reason;
             //    });
         }
+
         /* GET ONE */
         function gettingMeeting(id) {
             var meeting = Meeting.resource.get({id: id});
@@ -165,6 +167,7 @@
             //        return reason;
             //    });
         }
+
         /* POST */
         function addingMeeting(mtg) {
             var meeting = Meeting.resource.save(mtg);
@@ -177,6 +180,7 @@
 
             return meeting;
         }
+
         /* PUT */
         function editingMeeting(mtg) {
             var meeting = Meeting.resource.update({id: $state.params.id}, mtg);
@@ -190,9 +194,10 @@
 
             return meeting;
         }
+
         /* DELETE */
         function deletingMeeting(i) {
-            var id=i || $state.params.id,
+            var id = i || $state.params.id,
                 meeting = Meeting.resource.delete({id: id});
 
             meeting.$promise.then(function (data) {
@@ -240,6 +245,41 @@
             //        return reason;
             //    });
         }
+
+        /* GET ALL with STATUSES */
+        function gettingRoomsStatus() {
+            var room = $resource('/api/room-status').query();//$http.get('/api/room-status');
+
+            room.$promise.then(function (data) {
+                //Room.setRoom(data);
+
+                return data;
+            });
+
+            return room;
+            //$http
+            //    .get('/api/rooms')
+            //    .then(function (results) {
+            //        var msg = '', data = results.data;
+            //
+            //        if (results.status === 200) {
+            //            msg = 'Rooms received successfully!';
+            //            logger.success(msg);
+            //            return data;
+            //        } else {
+            //            msg = 'Rooms getting failed. ' + data.message;
+            //            logger.error(msg);
+            //        }
+            //
+            //        return data;
+            //    }).catch(function (reason) {
+            //        var msg = 'Rooms getting failed. ' + reason.data.description;
+            //        logger.error(msg);
+            //
+            //        return reason;
+            //    });
+        }
+
         /* GET ONE */
         function gettingRoom(id) {
             var room = Room.resource.get({id: id});
@@ -273,6 +313,7 @@
             //        return reason;
             //    });
         }
+
         /* POST */
         function addingRoom(mtg) {
             var room = Room.resource.save(mtg);
@@ -285,6 +326,7 @@
 
             return room;
         }
+
         /* PUT */
         function editingRoom(mtg) {
             var room = Room.resource.update({id: $state.params.id}, mtg);
@@ -298,9 +340,10 @@
 
             return room;
         }
+
         /* DELETE */
         function deletingRoom(i) {
-            var id=i || $state.params.id,
+            var id = i || $state.params.id,
                 room = Room.resource.delete({id: id});
 
             room.$promise.then(function (data) {
@@ -348,6 +391,7 @@
             //        return reason;
             //    });
         }
+
         /* GET ONE */
         function gettingUser(id) {
             var user = User.resource.get({id: id});
@@ -381,6 +425,7 @@
             //        return reason;
             //    });
         }
+
         /* POST */
         function addingUser(mtg) {
             var user = User.resource.save(mtg);
@@ -393,6 +438,7 @@
 
             return user;
         }
+
         /* PUT */
         function editingUser(mtg) {
             var user = User.resource.update({id: $state.params.id}, mtg);
@@ -406,9 +452,10 @@
 
             return user;
         }
+
         /* DELETE */
         function deletingUser(i) {
-            var id=i || $state.params.id,
+            var id = i || $state.params.id,
                 user = User.resource.delete({id: id});
 
             user.$promise.then(function (data) {

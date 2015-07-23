@@ -16,8 +16,9 @@
         <td>
             {{$index +1}}
         </td>
-        <td>
-            <a ui-sref="meetings.details({id : meeting.id})">{{meeting.description}}</a>
+        <td ng-switch="meeting.canEdit || meeting.isCreator">
+            <a ng-switch-when="true" ui-sref="meetings.details({id : meeting.id})">{{meeting.description}}</a>
+            <span ng-switch-when="false">{{meeting.description}}</span>
         </td>
         <td>{{meeting.who}}</td>
         <td>{{meeting.when}}</td>

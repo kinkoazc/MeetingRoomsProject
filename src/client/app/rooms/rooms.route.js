@@ -70,24 +70,24 @@
                     //        return dataservice.gettingRooms();
                     //
                     //    }
-                        //,
-                        //room: function ($stateParams) {
-                        //    if ($stateParams.id) {
-                        //        return this.rooms().when(
-                        //            function (data) {
-                        //                for (var i = 0; i < data.length; i++) {
-                        //                    if ($stateParams.id == data[i].id + '") {
-                        //                        return data[i];
-                        //                    }
-                        //                }
-                        //
-                        //                return {};
-                        //            }
-                        //        )
-                        //    } else {
-                        //        return {};
-                        //    }
-                        //}
+                    //,
+                    //room: function ($stateParams) {
+                    //    if ($stateParams.id) {
+                    //        return this.rooms().when(
+                    //            function (data) {
+                    //                for (var i = 0; i < data.length; i++) {
+                    //                    if ($stateParams.id == data[i].id + '") {
+                    //                        return data[i];
+                    //                    }
+                    //                }
+                    //
+                    //                return {};
+                    //            }
+                    //        )
+                    //    } else {
+                    //        return {};
+                    //    }
+                    //}
                     //}
                 }
             },
@@ -98,10 +98,7 @@
                     templateUrl: 'app/rooms/rooms.mru.list.html',
                     title: 'Rooms list',
                     settings: {
-                        nav: 2,
-                        inMainMenu: true,
-                        authLevel: 3,
-                        content: '<i class="fa fa-briefcase"></i> Rooms'
+                        authLevel: 3
                     },
                     resolve: {
                         rooms: function () {
@@ -163,11 +160,130 @@
                         vml.rooms = [];
                         rooms.$promise.then(function (data) {
                             //$scope.$parent.vm.rooms
-                            vml.rooms= formatservice.formatRoomsList(data);
+                            vml.rooms = formatservice.formatRoomsList(data);
                         });
 
                     }],
                     controllerAs: 'vml'
+                }
+            },
+            {
+                state: 'rooms.status',
+                config: {
+                    url: '/status',
+                    templateUrl: 'app/rooms/rooms.mru.status.html',
+                    title: 'Rooms status',
+                    settings: {
+                        nav: 2,
+                        inMainMenu: true,
+                        authLevel: 1,
+                        content: '<i class="fa fa-briefcase"></i> Rooms'
+                    },
+                    resolve: {
+                        roomsStatus: function () {
+                            //console.log('resolve rooms');
+                            //var rooms = [
+                            //    {
+                            //        description: 'Scrum room',
+                            //        who: 'User One',
+                            //        when: 1488323623006,
+                            //        duration: 6600000,
+                            //        where: 'Room 45',
+                            //        allowed: 'User One, User Three',
+                            //        id: 1231241
+                            //    },
+                            //    {
+                            //        description: 'Investors room',
+                            //        who: 'User Three',
+                            //        when: 1498323623006,
+                            //        duration: 10200000,
+                            //        where: 'Room 30',
+                            //        allowed: 'User Three',
+                            //        id: 1231256
+                            //    }
+                            //];
+                            //
+                            //var deferred=$q.defer();
+                            //
+                            //$timeout(function () {
+                            //    deferred.resolve(rooms);
+                            //}, 100);
+                            //
+                            //return deferred.promise;//$q.when(rooms);
+
+                            return dataservice.gettingRoomsStatus();
+
+                        }
+                        //,
+                        //room: function ($stateParams) {
+                        //    if ($stateParams.id) {
+                        //        return this.rooms().when(
+                        //            function (data) {
+                        //                for (var i = 0; i < data.length; i++) {
+                        //                    if ($stateParams.id == data[i].id + '") {
+                        //                        return data[i];
+                        //                    }
+                        //                }
+                        //
+                        //                return {};
+                        //            }
+                        //        )
+                        //    } else {
+                        //        return {};
+                        //    }
+                        //}
+                    },
+                    controller: ['$scope', '$interval', 'roomsStatus', function ($scope, $interval, roomsStatus) {
+                        var vms = this;
+
+                        vms.roomsStatus = [];
+                        roomsStatus.$promise.then(function (data) {
+                            vms.roomsStatus = formatservice.formatRoomsStatusList(data);
+                        });
+                        vms.checkIfAvailable = checkIfAvailable;
+
+                        function checkIfAvailable(rm, arr) {
+                            rm.rez = false;
+
+                            (function (rm, arr) {
+                                if (!rm.interval) {
+
+                                    //rm.interval = $interval(checkIfAvailableInterval.bind(null, rm, arr), 5000);
+
+                                    $timeout(function () {
+                                        checkIfAvailableInterval(rm, arr);
+                                    });
+
+                                    rm.interval = $interval(checkIfAvailableInterval.bind(null, rm, arr), 5000);
+                                }
+                            })(rm, arr);
+                        }
+
+                        function checkIfAvailableInterval(rm, arr) {
+                            //console.log('----- checking if room is available');
+
+                            var now = +new Date();
+                            for (var i = 0; i < arr.length; i++) {
+                                if (now >= arr[i].start && now <= arr[i].end) {
+                                    rm.rez = false;
+                                    return false;
+                                }
+                            }
+
+                            rm.rez = true;
+                            return true;
+                        }
+
+                        $scope.$on('$destroy', function () {
+                            for (var i = 0; i < vms.roomsStatus.length; i++) {
+                                if (vms.roomsStatus[i].interval) {
+                                    $interval.cancel(vms.roomsStatus[i].interval);
+                                }
+                            }
+                        })
+
+                    }],
+                    controllerAs: 'vms'
                 }
             },
             {
@@ -210,10 +326,10 @@
                         /* TODO erase/comment this; for testing purposes only */
                         vma.room = {};
                         vma.room.name = 'Room ' + Math.round(Math.random() * 10000);
-                        vma.room.location = Math.round(Math.random() * 15)+'th Floor, Europe House';
+                        vma.room.location = Math.round(Math.random() * 15) + 'th Floor, Europe House';
                         vma.room.size = Math.round(Math.random() * 100);
-                        vma.room.hasConferenceEquipment = Math.round(Math.random()) ? true:false;
-                        vma.room.hasVideoProjector = Math.round(Math.random()) ? true:false;
+                        vma.room.hasConferenceEquipment = Math.round(Math.random()) ? true : false;
+                        vma.room.hasVideoProjector = Math.round(Math.random()) ? true : false;
 
                         function addRoomFormCb() {
                             vma.room = {};
@@ -311,26 +427,26 @@
                     },
                     controller: ['$scope', '$state', 'room',
                         function ($scope, $state, room) {//, users, rooms
-                        var vme = this;
+                            var vme = this;
 
-                        vme.editRoomFormCb = editRoomFormCb;
+                            vme.editRoomFormCb = editRoomFormCb;
 
-                        room.$promise.then(function (data) {
-                            vme.room = formatservice.formatRoomEditIn(data);
-                        });
+                            room.$promise.then(function (data) {
+                                vme.room = formatservice.formatRoomEditIn(data);
+                            });
 
-                        //vme.room = room;
-                        //vme.users = users;
-                        //vme.rooms = rooms;
+                            //vme.room = room;
+                            //vme.users = users;
+                            //vme.rooms = rooms;
 
-                        function editRoomFormCb() {
-                            //$state.reload();
-                            $state.go('rooms.details');
-                            //var who = angular.copy(vme.room.who);
-                            //vme.room = {};
-                            //vme.room.who = who;
-                        }
-                    }],
+                            function editRoomFormCb() {
+                                //$state.reload();
+                                $state.go('rooms.details');
+                                //var who = angular.copy(vme.room.who);
+                                //vme.room = {};
+                                //vme.room.who = who;
+                            }
+                        }],
                     controllerAs: 'vme',
                     settings: {
                         authLevel: 3

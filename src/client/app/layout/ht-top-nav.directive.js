@@ -16,7 +16,7 @@
                 states = routerHelper.getStates();
 
             vm.auth = auth;
-            vm.isAuthorized = isAuthorized;
+            vm.isAuthorized = auth.isAuthorized;
             vm.isCurrent = isCurrent;
             vm.isLoggedIn = auth.isLoggedIn;
             vm.navRoutes = [];
@@ -43,31 +43,6 @@
                 var menuName = route.name;
                 if (menuName && $state.current.name) {
                     return menuName.split('.')[0] === $state.current.name.split('.')[0] ? 'active' : '';
-                }
-            }
-
-            function isAuthorized(stateAuthLevel) {
-                var currentUser = auth.currentUser();
-
-                if (stateAuthLevel) {
-                    switch (stateAuthLevel) {
-                        case 1: {
-                            return true;
-                        }
-                            break;
-                        case 2: {
-                            if (currentUser) {
-                                return true;
-                            }
-                        }
-                            break;
-                        case 3: {
-                            if (currentUser && currentUser.admin) {
-                                return true;
-                            }
-                        }
-                            break;
-                    }
                 }
             }
         }

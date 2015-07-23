@@ -57,6 +57,27 @@
             $window.localStorage.removeItem('meetings-auth-token');
         };
 
+        auth.isAuthorized = function isAuthorized(stateAuthLevel) {
+            var currentUser = auth.currentUser();
+
+            if (stateAuthLevel) {
+                switch (stateAuthLevel) {
+                    case 1: {
+                        return true;
+                    }
+                        break;
+                    case 2: {
+                        return !!currentUser;
+                    }
+                        break;
+                    case 3: {
+                        return !!(currentUser && currentUser.admin);
+                    }
+                        break;
+                }
+            }
+        };
+
         return auth;
     }
 

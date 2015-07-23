@@ -16,6 +16,7 @@
             states = routerHelper.getStates();
         vm.deleteMeeting = deleteMeeting;
         vm.isCurrent = isCurrent;
+        vm.isAuthorized = auth.isAuthorized;
         //vm.meetings = [];
         //vm.meeting = {};
         vm.navRoutes = [];
@@ -40,7 +41,7 @@
                 //    }
                 //
                 //    if (angular.equals({}, vm.meeting)) {
-                //        $state.go('meetings.list');
+                //        $state.go('rooms.status');
                 //    }
                 //}
 

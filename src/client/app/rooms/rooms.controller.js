@@ -22,6 +22,7 @@
         vm.sendAddForm = sendAddForm;
         vm.sendEditForm = sendEditForm;
         vm.title = 'Rooms';
+        vm.isAuthorized = auth.isAuthorized;
         //vm.user = {};
 
         activate();
