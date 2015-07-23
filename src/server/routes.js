@@ -405,7 +405,7 @@ apiRoutes.get('/users', function (req, res, next) {// /users (get all users)
     //    next();
     //}
 
-    console.log('-------- getting users');
+    console.log('-------- getting users', req);
 
     //check authorization level
 

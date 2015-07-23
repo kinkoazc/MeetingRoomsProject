@@ -5,10 +5,18 @@
         .module('app.core')
         .run(appRun);
 
-    appRun.$inject = ['routerHelper'];
+    appRun.$inject = ['$rootScope', '$state', 'auth', 'routerHelper'];
     /* @ngInject */
-    function appRun(routerHelper) {
+    function appRun($rootScope, $state, auth, routerHelper) {
         routerHelper.configureStates(getStates(), '/rooms/status');
+
+        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+            if (!auth.isAuthorized(toState.settings.authLevel)) {
+                event.preventDefault();
+                $state.go('rooms.status');
+                return false;
+            }
+        });
     }
 
     function getStates() {

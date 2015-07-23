@@ -280,7 +280,7 @@
                                     $interval.cancel(vms.roomsStatus[i].interval);
                                 }
                             }
-                        })
+                        });
 
                     }],
                     controllerAs: 'vms'

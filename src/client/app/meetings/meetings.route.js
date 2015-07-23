@@ -25,7 +25,6 @@
                     abstract: true,
                     settings: {
                         nav: 1,
-                        authLevel: 2,
                         //inMainMenu: true,
                         content: '<i class="fa fa-briefcase"></i> Meetings'
                     }
@@ -33,22 +32,6 @@
                     //    console.log('entering meetings');
                     //    $state.go('rooms.status');
                     //}],
-                    //resolve: {
-                    //    checkAuth: ['$state', 'auth', function ($state, auth) {
-                    //        var deferred = $q.defer();
-                    //
-                    //        if (auth.isAuthorized(config.settings.authLevel)) {
-                    //
-                    //            deferred.resolve();
-                    //        } else {
-                    //            console.log('--redirected');
-                    //            $state.go('rooms.status');
-                    //            //deferred.reject();
-                    //        }
-                    //
-                    //        return deferred.promise;
-                    //    }]
-                    //}
                     //onExit: function () {
                     //    console.log('exiting meetings');
                     //},
@@ -121,6 +104,21 @@
                         content: '<i class="fa fa-briefcase"></i> Meetings'
                     },
                     resolve: {
+                        //checkAuth: ['$state', 'auth', function ($state, auth) {
+                        //    console.log('--- check auth');
+                        //    var deferred = $q.defer();
+                        //
+                        //    if (auth.isAuthorized(config[1].config.settings.authLevel)) {
+                        //        console.log('--- check authed');
+                        //        deferred.resolve();
+                        //    } else {
+                        //        console.log('--- check redirected');
+                        //        $state.go('rooms.status');
+                        //        //deferred.reject();
+                        //    }
+                        //
+                        //    return deferred.promise;
+                        //}],
                         meetings: function () {
                             //console.log('resolve meetings');
                             //var meetings = [
