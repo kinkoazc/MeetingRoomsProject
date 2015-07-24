@@ -207,7 +207,6 @@ apiRoutes.get('/meetings', function (req, res, next) {// /meetings (get all meet
 
     console.log('-------- getting meetings');
 
-    //check authorization level
 
     Meeting
         .find({})
@@ -224,7 +223,10 @@ apiRoutes.get('/meetings', function (req, res, next) {// /meetings (get all meet
 });
 
 apiRoutes.post('/meetings', function (req, res, next) {// /meetings (create a meeting)
-    //check authorization level
+
+    if (!req.body.description || !req.body.who || !req.body.when || !req.body.duration || !req.body.duration < 0 || !req.body.room || !req.body.allowed) {
+        return res.status(400).json({success: false, message: 'Please fill out all fields'});
+    }
 
     console.log('-------- adding meeting');
 
@@ -250,7 +252,6 @@ apiRoutes.post('/meetings', function (req, res, next) {// /meetings (create a me
 
 apiRoutes.get('/meetings/:id', function (req, res, next) {// /meetings/:id (get a meeting)
 
-    //check authorization level
 
     console.log('-------- getting meeting');
 
@@ -274,6 +275,9 @@ apiRoutes.get('/meetings/:id', function (req, res, next) {// /meetings/:id (get 
 
 apiRoutes.put('/meetings/:id', function (req, res, next) {// /meetings/:id (edit a meeting)
     //check authorization level(done in .use() part, above)(only the standard and admin users will be let through)
+    if (!req.body.description || !req.body.who || !req.body.when || !req.body.duration || !req.body.duration < 0 || !req.body.room || !req.body.allowed) {
+        return res.status(400).json({success: false, message: 'Please fill out all fields'});
+    }
 
     console.log('-------- updating meeting');
 
@@ -290,12 +294,6 @@ apiRoutes.put('/meetings/:id', function (req, res, next) {// /meetings/:id (edit
             if (err) {
                 console.log(err);
             } else if (meeting) {
-                ////console.log('----- meeting: ', meeting);
-                //console.log('----- meeting.allowed.length: ', meeting.allowed.length);
-                //console.log('----- meeting.who.length: ', meeting.who.length);
-                //console.log('----- concat meetings length: ', _(meeting.allowed).concat(meeting.who).value().length);
-                ////console.log('----- req.decoded: ', req.decoded);
-
                 //check if user is among the editors/owner
                 if (funcs.allowed(req.decoded, _(meeting.allowed).concat(meeting.who).value())) {
                     _.extend(meeting, req.body);
@@ -323,8 +321,6 @@ apiRoutes.put('/meetings/:id', function (req, res, next) {// /meetings/:id (edit
 apiRoutes.delete('/meetings/:id', function (req, res, next) {// /meetings/:id (delete a meeting)
     //next(new Error('not implemented'));
 
-    //check authorization level
-    //check if user is among the editors/owner
 
     var meetingId = req.params.id;
 
@@ -341,6 +337,7 @@ apiRoutes.delete('/meetings/:id', function (req, res, next) {// /meetings/:id (d
                 if (err) {
                     console.log(err);
                 } else if (meeting) {
+                    //check if user is among the editors/owner
                     if (funcs.allowed(req.decoded, _(meeting.allowed).concat(meeting.who).value())) {
                         meeting.remove(function (err) {
                             if (err) {
@@ -359,31 +356,12 @@ apiRoutes.delete('/meetings/:id', function (req, res, next) {// /meetings/:id (d
                     }
                 }
             });
-
-        //Meeting.findOneAndRemove({_id: meetingId}, function (err) {
-        //    if (err) {
-        //        console.log(err);
-        //    } else {
-        //        console.log('------ meeting deleted');
-        //        res.status(200).json({message: 'Meeting deleted'});
-        //    }
-        //});
     }
-
 });
 
 
 apiRoutes.get('/rooms', function (req, res, next) {// /rooms (get all rooms)
-
-    //var meetingId = req.params.id;
-    //
-    //if (meetingId) {/* GET one room case */
-    //    next();
-    //}
-
     console.log('-------- getting rooms');
-
-    //check authorization level
 
     Room
         .find({})
@@ -392,6 +370,52 @@ apiRoutes.get('/rooms', function (req, res, next) {// /rooms (get all rooms)
                 console.log(err);
             } else {
                 res.status(200).json(rooms);
+            }
+        });
+});
+
+apiRoutes.post('/rooms/check-availability', function (req, res, next) {// check if room is available between two dates
+    if (!req.body.roomId || !req.body.start || !req.body.end || (req.body.start >= req.body.end)) {
+        return res.status(400).json({success: false, message: 'Please provide the required informations.'});
+    }
+
+    console.log('-------- getting room availability');
+
+    Meeting
+        .find({
+            room: req.body.roomId
+        })
+        .populate('who')
+        .populate('allowed')
+        .populate('room')
+        .exec(function (err, mtgs) {
+            if (err) {
+                console.log(err);
+            } else {
+                var meetings = _.map(mtgs, function (meeting) {
+                        return meeting._doc;
+                    }),
+                    available = true;
+
+                _.each(meetings, function (meeting) {
+                    if (available === false) {
+                        return false;
+                    }
+
+                    var start = Math.round(meeting.when / (1000 * 60)),
+                        end = Math.round((meeting.when + meeting.duration) / (1000 * 60)),
+                        reqStart = Math.round(req.body.start / (1000 * 60)),
+                        reqEnd = Math.round(req.body.end / (1000 * 60));
+
+                    for (var i = reqStart; i <= reqEnd; i++) {
+                        if (i > start && i < end) {
+                            available = false;
+                            break;
+                        }
+                    }
+                });
+
+                res.status(200).json(available);
             }
         });
 });
@@ -405,9 +429,8 @@ apiRoutes.get('/users', function (req, res, next) {// /users (get all users)
     //    next();
     //}
 
-    console.log('-------- getting users', req);
+    console.log('-------- getting users');
 
-    //check authorization level
 
     User
         .find({})
@@ -437,13 +460,15 @@ apiRoutes.use(function (req, res, next) {
 
 /* ROOMS routes */
 apiRoutes.post('/rooms', function (req, res, next) {// /rooms (create a room)
-    //check authorization level
+    if (!req.body.location || !req.body.name || !req.body.size) {
+        return res.status(400).json({success: false, message: 'Please fill out all fields'});
+    }
+
     console.log('-------- adding room');
 
     var room = new Room({
         location: req.body.location,
         name: req.body.name,
-        updatedOn: req.body.updatedOn,
         hasConferenceEquipment: req.body.hasConferenceEquipment,
         hasVideoProjector: req.body.hasVideoProjector,
         size: req.body.size
@@ -462,7 +487,6 @@ apiRoutes.post('/rooms', function (req, res, next) {// /rooms (create a room)
 
 apiRoutes.get('/rooms/:id', function (req, res, next) {// /rooms/:id (get a room)
 
-    //check authorization level
 
     console.log('-------- getting room');
 
@@ -483,6 +507,9 @@ apiRoutes.get('/rooms/:id', function (req, res, next) {// /rooms/:id (get a room
 
 apiRoutes.put('/rooms/:id', function (req, res, next) {// /rooms/:id (edit a room)
     //check authorization level(done in .use() part, above)(only the standard and admin users will be let through)
+    if (!req.body.location || !req.body.name || !req.body.size) {
+        return res.status(400).json({success: false, message: 'Please fill out all fields'});
+    }
 
     console.log('-------- updating room');
 
@@ -496,9 +523,6 @@ apiRoutes.put('/rooms/:id', function (req, res, next) {// /rooms/:id (edit a roo
             if (err) {
                 console.log(err);
             } else if (room) {
-                //check if user is among the editors/owner
-                //...
-
                 _.extend(room, req.body);
 
                 room.save(function (err, m) {
@@ -517,10 +541,6 @@ apiRoutes.put('/rooms/:id', function (req, res, next) {// /rooms/:id (edit a roo
 
 apiRoutes.delete('/rooms/:id', function (req, res, next) {// /rooms/:id (delete a room)
     //next(new Error('not implemented'));
-
-    //check authorization level
-    //check if user is among the editors/owner
-
     console.log('------ deleting room');
 
     var roomId = req.params.id;
@@ -543,12 +563,12 @@ apiRoutes.delete('/rooms/:id', function (req, res, next) {// /rooms/:id (delete 
 
 /* USERS routes */
 apiRoutes.post('/users', function (req, res, next) {// /users (create a user)
-    //check authorization level
-    console.log('-------- adding user');
 
     if (!req.body.email || !req.body.password) {
         return res.status(400).json({success: false, message: 'Please fill out all fields'});
     }
+
+    console.log('-------- adding user');
 
     var user = new User();
 
@@ -567,7 +587,6 @@ apiRoutes.post('/users', function (req, res, next) {// /users (create a user)
 
 apiRoutes.get('/users/:id', function (req, res, next) {// /users/:id (get a user)
 
-    //check authorization level
 
     console.log('-------- getting user');
 
@@ -588,6 +607,9 @@ apiRoutes.get('/users/:id', function (req, res, next) {// /users/:id (get a user
 
 apiRoutes.put('/users/:id', function (req, res, next) {// /users/:id (edit a user)
     //check authorization level(done in .use() part, above)(only the standard and admin users will be let through)
+    if (!req.body.email || !req.body.password) {
+        return res.status(400).json({success: false, message: 'Please fill out all fields'});
+    }
 
     console.log('-------- updating user');
 
@@ -601,11 +623,11 @@ apiRoutes.put('/users/:id', function (req, res, next) {// /users/:id (edit a use
             if (err) {
                 console.log(err);
             } else if (user) {
-                //check if user is among the editors/owner
+
                 //...
 
-                user.email=req.body.email;
-                user.admin=req.body.admin;
+                user.email = req.body.email;
+                user.admin = req.body.admin;
                 //_.extend(user, req.body);
 
                 user.save(function (err, m) {
@@ -624,10 +646,6 @@ apiRoutes.put('/users/:id', function (req, res, next) {// /users/:id (edit a use
 
 apiRoutes.delete('/users/:id', function (req, res, next) {// /users/:id (delete a user)
     //next(new Error('not implemented'));
-
-    //check authorization level
-    //check if user is among the editors/owner
-
     console.log('------ deleting user');
 
     var userId = req.params.id;

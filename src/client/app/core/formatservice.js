@@ -46,7 +46,7 @@
 
                 meeting.description = m.description || '';
                 meeting.who = (m.who[0] && m.who[0].email) || '';
-                meeting.when = $filter('date')(m.when, 'd MMM y h:mm:ss a');
+                meeting.when = $filter('date')(m.when, 'd MMM y H:mm:ss');
                 meeting.duration = $filter('time')(m.duration);
                 meeting.where = m.room[0].name + ' - ' + m.room[0].location;
                 meeting.allowed = m.allowed.map(function (user) {
@@ -64,7 +64,7 @@
 
             meeting.description = originalMeeting.description || '';
             meeting.creator = originalMeeting.who[0].email || '';
-            meeting.when = $filter('date')(originalMeeting.when, 'd MMM y h:mm:ss a');
+            meeting.when = $filter('date')(originalMeeting.when, 'd MMM y H:mm:ss');
             meeting.duration = $filter('time')(originalMeeting.duration);
             meeting.where = originalMeeting.room[0].name + ' - ' + originalMeeting.room[0].location;
             meeting.editors = originalMeeting.allowed.map(function (user) {
@@ -91,7 +91,9 @@
         }
 
         function formatMeetingEditOut(mtg) {
-            var meeting = {};
+            var meeting = {}, day, startTime;
+            day = new Date(mtg.whenDate);
+            startTime = new Date(mtg.whenStartTime);
 
             meeting.description = mtg.description;
             if (mtg.editors.indexOf(mtg.who) === -1) {
@@ -99,7 +101,9 @@
             }
             meeting.allowed = mtg.editors;
             meeting.who = mtg.who;
-            meeting.when = Math.round(mtg.whenDate / 86400000) * 86400000 + mtg.whenStartTime % 86400000;
+            meeting.when = +new Date(day.getFullYear(), day.getMonth(), day.getDate(), startTime.getHours(),
+                startTime.getMinutes(), 0, 0);
+                //Math.round(mtg.whenDate / 86400000) * 86400000 + mtg.whenStartTime % 86400000;
             meeting.duration = mtg.whenEndTime - mtg.whenStartTime;
             meeting.room = mtg.where;
 
@@ -117,7 +121,9 @@
             }
             meeting.allowed = mtg.editors;
             meeting.who = mtg.who._id;
-            meeting.when = +new Date(day.getFullYear(), day.getMonth(), day.getDate(), startTime.getHours(), startTime.getMinutes(), 0, 0);//Math.round(mtg.whenDate / 86400000) * 86400000 + mtg.whenStartTime % 86400000;
+            meeting.when = +new Date(day.getFullYear(), day.getMonth(), day.getDate(), startTime.getHours(),
+                startTime.getMinutes(), 0, 0);
+                //Math.round(mtg.whenDate / 86400000) * 86400000 + mtg.whenStartTime % 86400000;
             meeting.duration = mtg.whenEndTime - mtg.whenStartTime;
             meeting.room = mtg.where;
 
@@ -254,7 +260,7 @@
                 user.id = u._id;
                 user.admin = (u.admin || false) ? 'Yes' : 'No';
                 user.email = u.email || '';
-                user.createdUpdatedOn = $filter('date')(u.updatedOn, 'd MMM y h:mm:ss a');//new Date(u.updatedOn);
+                user.createdUpdatedOn = $filter('date')(u.updatedOn, 'd MMM y H:mm:ss');//new Date(u.updatedOn);
 
                 users.push(user);
             });
@@ -267,7 +273,7 @@
 
             user.admin = (originalUser.admin || false) ? 'Yes' : 'No';
             user.email = originalUser.email || '';
-            user['Created/Updated on'] = $filter('date')(originalUser.updatedOn, 'd MMM y h:mm:ss a');
+            user['Created/Updated on'] = $filter('date')(originalUser.updatedOn, 'd MMM y H:mm:ss');
 
             return user;
         }

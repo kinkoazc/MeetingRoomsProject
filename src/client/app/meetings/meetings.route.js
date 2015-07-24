@@ -178,7 +178,7 @@
                         vml.meetings = [];
                         meetings.$promise.then(function (data) {
                             //$scope.$parent.vm.meetings
-                            vml.meetings= formatservice.formatMeetingsList(data);
+                            vml.meetings = formatservice.formatMeetingsList(data);
                         });
 
                     }],
@@ -217,36 +217,96 @@
                             return dataservice.gettingRooms();
                         }
                     },
-                    controller: ['$state', 'users', 'rooms', 'auth', function ($state, users, rooms, auth) {
-                        var vma = this;
+                    controller: ['$state', '$filter', '$scope', '$http', 'users', 'rooms', 'auth',
+                        function ($state, $filter, $scope, $http, users, rooms, auth) {
+                            var vma = this;
 
-                        vma.users = users;
-                        vma.rooms = rooms;
-                        vma.addMeetingFormCb = addMeetingFormCb;
+                            vma.users = users;
+                            vma.rooms = rooms;
+                            vma.addMeetingFormCb = addMeetingFormCb;
+                            vma.checkingMessage = '';
 
-                        /* TODO erase/comment this; for testing purposes only */
-                        vma.meeting = {};
-                        vma.meeting.description = 'one two three ' + Math.round(Math.random() * 10000);
-                        vma.meeting.editors = [
-                            '55a8e758781779641a5526e6',
-                            '55a912cd012489b814275a9b',
-                            '55a91364012489b814275a9c'
-                        ];
-                        //vma.meeting.who = '55a8e757781779641a5526e5';
-                        vma.meeting.who = auth.currentUser();
-                        var date = new Date();
-                        vma.meeting.whenDate = new Date(date.getFullYear(), date.getMonth(), date.getDate()-1, 0, 0, 0, 0);//new Date('2015-07-21T21:00:00.000Z');
-                        vma.meeting.whenStartTime = new Date(1970, 0, 1, 11, 20, 0 ,0);//'1970-01-01T09:20:00.000Z'
-                        vma.meeting.whenEndTime = new Date(1970, 0, 1, 13, 20, 0 ,0);//'1970-01-01T11:40:00.000Z'
-                        vma.meeting.where = '55a8e758781779641a5526e7';
-
-                        function addMeetingFormCb() {
-                            var who = angular.copy(vma.meeting.who);
+                            /* TODO erase/comment this; for testing purposes only */
                             vma.meeting = {};
-                            vma.meeting.who = who;
-                            $state.go('meetings.list');
-                        }
-                    }],
+                            vma.meeting.description = 'one two three ' + Math.round(Math.random() * 10000);
+                            vma.meeting.editors = [
+                                '55a8e758781779641a5526e6',
+                                '55a912cd012489b814275a9b',
+                                '55a91364012489b814275a9c'
+                            ];
+                            vma.meeting.who = auth.currentUser();
+                            var date = new Date();
+                            vma.meeting.whenDate =
+                                new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1, 0, 0, 0, 0);
+                            //new Date('2015-07-21T21:00:00.000Z');
+                            vma.meeting.whenStartTime = new Date(1970, 0, 1, 11, 20, 0, 0);
+                            vma.meeting.whenEndTime = new Date(1970, 0, 1, 13, 20, 0, 0);
+                            vma.meeting.where = '55a8e758781779641a5526e7';
+
+
+
+                            var dateWatchGroup = ['vma.meeting.whenDate', 'vma.meeting.whenStartTime',
+                                'vma.meeting.whenEndTime', 'vma.meeting.where'];
+                            var groupWatcher=$scope.$watchGroup(
+                                dateWatchGroup,
+                                function (values) {
+                                    //console.log('---- digesting');
+                                    var scope=$scope;
+
+                                    vma.startingDate =
+                                        new Date(vma.meeting.whenDate.getFullYear(), vma.meeting.whenDate.getMonth(),
+                                            vma.meeting.whenDate.getDate(), vma.meeting.whenStartTime.getHours(),
+                                            vma.meeting.whenStartTime.getMinutes(), 0, 0);
+                                    vma.verificationStartingDate = +vma.startingDate;
+                                    vma.verificationEndingDate =
+                                        +vma.startingDate + (vma.meeting.whenEndTime - vma.meeting.whenStartTime);
+
+                                    vma.checkingMsg = {message: 'Checking...',color: 'orange'};
+                                    //check availability of meeting room and time interval
+                                    checkMeetingRoomAvailability({
+                                        roomId: vma.meeting.where,
+                                        start: vma.verificationStartingDate,
+                                        end: vma.verificationEndingDate
+                                    }).then(function (result) {
+                                        //$timeout(function () {
+                                            if (result.status===200) {
+                                                vma.checkingMsg =
+                                                    result.data ?
+                                                    {message: 'Available',color: 'green'} :
+                                                    {message: 'Not available',color: 'red'};
+
+                                                if (!result.data) {
+                                                    scope.meetingAddForm.onDate.$setValidity('notAvailable', false);
+                                                    scope.meetingAddForm.where.$setValidity('notAvailable', false);
+                                                } else {
+                                                    scope.meetingAddForm.onDate.$setValidity('notAvailable', true);
+                                                    scope.meetingAddForm.where.$setValidity('notAvailable', true);
+                                                }
+                                            } else {
+                                                vma.checkingMsg =
+                                                {message: 'Verification could not be possible. ' +
+                                                result.data.message, color: 'red'};
+                                            }
+
+                                        //}, 2000);
+                                    });
+                                });
+
+                            $scope.$on('$destroy', function () {
+                                groupWatcher();
+                            });
+
+                            function addMeetingFormCb() {
+                                var who = angular.copy(vma.meeting.who);
+                                vma.meeting = {};
+                                vma.meeting.who = who;
+                                $state.go('meetings.list');
+                            }
+
+                            function checkMeetingRoomAvailability(dates) {
+                                return $http.post('/api/rooms/check-availability', dates);
+                            }
+                        }],
                     controllerAs: 'vma',
                     settings: {
                         authLevel: 2
