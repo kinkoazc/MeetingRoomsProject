@@ -1,0 +1,32 @@
+/* Navbar */
+
+.navbar {
+    background: #000;
+}
+
+.navbar .container {
+    width: 97% !important;
+}
+
+.navbar .nav > li > a {
+    font-size: 13px !important;
+    color: #fff !important;
+}
+
+.navbar i {
+    margin-right: 3px;
+}
+
+.navbar .caret {
+    border-top-color: #fff !important;
+    border-bottom-color: #fff !important;
+}
+
+.navbar .nav-user-pic {
+    width: 20px;
+    margin-right: 10px;
+}
+
+.navbar .badge {
+    margin-left: 5px;
+}

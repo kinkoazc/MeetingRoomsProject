@@ -1,0 +1,366 @@
+* {
+    /*-webkit-box-shadow: none !important;
+    -ms-box-shadow: none !important;
+    box-shadow: none !important;
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false) !important;
+    -webkit-text-shadow: none !important;
+    -ms-text-shadow: none !important;
+    text-shadow: none !important;*/
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    /*font-weight: 400;*/
+}
+
+.btn, .badge, .modal, .modal-dialog, .modal-content {
+    -ms-border-radius: 0 !important;
+    border-radius: 0 !important;
+}
+
+input, select {
+    @extend .btn, .badge, .modal, .modal-dialog, .modal-content;
+    padding: 4px !important;
+    /*width: 65% !important;*/
+    display: inline-block !important;
+}
+
+
+.navbar * {
+    background-image: none !important;
+    -webkit-text-shadow: none !important;
+    -ms-text-shadow: none !important;
+    text-shadow: none !important;
+}
+
+form * {
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+}
+
+input, textarea {
+    background-image: none !important;
+    border: 1px solid #ccc !important;
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+}
+
+select {
+    font-size: 13px !important;
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+}
+
+input[type="radio"], input[type="checkbox"] {
+    margin: 0 0 0 !important;
+    margin-right: 5px !important;
+    line-height: 23px !important;
+    border: 0 !important;
+}
+
+.btn {
+    background-image: none !important;
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    font-size: 13px !important;
+
+    .btn-form-md {
+        margin: 0 .5em .2em .5em;
+        width: 9em;
+    }
+
+    .btn-mini {
+        font-size: 11px !important;
+    }
+}
+
+body {
+    font-size: 13px;
+    line-height: 23px;
+    color: #666;
+    background: #111;
+    padding-top: 45px;
+    -webkit-font-smoothing: antialiased;
+
+    .container {
+        width: 97%;
+        padding-left: 1.5%;
+        padding-right: 1.5%;
+    }
+}
+
+h1 {
+    padding: 2px 0;
+    margin: 2px 0;
+    color: #777;
+    font-weight: 400;
+}
+
+h2 {
+    @extend h1;
+    font-size: 30px;
+    line-height: 40px;
+}
+
+h3 {
+    @extend h1;
+    font-size: 23px;
+    line-height: 33px;
+}
+
+h4 {
+    @extend h1;
+    font-size: 20px;
+    line-height: 30px;
+}
+
+h5 {
+    @extend h1;
+    font-size: 18px;
+    line-height: 28px;
+}
+
+h6 {
+    @extend h1;
+    font-size: 15px;
+    line-height: 25px;
+}
+
+p {
+    padding: 1px 0 !important;
+    margin: 1px 0 !important;
+}
+
+a {
+    color: #333;
+    text-decoration: none !important;
+
+    &:hover {
+        color: #888;
+        text-decoration: none;
+        outline: 0;
+    }
+
+    &:focus, &:active {
+        outline: 0;
+    }
+
+    &.btn {
+        font-size: 13px !important;
+    }
+}
+
+.bold {
+    font-weight: 600;
+}
+
+hr {
+    margin: 8px 0 8px 0 !important;
+    padding: 0 !important;
+    border-top: 0;
+    border-bottom: 1px solid #ddd !important;
+    height: 0;
+}
+
+:focus {
+    outline: none;
+}
+
+::-moz-focus-inner {
+    border: 0;
+}
+
+.well {
+    padding: 10px 15px;
+}
+
+.label {
+    font-weight: 400;
+    padding: 3px 6px !important;
+    font-size: 13px;
+}
+
+.control-label{
+    font-weight: 400 !important;
+    font-size: 14px;
+}
+
+.badge {
+    font-weight: 400;
+    padding: 3px 8px;
+    font-size: 13px;
+}
+
+.progress {
+    height: 17px;
+    line-height: 17px;
+    margin: 5px 0 !important;
+    border: 0;
+}
+
+.progress .bar {
+    font-size: 12px;
+}
+
+/* Button colors */
+
+.btn {
+    &.btn-primary {
+        background: $color_blue !important;
+        &:hover {
+            background: #0f608b !important;
+        }
+    }
+
+    &.btn-info {
+        background: $color_lightblue !important;
+        &:hover {
+            background: #459fc9 !important;
+        }
+    }
+
+    &.btn-success {
+        background: $color_success !important;
+
+        &:hover {
+            background: #36a530 !important;
+        }
+    }
+
+    &.btn-warning {
+        background: $color_warning !important;
+        &:hover {
+            background: #d67323 !important;
+        }
+    }
+
+    &.btn-danger {
+        background: $color_important !important;
+
+        &:hover {
+            background: #d82829 !important;
+        }
+    }
+
+}
+
+/* Label colors */
+
+.label.label-success,
+.badge.badge-success {
+    background: $color_success !important;
+}
+
+.label.label-warning,
+.badge.badge-warning {
+    background: $color_warning !important;
+}
+
+.label.label-important,
+.badge.badge-important {
+    background: $color_important !important;
+}
+
+.label.label-info,
+.badge.badge-info {
+    background: $color_lightblue !important;
+}
+
+/* Background colors */
+
+.blightblue {
+    background: $color_lightblue !important;
+    color: #fff !important;
+    border: 0 !important;
+}
+
+.bblue {
+    background: $color_blue !important;
+    color: #fff !important;
+    border: 0 !important;
+}
+
+.bgreen {
+    background: $color_success !important;
+    color: #fff !important;
+    border: 0 !important;
+}
+
+.borange {
+    background: $color_warning !important;
+    color: #fff !important;
+    border: 0 !important;
+}
+
+.bred {
+    background: $color_important !important;
+    color: #fff !important;
+    border: 0 !important;
+}
+
+.bviolet {
+    background: $color_violet !important;
+    color: #fff !important;
+    border: 0 !important;
+}
+
+.blightblue h2, .blightblue h3, .blightblue h3, .blightblue h4, .blightblue h5, .blightblue h6,
+.bblue h2, .bblue h3, .bblue h3, .bblue h4, .bblue h5, .bblue h6,
+.bgreen h2, .bgreen h3, .bgreen h3, .bgreen h4, .bgreen h5, .bgreen h6,
+.bred h2, .bred h3, .bred h3, .bred h4, .bred h5, .bred h6,
+.bviolet h2, .bviolet h3, .bviolet h3, .bviolet h4, .bviolet h5, .bviolet h6,
+.borange h2, .borange h3, .borange h3, .borange h4, .borange h5, .borange h6 {
+    color: #fff !important;
+}
+
+.blightblue a,
+.bblue a,
+.bgreen a,
+.bred a,
+.borange a,
+.bviolet a {
+    color: #eee !important;
+}
+
+.blightblue a:hover,
+.bblue a:hover,
+.bgreen a:hover,
+.bred a:hover,
+.borange a:hover,
+.bviolet a:hover {
+    color: #ddd !important;
+}
+
+/* Text colors */
+
+.lightblue {
+    color: $color_lightblue !important;
+}
+
+.blue {
+    color: $color_blue !important;
+}
+
+.green {
+    color: $color_success !important;
+}
+
+.orange {
+    color: $color_warning !important;
+}
+
+.red {
+    color: $color_important !important;
+}
+
+.violet {
+    color: $color_violet !important;
+}
+
+
+
+/* Half column - CHECK LATER */
+
+.col-left {
+    width: 48%;
+    float: left;
+}
+
+.col-right {
+    width: 48%;
+    float: right;
+}

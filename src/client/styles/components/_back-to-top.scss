@@ -1,0 +1,24 @@
+/* Back to top */
+
+.totop {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 104400;
+    background: $color_important;
+    display: none;
+}
+
+.totop a, .totop a:visited {
+    display: block;
+    width: 30px;
+    height: 30px;
+    color: #fff;
+    text-align: center;
+    line-height: 30px;
+}
+
+.totop a:hover {
+    color: #eee;
+    text-decoration: none;
+}

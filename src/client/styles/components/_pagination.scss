@@ -1,0 +1,18 @@
+/* Pagination*/
+
+.pagination {
+    margin: 10px 0 5px 0;
+}
+
+.pagination ul > li > a, .pagination ul > li > span {
+    border: 1px solid #ccc;
+    margin-right: 3px;
+    padding: 3px 8px;
+    background-color: #fff;
+    color: #666;
+}
+
+.pagination ul > li > a:hover {
+    color: #333;
+    background: #fafafa;
+}
