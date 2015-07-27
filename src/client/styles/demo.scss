@@ -496,3 +496,895 @@ $params: (
 
 //Mixins and Vendor Prefixes
 //http://sass-guidelin.es/#mixins-and-vendor-prefixes
+
+//use Autoprefixer(https://github.com/postcss/autoprefixer), don't create mixins to handle vendor prefixing
+//Unfortunately, Autoprefixer is not always an option. If you use either Bourbon or Compass, you may already know that they both provide a collection of mixins that handle vendor prefixes for you. Use those.
+//If you cannot use Autoprefixer and use neither Bourbon nor Compass, then and only then, you can have your own mixin for prefixing CSS properties. But. Please do not build a mixin per property, manually printing each vendor.
+
+/// Mixin helper to output vendor prefixes
+/// @access public
+/// @author HugoGiraudel
+/// @param {String} $property - Unprefixed CSS property
+/// @param {*} $value - Raw CSS value
+/// @param {List} $prefixes - List of prefixes to output
+@mixin prefix($property, $value, $prefixes: ()) {
+    @each $prefix in $prefixes {
+        -#{$prefix}-#{$property}: $value;//-webkit-transform: ...
+    }
+
+    #{$property}: $value;//transform: ...
+}
+
+//usage
+.foo {
+    @include prefix(transform, rotate(90deg), ('webkit', 'ms'));
+}
+
+
+
+//Conditional Statements(@if, @else)
+//No parentheses unless they are necessary;
+//Always an empty new line before @if;
+//Always a line break after the opening brace ({);
+//@else statements on the same line as previous closing brace (}).
+//Always an empty new line after the last closing brace (}) unless the next line is a closing brace (}).
+
+$support-legacy : false;
+// Yep
+@if $support-legacy {
+    // ...
+} @else {
+    // ...
+}
+
+//When testing for a falsy value, always use the not keyword rather than testing against false or null.
+$list: ('one', 'two', 'three');
+$item: 'one';
+// Yep
+@if not index($list, $item) {
+    // ...
+}
+
+//Put the variable part on the left side of the statement
+// Yep
+@if $value == 42 {
+    // ...
+}
+
+//always make sure the function still has a @return statement outside of any conditional block
+// Yep
+@function dummy($condition) {
+    @if $condition {
+        @return true;
+    }
+
+    @return false;
+}
+
+
+//LOOPS(to iterate over lists and maps)
+//However, the presence of loops usually implies moderately complex logic that probably does not belong to Sass. Before using a loop, make sure it makes sense and that it actually solves an issue.
+//1. @each
+$themes : ('abc', 'def', 'ghi');
+$colors: (
+    'abc':red,
+    'def':green,
+    'ghi':blue
+);
+@each $theme in $themes {
+    .section-#{$theme} {
+        background-color: map-get($colors, $theme);
+    }
+}
+
+//When iterating on a map, always use $key and $value as variable names to enforce consistency.
+@each $key, $value in $themes {
+    .section-#{$key} {
+        background-color: $value;
+    }
+}
+
+//2. @for
+//The @for loop might be useful when combined with CSS’ :nth-* pseudo-classes. Except for these scenarios, prefer an @each loop if you have to iterate over something.
+@for $i from 1 through 10 {//unless you have a really good reason to, never use the to keyword: always use through. Many developers do not even know Sass offers this variation; using it might lead to confusion.
+    .foo:nth-of-type(#{$i}) {
+        border-color: hsl($i * 36, 50%, 50%);
+    }
+}
+
+//3. @while
+//The @while loop has absolutely no use case in a real Sass project, especially since there is no way to break a loop from the inside. Do not use it.
+
+
+
+//Warnings And Errors
+//ability to dynamically output warnings and errors
+//Sass comes with three custom directives to print content in the standard output system (CLI, compiling app…)
+//1. @debug //it is clearly intended to debug SassScript, which is not our point here
+//We are then left with @warn and @error which are noticeably identical except that one stops the compiler while the other does not. I’ll let you guess which does what.
+//2. @warn
+//3. @error
+//use a logger?(see http://sass-guidelin.es/#warnings-and-errors)
+
+//Warnings
+$mq-base-font-size: 10;
+@function mq-px2em($px, $base-font-size: $mq-base-font-size) {
+    @if unitless($px) {
+        @warn 'Assuming #{$px} to be in pixels, attempting to convert it into pixels.';//an assumption may be risky so the user should be warned that the software did something that could be considered unexpected.
+        @return mq-px2em($px + 0px);
+    } @else if unit($px) == em {
+        @return $px;
+    }
+
+    @return ($px / $base-font-size) * 1em;
+}
+
+//Errors
+//they stop the compilation and display a message in the output stream as well as the stack trace, which is handy for debugging
+//errors should be thrown when there is no way for the program to keep running. When possible, try to work around the issue and display a warning instead
+
+/// Z-indexes map, gathering all Z layers of the application
+/// @access private
+/// @type Map
+/// @prop {String} key - Layer’s name
+/// @prop {Number} value - Z value mapped to the key
+$z-indexes: (
+    'modal': 5000,
+    'dropdown': 4000,
+    'default': 1,
+    'below': -1,
+);
+
+/// Get a z-index value from a layer name
+/// @access public
+/// @param {String} $layer - Layer's name
+/// @return {Number}
+/// @require $z-indexes
+@function z($layer) {
+    @if not map-has-key($z-indexes, $layer) {
+        @error 'There is no layer named `#{$layer}` in $z-indexes. '
+         + 'Layer should be one of #{map-keys($z-indexes)}.';
+    }
+
+    @return map-get($z-indexes, $layer);
+}
+
+
+//TOOLS
+//my advice would to be to lower the number of dependencies to the strict minimum. Managing dependencies is some sort of hell you don’t want to be part of. Plus, there is little( to no) need for external dependencies when it comes to Sass.
+//Compass
+//I do not use Compass anymore, the main reason is that it slows Sass down a lot. Ruby Sass is quite slow in itself, so adding more Ruby and more Sass on top of it doesn’t really help.
+//The thing is, we use very little from the whole framework. Compass is huge. Cross-browser compatibility mixins is just the tip of the iceberg. Math functions, image helpers, spriting… There is so much that can be done with this great piece of software.
+//Unfortunately, this is all sugar and there is no killer feature in there. An exception could be made of the sprite builder which is really great, but Grunticon and Grumpicon do the job as well, and have the benefit of being pluggable in the build process.
+
+
+//GRID SYSTEMS
+//Not using a grid system is not an option now that Responsive Web Design is all over the place.
+//To avoid having to code this grid work over and over again, some brilliant minds made theirs reusable.
+//In most cases, you just want the usual regular 12-columns grid, nothing fancy.
+
+//If you are using a CSS framework for your project like Bootstrap or Foundation, chances are high it includes a grid system already in which case I would recommend to use it to avoid having to deal with yet another dependency.
+//If you are not tied to a specific grid system, you will be pleased to know there are two top-notch Sass powered grid engines out there: Susy and Singularity. Both do much more than you will ever need so you can pick the one you prefer between these two and be sure all your edge cases—even the most nifty ones—will be covered. If you ask me, Susy has a slightly better community, but that’s my opinion.
+//Or you can head over to something a bit more casual, like csswizardry-grids. All in all, the choice will not have much of an impact on your coding style, so this is pretty much up to you at this point.
+
+
+//SCSS-Lint
+//Linting code is very important. Usually, following guidelines from a styleguide helps reducing the amount of code quality mistakes but nobody’s perfect and there are always things to improve. So you could say that linting code is as important as commenting it.
+//Fortunately, SCSS-lint recommendations are very similar to those described in this document. In order to configure SCSS-lint according to Sass Guidelines, may I recommend the following setup:
+//# For SCSS-Lint v0.32.0
+//
+//  linters:
+//
+//  BangFormat:
+//  enabled: true
+//  space_before_bang: true
+//  space_after_bang: false
+//
+//  BorderZero:
+//  enabled: true
+//
+//  ColorKeyword:
+//  enabled: false
+//
+//  Comment:
+//  enabled: false
+//
+//  DebugStatement:
+//  enabled: true
+//
+//  DeclarationOrder:
+//  enabled: true
+//
+//  DuplicateProperty:
+//  enabled: false
+//
+//  ElsePlacement:
+//  enabled: true
+//  style: same_line
+//
+//  EmptyLineBetweenBlocks:
+//  enabled: true
+//  ignore_single_line_blocks: false
+//
+//  EmptyRule:
+//  enabled: true
+//
+//  FinalNewline:
+//  enabled: true
+//  present: true
+//
+//  HexLength:
+//  enabled: true
+//  style: short
+//
+//  HexNotation:
+//  enabled: true
+//  style: lowercase
+//
+//  HexValidation:
+//  enabled: true
+//
+//  IdSelector:
+//  enabled: true
+//
+//  ImportPath:
+//  enabled: true
+//  leading_underscore: false
+//  filename_extension: false
+//
+//  Indentation:
+//  enabled: true
+//  character: space
+//  width: 2
+//
+//LeadingZero:
+//enabled: true
+//style: include_zero
+//
+//MergeableSelector:
+//enabled: false
+//force_nesting: false
+//
+//NameFormat:
+//enabled: true
+//convention: hyphenated_lowercase
+//allow_leading_underscore: true
+//
+//NestingDepth:
+//enabled: true
+//max_depth: 3
+//
+//PlaceholderInExtend:
+//enabled: true
+//
+//PropertySortOrder:
+//enabled: false
+//ignore_unspecified: false
+//
+//PropertySpelling:
+//enabled: true
+//extra_properties: []
+//
+//QualifyingElement:
+//enabled: true
+//allow_element_with_attribute: false
+//allow_element_with_class: false
+//allow_element_with_id: false
+//
+//SelectorDepth:
+//enabled: true
+//max_depth: 3
+//
+//SelectorFormat:
+//enabled: true
+//convention: hyphenated_lowercase
+//class_convention: '^(?:u|is|has)\-[a-z][a-zA-Z0-9]*$|^(?!u|is|has)[a-zA-Z][a-zA-Z0-9]*(?:\-[a-z][a-zA-Z0-9]*)?(?:\-\-[a-z][a-zA-Z0-9]*)?$'
+//
+//Shorthand:
+//enabled: true
+//
+//SingleLinePerProperty:
+//enabled: true
+//allow_single_line_rule_sets: false
+//
+//SingleLinePerSelector:
+//enabled: true
+//
+//SpaceAfterComma:
+//enabled: true
+//
+//SpaceAfterPropertyColon:
+//enabled: true
+//style: one_space
+//
+//SpaceAfterPropertyName:
+//enabled: true
+//
+//SpaceBeforeBrace:
+//enabled: true
+//style: space
+//allow_single_line_padding: true
+//
+//SpaceBetweenParens:
+//enabled: true
+//spaces: 0
+//
+//StringQuotes:
+//enabled: true
+//style: single_quotes
+//
+//TrailingSemicolon:
+//enabled: true
+//
+//TrailingZero:
+//enabled: true
+//
+//UnnecessaryMantissa:
+//enabled: true
+//
+//UnnecessaryParentReference:
+//enabled: true
+//
+//UrlFormat:
+//enabled: false
+//
+//UrlQuotes:
+//enabled: true
+//
+//VendorPrefixes:
+//enabled: true
+//identifier_list: base
+//include: []
+//exclude: []
+//
+//ZeroUnit:
+//enabled: true
+
+
+
+//tl;dr
+//Two (2) spaces indents, no tabs;
+//80-characters wide lines;
+//Properly written multi-line CSS;
+//Meaningful use of whitespaces;
+//Quoted strings (single quotes) & URLs;
+//No trailing 0, mandatory leading 0;
+//Calculations wrapped in parentheses;
+//No magic numbers;
+//Colors expressed in keywords > HSL > RGB > hexadecimal;
+//Lists separated with commas;
+//No trailing comma in lists (since they are inlined);
+//Trailing comma in maps;
+//No selector nesting except for pseudo-classes and pseudo-elements;
+//Hyphen-delimited naming;
+//Extensive comments;
+//SassDoc-powered API comments;
+//Limited usage of @extend;
+//Simple mixins;
+//As few loops as possible, no @while;
+//Reduced number of dependencies;
+//Meaningful use of warnings and errors.
+
+
+
+//see https://css-tricks.com/bem-101/
+//Block block
+//Element block__element
+//Modifier block--modifier
+
+//<div class="block block--modifier">
+//    <button class="block__title"></button>
+//    <button class="block__element"></button>
+//</div>
+
+//.For those of you writing Sass and enjoy nesting as a way of scoping styles, you can still author in a nested format, but get CSS that isn't nested, with @at-rootblock {
+.block {
+    @at-root #{&}__element {
+    }
+    @at-root #{&}--modifier {
+    }
+}
+
+//result
+.block {
+}
+.block__element {
+}
+.block--modifier {
+}
+
+//And you can get as abstract as you want! Check out Danield Guillan's BEM Constructor(https://github.com/danielguillan/bem-constructor) or Anders Schmidt Hansen's Expressive BEM(http://codepen.io/andersschmidt/thoughts/expressive-bem-with-sass-a-different-approach).
+
+//This is because a great deal of front end development is not just about the nice tricks that solve one little problem in the short term; we need agreements, promises and binding social contracts between developers so that our codebase can adapt over time.
+//Replace "can you build this?" with "can you maintain this without losing your minds?" (see BEM as an answer)
+
+
+
+
+
+
+
+
+
+
+
+
+//Sass Reference (http://sass-lang.com/documentation/file.SASS_REFERENCE.html)
+
+//1. & operator
+a {
+    font-weight: bold;
+    text-decoration: none;
+    &:hover { text-decoration: underline; }
+    body.firefox & { font-weight: normal; }
+}
+//compiled to
+a {
+    font-weight: bold;
+    text-decoration: none; }
+a:hover {
+    text-decoration: underline; }
+body.firefox a {
+    font-weight: normal; }
+
+
+#main {
+    color: black;
+    &-sidebar { border: 1px solid; }
+}
+//compiled to
+#main {
+    color: black; }
+#main-sidebar {
+    border: 1px solid; }
+
+
+//2. nested properties
+.funky {
+    font: {
+        family: fantasy;
+        size: 30em;
+        weight: bold;
+    }
+}
+//compiled to
+.funky {
+    font-family: fantasy;
+    font-size: 30em;
+    font-weight: bold; }
+
+.funky {
+    font: 20px/24px fantasy {
+        weight: bold;
+    }
+}
+//compiled to
+.funky {
+    font: 20px/24px fantasy;
+    font-weight: bold;
+}
+
+
+//3. placeholders (%foo)
+%foo {
+    color: black;
+}
+
+.bar {
+    @extend %foo;
+    font-size: 18px;
+}
+
+
+//4. comments (/* appears as CSS comments */ and // only as Sass comments)
+//When the first letter of a multiline comment is !, the comment will always rendered into css output even in compressed output modes. This is useful for adding Copyright notices to your generated CSS.
+//Since multiline comments become part of the resulting CSS, interpolation within them is resolved.
+$version: '1.2.3';
+/* This CSS is generated by My Snazzy Framework version #{$version}. */
+
+//5. SassScript (sass -i)
+//Sass supports a small set of extensions called SassScript. SassScript allows properties to use variables, arithmetic, and extra functions. SassScript can be used in any property value.
+//SassScript can also be used to generate selectors and property names, which is useful when writing mixins. This is done via interpolation.
+
+//6. SassScript variables
+//Variables are only available within the level of nested selectors where they’re defined. If they’re defined outside of any nested selectors, they’re available everywhere. They can also be defined with the !global flag, in which case they’re also available everywhere.
+//For historical reasons, variable names (and all other Sass identifiers) can use hyphens and underscores interchangeably. For example, if you define a variable called $main-width, you can access it as $main_width, and vice versa.
+$width: 4em;
+#main {
+    width: $width;
+}
+
+#main {
+    $width: 5em !global;
+    width: $width;
+}
+
+#sidebar {
+    width: $width;
+}
+
+//7. Data types
+//SassScript supports seven main data types:
+//
+//numbers (e.g. 1.2, 13, 10px)
+//strings of text, with and without quotes (e.g. "foo", 'bar', baz)
+//colors (e.g. blue, #04a3f9, rgba(255, 0, 0, 0.5)) (In compressed output mode, Sass will output the smallest CSS representation of a color. For example, #FF0000 will output as red in compressed mode, but blanchedalmond will output as #FFEBCD.) (use color functions)
+//booleans (e.g. true, false)
+//nulls (e.g. null)
+//lists of values(even other lists), separated by spaces or commas (e.g. 1.5em 1em 0 2em, Helvetica, Arial, sans-serif)(use with Sass functions such as nth, join, append, etc.)
+//maps from one value(even other maps) to another (e.g. (key1: value1, key2: value2)) (use with Sass functions like map-get, map-merge and inspect(for debugging maps))
+
+@mixin firefox-message($selector) {
+    body.firefox #{$selector}:before {
+        content: "Hi, Firefox users!";
+    }
+}
+@include firefox-message(".header");//string is striped of quotes when used with #{} interpolation
+
+
+//8. interpolation (using #{})
+$name: foo;
+$attr: border;
+p.#{$name} {
+    #{$attr}-color: blue;
+}
+
+p {
+    $font-size: 12px;
+    $line-height: 30px;
+    font: #{$font-size}/#{$line-height};
+}
+
+//9. & in SassScript
+//Just like when it’s used in selectors, & in SassScript refers to the current parent selector. It’s a comma-separated list of space-separated lists.
+.foo.bar .baz.bang, .bip.qux {
+    $selector: &;
+}
+
+@mixin does-parent-exist {
+    @if & {
+        &:hover {
+            color: red;
+        }
+    } @else {
+        a {
+            color: red;
+        }
+    }
+}
+
+//10. !default flag
+//if the variable has already been assigned to, it won’t be re-assigned, but if it doesn’t have a value yet, it will be given one.
+
+$content: "First content";//this will be compiled
+//$content: null;//treated as unassigned
+$content: "Second content?" !default;
+$new_content: "First time reference" !default;
+
+#main {
+    content: $content;
+    new-content: $new_content;
+}
+
+
+//11. @-Rules(from CSS3) and Directives
+// @import
+//Sass extends the CSS @import rule to allow it to import SCSS and Sass files.
+//@import "rounded-corners", "text-shadow";
+$family: unquote("Droid+Sans");
+@import url("http://fonts.googleapis.com/css?family=#{$family}");//only works with url() imports
+
+//@import "colors";//import a Sass partial, _colors.scss, which will not generate a .css file
+
+
+//@media (can be nested)
+.sidebar {
+    width: 300px;
+    @media screen and (orientation: landscape) {
+        width: 500px;
+    }
+}
+
+@media screen {
+    .sidebar {
+        @media (orientation: landscape) {
+            width: 500px;
+        }
+    }
+}
+
+$media: screen;
+$feature: -webkit-min-device-pixel-ratio;
+$value: 1.5;
+@media #{$media} and ($feature: $value) {
+    .sidebar {
+        width: 500px;
+    }
+}
+
+
+//@extend
+.error {
+    border: 1px #f00;
+    background-color: #fdd;
+}
+.seriousError {
+    @extend .error;
+    border-width: 3px;
+}
+
+
+.error {
+    border: 1px #f00;
+    background-color: #fdd;
+}
+.error.intrusion {
+    //background-image: url("/image/hacked.png");
+}
+.seriousError {
+    @extend .error;
+    border-width: 3px;
+}
+//compiled to:
+.error, .seriousError {
+    border: 1px #f00;
+    background-color: #fdd; }
+
+.error.intrusion, .seriousError.intrusion {
+    //background-image: url("/image/hacked.png"); }
+
+    .seriousError {
+        border-width: 3px;
+    }
+}
+
+//The !optional Flag
+a.important {
+    @extend .notice !optional;//optional extended class
+}
+
+
+//@extend
+//if you use @extend within @media (or other CSS directives), you may only extend selectors that appear within the same directive block.
+//.error {
+//    border: 1px #f00;
+//    background-color: #fdd;
+//}
+//
+//@media print {
+//    .seriousError {
+//        // INVALID EXTEND: .error is used outside of the "@media print" directive
+//        @extend .error;
+//        border-width: 3px;
+//    }
+//}
+
+
+//@at-root
+//.parent {
+//    ...
+//  @at-root .child { ... }
+//}
+//.parent {
+//    ...
+//  @at-root {
+//        .child1 { ... }
+//        .child2 { ... }
+//    }
+//    .step-child { ... }
+//}
+
+//@at-root (without: ...) and @at-root (with: ...)//You can use @at-root (without: ...) to move outside of any directive. You can also do it with multiple directives separated by a space: @at-root (without: media supports) moves outside of both @media and @supports queries.
+//There are two special values you can pass to @at-root. “rule” refers to normal CSS rules; @at-root (without: rule) is the same as @at-root with no query. @at-root (without: all) means that the styles should be moved outside of all directives and CSS rules.
+//If you want to specify which directives or rules to include, rather than listing which ones should be excluded, you can use with instead of without. For example, @at-root (with: rule) will move outside of all directives, but will preserve any CSS rules.
+//@media print {
+//    .page {
+//        width: 8in;
+//        @at-root (without: media) {
+//            color: red;
+//        }
+//    }
+//}
+
+
+//@debug
+@debug 10em + 12em;
+
+//@warn
+//Is useful for libraries that need to warn users of deprecations or recovering from minor mixin usage mistakes. There are two major distinctions between @warn and @debug: You can turn warnings off with the --quiet command-line option or the :quiet Sass option.
+//A stylesheet trace will be printed out along with the message so that the user being warned can see where their styles caused the warning.
+@mixin adjust-location($x, $y) {
+    @if unitless($x) {
+        @warn "Assuming #{$x} to be in pixels";
+        $x: 1px * $x;
+    }
+    @if unitless($y) {
+        @warn "Assuming #{$y} to be in pixels";
+        $y: 1px * $y;
+    }
+    position: relative; left: $x; top: $y;
+}
+
+
+//@error
+//throws the value of a SassScript expression as a fatal error, including a nice stack trace
+//useful for validating arguments to mixins and functions
+@mixin adjust-location($x, $y) {
+    @if unitless($x) {
+        @error "$x may not be unitless, was #{$x}.";
+    }
+    @if unitless($y) {
+        @error "$y may not be unitless, was #{$y}.";
+    }
+    position: relative; left: $x; top: $y;
+}
+
+
+//Control Directives & Expressions
+//Note: Control directives are an advanced feature, and are uncommon in day-to-day styling. They exist mainly for use in mixins, particularly those that are part of libraries like Compass, and so require substantial flexibility.
+
+//@if
+$type: monster;
+p {
+    @if $type == ocean {
+        color: blue;
+    } @else if $type == matador {
+        color: red;
+    } @else if $type == monster {
+        color: green;
+    } @else {
+        color: black;
+    }
+}
+
+//@for
+//the range includes the values of <start> and <end>, but the form from ... to runs up to but not including the value of <end>
+@for $i from 1 through 3 {//1, 2, 3
+    .item-#{$i} { width: 2em * $i; }
+}
+@for $i from 1 to 3 {//1, 2
+    .item-#{$i} { width: 2em * $i; }
+}
+
+//@each
+@each $animal in puma, sea-slug, egret, salamander {
+    .#{$animal}-icon {
+        background-image: url('/images/#{$animal}.png');
+    }
+}
+
+@each $animal, $color, $cursor in (puma, black, default),//($animal, $color, $cursor)
+    (sea-slug, blue, pointer),
+    (egret, white, move) {
+    .#{$animal}-icon {
+        background-image: url('/images/#{$animal}.png');
+        border: 2px solid $color;
+        cursor: $cursor;
+    }
+}
+
+@each $header, $size in (h1: 2em, h2: 1.5em, h3: 1.2em) {
+    #{$header} {
+        font-size: $size;
+    }
+}
+
+
+//@while
+$i: 6;
+@while $i > 0 {
+    .item-#{$i} { width: 2em * $i; }
+    $i: $i - 2;
+}
+
+
+//Mixin directives
+
+//defining a @mixin
+@mixin clearfix {
+    display: inline-block;
+    &:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+    * html & { height: 1px }
+}
+
+//including a mixin
+.page-title {
+    //@include clearfix;
+    padding: 4px;
+    margin-top: 10px;
+}
+
+
+@mixin silly-links {
+    a {
+        color: blue;
+        background-color: red;
+    }
+}
+@include silly-links;
+
+
+@mixin compound {
+    @include highlighted-background;
+    @include header-text;
+}
+@mixin highlighted-background { background-color: #fc0; }
+@mixin header-text { font-size: 20px; }
+
+
+@mixin sexy-border($color, $width: 1in) {
+    border: {
+        color: $color;
+        width: $width;
+        style: dashed;
+    }
+}
+p { @include sexy-border(blue); }
+h1 { @include sexy-border(blue, 2in); }
+p { @include sexy-border($color: blue); }
+h1 { @include sexy-border($width: 2in, $color: blue); }
+
+@mixin box-shadow($shadows...) {//variable args
+    -moz-box-shadow: $shadows;
+    -webkit-box-shadow: $shadows;
+    box-shadow: $shadows;
+}
+.shadows {
+    @include box-shadow(0px 4px 5px #666, 2px 6px 10px #999);
+}
+//Variable arguments also contain any keyword arguments passed to the mixin or function. These can be accessed using the keywords($args) function, which returns them as a map from strings (without $) to values.
+
+@mixin colors($text, $background, $border) {
+    color: $text;
+    background-color: $background;
+    border-color: $border;
+}
+$values: #ff0000, #00ff00, #0000ff;
+.primary {
+    @include colors($values...);
+}
+$value-map: (text: #00ff00, background: #0000ff, border: #ff0000);
+.secondary {
+    @include colors($value-map...);
+}
+
+
+//Passing Content Blocks to a Mixin
+//The block of content passed to a mixin are evaluated in the scope where the block is defined, not in the scope of the mixin. This means that variables local to the mixin cannot be used within the passed style block and variables will resolve to the global value
+@mixin apply-to-ie6-only {
+    * html {
+        @content;
+    }
+}
+@include apply-to-ie6-only {
+    #logo {
+        background-image: url(/logo.gif);
+    }
+}
+//Generates
+* html #logo {
+    background-image: url(/logo.gif);
+}
+
+
+//Function Directives, @function
+//It is possible to define your own functions in sass and use them in any value or script context.
+//It is recommended that you prefix your functions to avoid naming conflicts and so that readers of your stylesheets know they are not part of Sass or CSS.
+//For historical reasons, function names (and all other Sass identifiers) can use hyphens and underscores interchangeably. For example, if you define a function called grid-width, you can use it as grid_width, and vice versa.
+$grid-width: 40px;
+$gutter-width: 10px;
+@function grid-width($n) {
+    @return $n * $grid-width + ($n - 1) * $gutter-width;
+}
+#sidebar { width: grid-width(5); }
+//As with mixins, you can call Sass-defined functions using keyword arguments.
+#sidebar { width: grid-width($n: 5); }
+
+
+
