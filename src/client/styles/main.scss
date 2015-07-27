@@ -67,8 +67,9 @@
 
 //framework/library overwrites
 @import
-    'vendors-extensions/bootstrap';
-    'vendors-extensions/font-awesome';
+    'vendors-extensions/bootstrap',
+    'vendors-extensions/font-awesome',
+    'vendors-extensions/angular',
     'vendors-extensions/toastr';
 
 //base
@@ -94,6 +95,7 @@
     'components/widget',
     'components/today-datas',
     'components/media',
+    'components/splash',
     'components/thumbnails',
     'components/back-to-top',
     'components/modal',

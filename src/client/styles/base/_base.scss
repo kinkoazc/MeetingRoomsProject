@@ -364,3 +364,171 @@ hr {
     width: 48%;
     float: right;
 }
+
+/* #region Main Styles */
+
+ul.image-group {
+    padding:0 0 0 0;
+    margin:0 0 0 0;
+}
+ul.image-group li {
+    list-style:none;
+    margin-bottom:25px;
+}
+
+.ng-cloak {
+    display: none !important;
+}
+
+select > option {
+    color: black;
+}
+
+input.form-control,
+select.form-control,
+textarea.form-control {
+    /*width: 205px;*/
+    display: block;
+    width: 50%;
+    max-width: 30em;
+}
+
+.widget .padd {
+    /*margin-bottom: 0;*/
+    /*padding: 1em 0;*/
+    height: 12em;
+}
+
+.widget .padd.padd-tight {
+    padding: 6px;
+}
+
+.list-flow.list-flow-tight {
+    width: 90px;
+}
+
+.map {
+    height: 228px;
+}
+
+.btn > i {
+    margin-right: 8px;
+}
+
+.btn {
+    margin-right: 4px;
+    margin-left: 4px;
+}
+
+.btn.btn-notext > i {
+    margin-right: 0;
+}
+
+.btn-group{
+    margin: .2em;
+}
+
+small {
+    font-size: 14px;
+}
+
+.text-subtle {
+    color: #b7b7b7;
+}
+
+.page-title-subtle {
+    color: white;
+}
+
+.page-title {
+    color: #EEE;
+    margin-right: 12px;
+}
+
+.right {
+    clear: right;
+    float: right;
+}
+
+.widget-content .padd:hover {
+    cursor: pointer;
+    color: white;
+    background-color: $color_lightblue;
+}
+
+.widget-content .padd:hover * {
+    color: white;
+}
+
+.list-flow {
+    margin: 6px;
+    float: left;
+    width: 110px;
+    height: 120px;
+    border-bottom: solid 0 transparent;
+    padding: 1.5% .5%;
+}
+
+.name-stack h5 {
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    line-height: 18px !important;
+}
+
+.search-query {
+    margin: 2px auto 8px auto !important;
+}
+
+.fa-search {
+    color: #FFFFFF;
+}
+
+.form-search {
+    min-height: 2em;
+}
+
+.input-group[class*="col-"] {
+    width: 80%;
+    margin: 0 1.5em;}
+
+.user .user-pic {
+    display: block;
+    margin: auto;
+}
+
+.user .user-details {
+    margin-left: 100px;
+    margin-right: 10px;
+}
+
+.widget-content {
+    padding: 1em;
+    margin: 0;
+}
+
+.stacked {
+    float: none !important;
+    display: block;
+    margin: auto;
+}
+
+.navbar .navbar-brand {
+    /*background: url(../images/gg.png) no-repeat left top !important;*/
+    margin: 0 1em;
+    height: 45px;
+}
+
+.navbar .brand-title {
+    /*margin-left: 4em;*/
+    color: #FFFFFF;
+}
+
+.navbar-logo img {
+    height: 20px;
+}
+
+.today-datas li {
+    padding: 20px 14px;
+    height: 9em;
+}
