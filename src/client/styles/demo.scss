@@ -1364,12 +1364,12 @@ $value-map: (text: #00ff00, background: #0000ff, border: #ff0000);
 }
 @include apply-to-ie6-only {
     #logo {
-        background-image: url(/logo.gif);
+        //background-image: url(/logo.gif);
     }
 }
 //Generates
 * html #logo {
-    background-image: url(/logo.gif);
+    //background-image: url(/logo.gif);
 }
 
 
