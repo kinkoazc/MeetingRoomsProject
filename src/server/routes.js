@@ -224,7 +224,8 @@ apiRoutes.get('/meetings', function (req, res, next) {// /meetings (get all meet
 
 apiRoutes.post('/meetings', function (req, res, next) {// /meetings (create a meeting)
 
-    if (!req.body.description || !req.body.who || !req.body.when || !req.body.duration || !req.body.duration < 0 || !req.body.room || !req.body.allowed) {
+    if (!req.body.description || !req.body.who || !req.body.when ||
+        !req.body.duration || req.body.duration > 0 || !req.body.room || !req.body.allowed) {
         return res.status(400).json({success: false, message: 'Please fill out all fields'});
     }
 
@@ -275,7 +276,8 @@ apiRoutes.get('/meetings/:id', function (req, res, next) {// /meetings/:id (get 
 
 apiRoutes.put('/meetings/:id', function (req, res, next) {// /meetings/:id (edit a meeting)
     //check authorization level(done in .use() part, above)(only the standard and admin users will be let through)
-    if (!req.body.description || !req.body.who || !req.body.when || !req.body.duration || !req.body.duration < 0 || !req.body.room || !req.body.allowed) {
+    if (!req.body.description || !req.body.who || !req.body.when || !req.body.duration ||
+        req.body.duration > 0 || !req.body.room || !req.body.allowed) {
         return res.status(400).json({success: false, message: 'Please fill out all fields'});
     }
 

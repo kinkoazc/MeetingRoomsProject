@@ -10,7 +10,7 @@
     /* @ngInject */
     /*jshint maxparams: 15 */
     function UsersController($rootScope, $state, $window,
-        $filter, $timeout, auth, logger, routerHelper, dataservice, formatservice) {
+                             $filter, $timeout, auth, logger, routerHelper, dataservice, formatservice) {
 
         var vm = this,
             states = routerHelper.getStates();
@@ -125,7 +125,7 @@
 
             //console.log('Edit user form submitted! ', user);
             dataservice.editingUser(formatservice.formatUserEditOut(user)).$promise.then(function (data) {
-                if (data.message==='Not authorized.') {
+                if (data.message === 'Not authorized.') {
                     logger.error('You are not authorized to edit this user.', data, 'Error!');
                 } else {
                     logger.success('User updated successfully.', data, 'Success!');
@@ -145,14 +145,14 @@
             e.preventDefault();
 
 
-            if (user.password!==user.password2) {
-                logger.warning('Passwords are not the same!',user,'Password error');
+            if (user.password !== user.password2) {
+                logger.warning('Passwords are not the same!', user, 'Password error');
                 return;
             }
 
             //console.log('Add user form submitted! ', formatservice.formatUserAddOut(user));
             dataservice.addingUser(formatservice.formatUserAddOut(user)).$promise.then(function (data) {
-                if (data.message==='Not authorized.') {
+                if (data.message === 'Not authorized.') {
                     logger.error('You are not authorized to add this user.', data, 'Error!');
                 } else {
                     logger.success('User saved successfully.', data, 'Success!');
@@ -171,7 +171,7 @@
         function deleteUser(id) {
             if ($window.confirm('Are you sure you want to delete the entry?')) {
                 dataservice.deletingUser(id).$promise.then(function (data) {
-                    if (data.message==='Not authorized.') {
+                    if (data.message === 'Not authorized.') {
                         logger.error('You are not authorized to delete this user.', data, 'Error!');
                     } else {
                         logger.success('User deleted successfully.', data, 'Success!');

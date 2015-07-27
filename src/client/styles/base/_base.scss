@@ -31,6 +31,11 @@ input, select {
     text-shadow: none !important;
 }
 
+.navbar .navbar-nav li.active > a {
+    background-color: #4C4C4C;//#131313;
+    //border-bottom: 1px solid #222;
+}
+
 form * {
     font-family: "Segoe UI", Arial, Helvetica, sans-serif;
 }
@@ -72,12 +77,12 @@ body {
     font-size: 13px;
     line-height: 23px;
     color: #666;
-    background: #111;
+    background: #E8E8E8;//#111;
     padding-top: 45px;
     -webkit-font-smoothing: antialiased;
 
     .container {
-        width: 97%;
+        //width: 97%;
         padding-left: 1.5%;
         padding-right: 1.5%;
     }

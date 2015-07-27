@@ -85,7 +85,9 @@
     'layout/header',
     'layout/footer',
     'layout/sidebar',
-    'layout/forms';
+    'layout/main',
+    'layout/forms',
+    'layout/matter';
 
 //components(styles for widgets, smaller site components/modules, etc.)
 @import
@@ -101,16 +103,16 @@
     'components/modal',
     'components/dropdown';
 
-//page-specific styles
-@import
-    'pages/home',
-    'pages/contact';
-
-//poject-specific themes
-@import
-    'themes/theme',
-    'themes/admin';
-
-//quirks
-@import
-    'shame';
+////page-specific styles
+//@import
+//    'pages/home',
+//    'pages/contact';
+//
+////poject-specific themes
+//@import
+//    'themes/theme',
+//    'themes/admin';
+//
+////quirks
+//@import
+//    'shame';

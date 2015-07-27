@@ -171,7 +171,6 @@
                         logger.success('Meeting deleted successfully.', data, 'Success!');
                     }
 
-
                     if ($state.is('meetings.list')) {
                         $state.reload();
                     } else {

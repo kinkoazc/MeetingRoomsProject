@@ -238,20 +238,17 @@
                             var date = new Date();
                             vma.meeting.whenDate =
                                 new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1, 0, 0, 0, 0);
-                            //new Date('2015-07-21T21:00:00.000Z');
                             vma.meeting.whenStartTime = new Date(1970, 0, 1, 11, 20, 0, 0);
                             vma.meeting.whenEndTime = new Date(1970, 0, 1, 13, 20, 0, 0);
                             vma.meeting.where = '55a8e758781779641a5526e7';
 
-
-
                             var dateWatchGroup = ['vma.meeting.whenDate', 'vma.meeting.whenStartTime',
                                 'vma.meeting.whenEndTime', 'vma.meeting.where'];
-                            var groupWatcher=$scope.$watchGroup(
+                            var groupWatcher = $scope.$watchGroup(
                                 dateWatchGroup,
                                 function (values) {
                                     //console.log('---- digesting');
-                                    var scope=$scope;
+                                    var scope = $scope;
 
                                     vma.startingDate =
                                         new Date(vma.meeting.whenDate.getFullYear(), vma.meeting.whenDate.getMonth(),
@@ -261,7 +258,7 @@
                                     vma.verificationEndingDate =
                                         +vma.startingDate + (vma.meeting.whenEndTime - vma.meeting.whenStartTime);
 
-                                    vma.checkingMsg = {message: 'Checking...',color: 'orange'};
+                                    vma.checkingMsg = {message: 'Checking...', color: 'orange'};
                                     //check availability of meeting room and time interval
                                     checkMeetingRoomAvailability({
                                         roomId: vma.meeting.where,
@@ -269,24 +266,26 @@
                                         end: vma.verificationEndingDate
                                     }).then(function (result) {
                                         //$timeout(function () {
-                                            if (result.status===200) {
-                                                vma.checkingMsg =
-                                                    result.data ?
-                                                    {message: 'Available',color: 'green'} :
-                                                    {message: 'Not available',color: 'red'};
+                                        if (result.status === 200) {
+                                            vma.checkingMsg =
+                                                result.data ?
+                                                {message: 'Available', color: 'green'} :
+                                                {message: 'Not available', color: 'red'};
 
-                                                if (!result.data) {
-                                                    scope.meetingAddForm.onDate.$setValidity('notAvailable', false);
-                                                    scope.meetingAddForm.where.$setValidity('notAvailable', false);
-                                                } else {
-                                                    scope.meetingAddForm.onDate.$setValidity('notAvailable', true);
-                                                    scope.meetingAddForm.where.$setValidity('notAvailable', true);
-                                                }
+                                            if (!result.data) {
+                                                scope.meetingAddForm.onDate.$setValidity('notAvailable', false);
+                                                scope.meetingAddForm.where.$setValidity('notAvailable', false);
                                             } else {
-                                                vma.checkingMsg =
-                                                {message: 'Verification could not be possible. ' +
-                                                result.data.message, color: 'red'};
+                                                scope.meetingAddForm.onDate.$setValidity('notAvailable', true);
+                                                scope.meetingAddForm.where.$setValidity('notAvailable', true);
                                             }
+                                        } else {
+                                            vma.checkingMsg =
+                                            {
+                                                message: 'Verification could not be possible. ' +
+                                                result.data.message, color: 'red'
+                                            };
+                                        }
 
                                         //}, 2000);
                                     });
