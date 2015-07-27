@@ -133,12 +133,9 @@ apiRoutes.get('/room-status', function (req, res) {
         res.status(200).json(rooms);
     });
 
-
     //get meetings
 
-
     //process the rooms availability
-
 
     //return
 
@@ -207,7 +204,6 @@ apiRoutes.get('/meetings', function (req, res, next) {// /meetings (get all meet
 
     console.log('-------- getting meetings');
 
-
     Meeting
         .find({})
         .populate('who')
@@ -252,7 +248,6 @@ apiRoutes.post('/meetings', function (req, res, next) {// /meetings (create a me
 });
 
 apiRoutes.get('/meetings/:id', function (req, res, next) {// /meetings/:id (get a meeting)
-
 
     console.log('-------- getting meeting');
 
@@ -323,7 +318,6 @@ apiRoutes.put('/meetings/:id', function (req, res, next) {// /meetings/:id (edit
 apiRoutes.delete('/meetings/:id', function (req, res, next) {// /meetings/:id (delete a meeting)
     //next(new Error('not implemented'));
 
-
     var meetingId = req.params.id;
 
     if (meetingId) {
@@ -360,7 +354,6 @@ apiRoutes.delete('/meetings/:id', function (req, res, next) {// /meetings/:id (d
             });
     }
 });
-
 
 apiRoutes.get('/rooms', function (req, res, next) {// /rooms (get all rooms)
     console.log('-------- getting rooms');
@@ -433,7 +426,6 @@ apiRoutes.get('/users', function (req, res, next) {// /users (get all users)
 
     console.log('-------- getting users');
 
-
     User
         .find({})
         .exec(function (err, users) {
@@ -444,7 +436,6 @@ apiRoutes.get('/users', function (req, res, next) {// /users (get all users)
             }
         });
 });
-
 
 /* ADMIN only routes */
 apiRoutes.use(function (req, res, next) {
@@ -458,7 +449,6 @@ apiRoutes.use(function (req, res, next) {
         next();
     }
 });
-
 
 /* ROOMS routes */
 apiRoutes.post('/rooms', function (req, res, next) {// /rooms (create a room)
@@ -488,7 +478,6 @@ apiRoutes.post('/rooms', function (req, res, next) {// /rooms (create a room)
 });
 
 apiRoutes.get('/rooms/:id', function (req, res, next) {// /rooms/:id (get a room)
-
 
     console.log('-------- getting room');
 
@@ -588,7 +577,6 @@ apiRoutes.post('/users', function (req, res, next) {// /users (create a user)
 });
 
 apiRoutes.get('/users/:id', function (req, res, next) {// /users/:id (get a user)
-
 
     console.log('-------- getting user');
 

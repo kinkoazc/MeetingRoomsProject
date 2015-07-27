@@ -76,11 +76,6 @@ gulp.task('styles', ['clean-styles'], function () {
         .src(config.sass)
         .pipe($.plumber()) // exit gracefully if something fails after this
         .pipe($.sass())
-        .pipe($.uncss({
-            html: [
-                './src/client/**/*.html'
-            ]
-        }))
 //        .on('error', errorLogger) // more verbose and dupe output. requires emit.
         .pipe($.autoprefixer({browsers: ['last 2 version', '> 5%']}))
         .pipe(gulp.dest(config.temp));
@@ -242,23 +237,22 @@ gulp.task('optimize', ['inject', 'test'], function () {
         .pipe(assets) // Gather all assets from the html with useref
         // Get the css
         .pipe(cssFilter)
-        .pipe($.filesize())
+        //.pipe($.uncss({
+        //    html: [
+        //        './src/client/**/*.html'
+        //    ]
+        //}))
         .pipe($.minifyCss())
-        .pipe($.filesize())
         .pipe(cssFilter.restore())
         // Get the custom javascript
         .pipe(jsAppFilter)
         .pipe($.ngAnnotate({add: true}))
-        .pipe($.filesize())
         .pipe($.uglify())
-        .pipe($.filesize())
         .pipe(getHeader())
         .pipe(jsAppFilter.restore())
         // Get the vendor javascript
         .pipe(jslibFilter)
-        .pipe($.filesize())
         .pipe($.uglify()) // another option is to override wiredep to use min files
-        .pipe($.filesize())
         .pipe(jslibFilter.restore())
         // Take inventory of the file names for future rev numbers
         .pipe($.rev())
@@ -267,7 +261,8 @@ gulp.task('optimize', ['inject', 'test'], function () {
         .pipe($.useref())
         // Replace the file names in the html with rev numbers
         .pipe($.revReplace())
-        .pipe(gulp.dest(config.build));
+        .pipe(gulp.dest(config.build))
+        .pipe($.filesize());
 });
 
 /**

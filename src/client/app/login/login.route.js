@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -23,7 +23,7 @@
                     title: 'Login/Register',
                     settings: {
                         nav: 4,
-                        inMainMenu : true,
+                        inMainMenu: true,
                         authLevel: 1,
                         content: '<i class="fa fa-sign-in"></i> Login/Register'
                     }
@@ -48,7 +48,7 @@
                     },
                     settings: {
                         nav: 4,
-                        inMainMenu : true,
+                        inMainMenu: true,
                         authLevel: 2,
                         content: '<i class="fa fa-sign-in"></i> Logout ' +
                         '<span ng-bind="vm.auth.currentUser().email"></span>'

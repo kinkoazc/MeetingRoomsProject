@@ -144,7 +144,6 @@
         function sendAddForm(e, user, cb) {
             e.preventDefault();
 
-
             if (user.password !== user.password2) {
                 logger.warning('Passwords are not the same!', user, 'Password error');
                 return;
@@ -176,7 +175,6 @@
                     } else {
                         logger.success('User deleted successfully.', data, 'Success!');
                     }
-
 
                     if ($state.is('users.list')) {
                         $state.reload();

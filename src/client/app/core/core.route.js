@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -10,7 +10,7 @@
     function appRun($rootScope, $state, auth, routerHelper) {
         routerHelper.configureStates(getStates(), '/rooms/status');
 
-        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
             if (!auth.isAuthorized(toState.settings.authLevel)) {
                 event.preventDefault();
                 $state.go('rooms.status');

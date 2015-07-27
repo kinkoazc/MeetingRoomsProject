@@ -45,7 +45,6 @@ function authInterceptor(auth) {//$q
     };
 }
 
-
 conf.$inject = ['$httpProvider'];
 /* @ngInject */
 function conf($httpProvider) {

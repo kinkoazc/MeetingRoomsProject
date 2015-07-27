@@ -14,7 +14,7 @@ var UserSchema = new Schema({
     updatedOn: {type: Date, default: Date.now}
 });
 
-UserSchema.pre('save', function(next){
+UserSchema.pre('save', function (next) {
     var now = new Date();
     this.updatedOn = now;
     //if ( !this.createdAt ) {

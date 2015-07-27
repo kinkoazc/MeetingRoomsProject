@@ -1,7 +1,6 @@
 /*jshint node:true*/
 'use strict';
 
-
 // =======================
 // get the packages we need ============
 // =======================
@@ -22,7 +21,6 @@ var express = require('express'),
     moment = require('moment'),
     _ = require('lodash-node');
 
-
 // =======================
 // configuration =========
 // =======================
@@ -37,7 +35,6 @@ app.use(bodyParser.json());
 
 // use morgan to log requests to the console
 app.use(morgan('dev'));
-
 
 // =======================
 // routes ================
@@ -357,7 +354,6 @@ app.get('/setup', function (req, res) {
 
 // apply the routes to our application with the prefix /api
 app.use('/api', require('./routes'));
-
 
 // =======================
 // start the server ======

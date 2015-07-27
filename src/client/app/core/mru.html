@@ -1,7 +1,9 @@
 <div class="panel panel-body">
 
     <div class="btn-group" role="group" aria-label="...">
-        <button type="button" class="btn btn-default" ui-sref-active="active" ng-show="vm.isAuthorized(r.settings.authLevel)" ng-repeat="r in vm.navRoutes"><!-- ng-class="vm.isCurrent(r)"  -->
+        <button type="button" class="btn btn-default" ui-sref-active="active"
+                ng-show="vm.isAuthorized(r.settings.authLevel)" ng-repeat="r in vm.navRoutes">
+            <!-- ng-class="vm.isCurrent(r)"  -->
             <a ui-sref="{{r.name}}">{{r.title}}</a>
         </button>
     </div>

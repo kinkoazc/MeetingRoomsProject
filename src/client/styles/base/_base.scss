@@ -23,7 +23,6 @@ input, select {
     display: inline-block !important;
 }
 
-
 .navbar * {
     background-image: none !important;
     -webkit-text-shadow: none !important;
@@ -32,7 +31,7 @@ input, select {
 }
 
 .navbar .navbar-nav li.active > a {
-    background-color: #4C4C4C;//#131313;
+    background-color: #4C4C4C; //#131313;
     //border-bottom: 1px solid #222;
 }
 
@@ -77,7 +76,7 @@ body {
     font-size: 13px;
     line-height: 23px;
     color: #666;
-    background: #E8E8E8;//#111;
+    background: #E8E8E8; //#111;
     padding-top: 45px;
     -webkit-font-smoothing: antialiased;
 
@@ -179,7 +178,7 @@ hr {
     font-size: 13px;
 }
 
-.control-label{
+.control-label {
     font-weight: 400 !important;
     font-size: 14px;
 }
@@ -356,8 +355,6 @@ hr {
     color: $color_violet !important;
 }
 
-
-
 /* Half column - CHECK LATER */
 
 .col-left {
@@ -373,12 +370,13 @@ hr {
 /* #region Main Styles */
 
 ul.image-group {
-    padding:0 0 0 0;
-    margin:0 0 0 0;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
 }
+
 ul.image-group li {
-    list-style:none;
-    margin-bottom:25px;
+    list-style: none;
+    margin-bottom: 25px;
 }
 
 .ng-cloak {
@@ -429,7 +427,7 @@ textarea.form-control {
     margin-right: 0;
 }
 
-.btn-group{
+.btn-group {
     margin: .2em;
 }
 
@@ -495,7 +493,8 @@ small {
 
 .input-group[class*="col-"] {
     width: 80%;
-    margin: 0 1.5em;}
+    margin: 0 1.5em;
+}
 
 .user .user-pic {
     display: block;

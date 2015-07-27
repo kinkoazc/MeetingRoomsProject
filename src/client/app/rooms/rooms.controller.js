@@ -171,7 +171,6 @@
                         logger.success('Room deleted successfully.', data, 'Success!');
                     }
 
-
                     if ($state.is('rooms.list')) {
                         $state.reload();
                     } else {

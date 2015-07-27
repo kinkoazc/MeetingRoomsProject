@@ -5,7 +5,6 @@
         .module('app.layout')
         .directive('htTopNav', htTopNav);
 
-
     /* @ngInject */
     function htTopNav() {
 

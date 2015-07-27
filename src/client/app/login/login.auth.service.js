@@ -62,17 +62,20 @@
 
             if (stateAuthLevel) {
                 switch (stateAuthLevel) {
-                    case 1: {
-                        return true;
-                    }
+                    case 1:
+                        {
+                            return true;
+                        }
                         break;
-                    case 2: {
-                        return !!currentUser;
-                    }
+                    case 2:
+                        {
+                            return !!currentUser;
+                        }
                         break;
-                    case 3: {
-                        return !!(currentUser && currentUser.admin);
-                    }
+                    case 3:
+                        {
+                            return !!(currentUser && currentUser.admin);
+                        }
                         break;
                 }
             }
@@ -82,7 +85,4 @@
     }
 
 })();
-
-
-
 

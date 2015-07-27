@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -6,7 +6,7 @@
         .directive('htSidebar', htSidebar);
 
     /* @ngInject */
-    function htSidebar () {
+    function htSidebar() {
         // Opens and closes the sidebar menu.
         // Usage:
         //  <div ht-sidebar">

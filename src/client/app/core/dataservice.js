@@ -75,7 +75,6 @@
                 });
         }
 
-
         function registering(user) {
             return $http
                 .post('/api/register', user)
@@ -206,10 +205,8 @@
                 return data;
             });
 
-
             return meeting;
         }
-
 
         /* ROOMS */
         /* GET ALL */
@@ -352,10 +349,8 @@
                 return data;
             });
 
-
             return room;
         }
-
 
         /* USERS */
         /* GET ALL */
@@ -463,7 +458,6 @@
 
                 return data;
             });
-
 
             return user;
         }

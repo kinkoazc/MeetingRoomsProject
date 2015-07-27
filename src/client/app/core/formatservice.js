@@ -103,7 +103,7 @@
             meeting.who = mtg.who;
             meeting.when = +new Date(day.getFullYear(), day.getMonth(), day.getDate(), startTime.getHours(),
                 startTime.getMinutes(), 0, 0);
-                //Math.round(mtg.whenDate / 86400000) * 86400000 + mtg.whenStartTime % 86400000;
+            //Math.round(mtg.whenDate / 86400000) * 86400000 + mtg.whenStartTime % 86400000;
             meeting.duration = mtg.whenEndTime - mtg.whenStartTime;
             meeting.room = mtg.where;
 
@@ -123,13 +123,12 @@
             meeting.who = mtg.who._id;
             meeting.when = +new Date(day.getFullYear(), day.getMonth(), day.getDate(), startTime.getHours(),
                 startTime.getMinutes(), 0, 0);
-                //Math.round(mtg.whenDate / 86400000) * 86400000 + mtg.whenStartTime % 86400000;
+            //Math.round(mtg.whenDate / 86400000) * 86400000 + mtg.whenStartTime % 86400000;
             meeting.duration = mtg.whenEndTime - mtg.whenStartTime;
             meeting.room = mtg.where;
 
             return meeting;
         }
-
 
         /* ROOMS formatters */
         function formatRoomsList(originalRooms) {
@@ -237,7 +236,6 @@
             return room;
         }
 
-
         /* USERS formatters */
         function formatUsersList(originalUsers) {
             if (!angular.isArray(originalUsers)) {
@@ -316,7 +314,6 @@
 
             return user;
         }
-
 
         /* UTILS */
         function isAmongUsers(user, index, users) {

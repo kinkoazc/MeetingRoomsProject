@@ -1,5 +1,4 @@
 //This file should not contain anything but @import and comments.
-
 //Files should be imported according to the folder they live in, one after the other in the following order:
 //
 //vendors/
@@ -9,14 +8,12 @@
 //components/
 //pages/
 //themes/
-
 //Rules:
 //one file per @import;
 //one @import per line;
 //no new line between two imports from the same folder;
 //a new line after the last import from a folder;
 //file extensions and leading underscores omitted.
-
 //@import 'vendors/bootstrap';
 //@import 'vendors/jquery-ui';
 //
@@ -48,60 +45,45 @@
 //@import 'themes/admin';
 //
 //@import 'shame';
-
-
 //...or...
-
-
 //vendors
-@import
-    'vendors/bootstrap',
-    'vendors/jquery-ui';
-
+@import 'vendors/bootstrap',
+'vendors/jquery-ui';
 //utils(global variable, function, mixin and placeholder)(should not output CSS code on compilation)
-@import
-    'utils/variables',
-    'utils/functions',
-    'utils/mixins',
-    'utils/helpers';
-
+@import 'utils/variables',
+'utils/functions',
+'utils/mixins',
+'utils/helpers';
 //framework/library overwrites
-@import
-    'vendors-extensions/bootstrap',
-    'vendors-extensions/font-awesome',
-    'vendors-extensions/angular',
-    'vendors-extensions/toastr';
-
+@import 'vendors-extensions/bootstrap',
+'vendors-extensions/font-awesome',
+'vendors-extensions/angular',
+'vendors-extensions/toastr';
 //base
-@import
-    'base/reset',
-    'base/base',
-    'base/typography';
-
+@import 'base/reset',
+'base/base',
+'base/typography';
 //layout(styles for the main sections of the site)
-@import
-    'layout/grid',
-    'layout/navigation',
-    'layout/header',
-    'layout/footer',
-    'layout/sidebar',
-    'layout/main',
-    'layout/forms',
-    'layout/matter';
-
+@import 'layout/grid',
+'layout/navigation',
+'layout/header',
+'layout/footer',
+'layout/sidebar',
+'layout/main',
+'layout/forms',
+'layout/matter';
 //components(styles for widgets, smaller site components/modules, etc.)
-@import
-    'components/buttons',
-    'components/carousel',
-    'components/cover',
-    'components/widget',
-    'components/today-datas',
-    'components/media',
-    'components/splash',
-    'components/thumbnails',
-    'components/back-to-top',
-    'components/modal',
-    'components/dropdown';
+@import 'components/buttons',
+'components/carousel',
+'components/cover',
+'components/widget',
+'components/today-datas',
+'components/media',
+'components/splash',
+'components/thumbnails',
+'components/back-to-top',
+'components/modal',
+'components/dropdown';
 
 ////page-specific styles
 //@import

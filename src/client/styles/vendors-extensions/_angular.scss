@@ -3,6 +3,7 @@
     position: relative;
     overflow: hidden;
 }
+
 /*#endregion */
 
 /*#region Angular ng-include, ng-view, ng-repeat shuffle animations*/
@@ -39,6 +40,7 @@
     left: 2em;
     opacity: 0;
 }
+
 /*#endregion*/
 
 /*#region Angular ng-include, ng-view, ng-repeat fader animation */
@@ -67,10 +69,11 @@
 }
 
 .fader-animation.ng-move {
-    opacity:0.5;
+    opacity: 0.5;
 }
+
 .fader-animation.ng-move.ng-move-active {
-    opacity:1;
+    opacity: 1;
 }
 
 /*#endregion*/
@@ -95,4 +98,5 @@
 .dissolve-animation.ng-hide-remove {
     opacity: 0;
 }
+
 /*#endregion */

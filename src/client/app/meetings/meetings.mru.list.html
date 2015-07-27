@@ -26,7 +26,9 @@
         <td>{{meeting.where}}</td>
         <td ng-bind-html="meeting.allowed"></td>
         <td>
-            <button class="btn btn-danger" ng-click="vm.deleteMeeting(meeting.id)" ng-show="meeting.canEdit || meeting.isCreator">Delete</button>
+            <button class="btn btn-danger" ng-click="vm.deleteMeeting(meeting.id)"
+                    ng-show="meeting.canEdit || meeting.isCreator">Delete
+            </button>
         </td>
     </tr>
     </tbody>
