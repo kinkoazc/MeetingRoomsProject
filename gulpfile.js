@@ -79,7 +79,7 @@ gulp.task('styles', ['clean-styles'], function () {
         .pipe($.sass())
 //        .on('error', errorLogger) // more verbose and dupe output. requires emit.
         .pipe($.autoprefixer({browsers: ['last 2 version', '> 5%']}))
-        .pipe($.csscomb())
+        //.pipe($.csscomb()) //TODO uncomment on staging
         .pipe(gulp.dest(config.temp));
 });
 
