@@ -46,44 +46,49 @@
 //
 //@import 'shame';
 //...or...
+
 //vendors
-@import 'vendors/bootstrap',
-'vendors/jquery-ui';
+@import 'vendors/bootstrap';
+
 //utils(global variable, function, mixin and placeholder)(should not output CSS code on compilation)
-@import 'utils/variables',
-'utils/functions',
-'utils/mixins',
-'utils/helpers';
+@import 'utils/variables',//vars
+        'utils/functions',//calcs, not used
+        'utils/mixins',//parametrized insertions, not used
+        'utils/helpers';//placeholders, not used
+
 //framework/library overwrites
-@import 'vendors-extensions/bootstrap',
-'vendors-extensions/font-awesome',
-'vendors-extensions/angular',
-'vendors-extensions/toastr';
+@import 'vendors-extensions/bootstrap',//commented
+        'vendors-extensions/font-awesome',//not used
+        'vendors-extensions/angular',//commented
+        'vendors-extensions/toastr';
+
 //base
-@import 'base/reset',
-'base/base',
-'base/typography';
+@import 'base/reset',//not used
+        'base/base',
+        'base/typography';//not used
+
 //layout(styles for the main sections of the site)
 @import 'layout/grid',
-'layout/navigation',
-'layout/header',
-'layout/footer',
-'layout/sidebar',
-'layout/main',
-'layout/forms',
-'layout/matter';
+        'layout/navigation',
+        'layout/header',
+        'layout/footer',
+        'layout/sidebar',
+        'layout/main',
+        'layout/forms',
+        'layout/matter';
+
 //components(styles for widgets, smaller site components/modules, etc.)
 @import 'components/buttons',
-'components/carousel',
-'components/cover',
-'components/widget',
-'components/today-datas',
-'components/media',
-'components/splash',
-'components/thumbnails',
-'components/back-to-top',
-'components/modal',
-'components/dropdown';
+        'components/carousel',
+        'components/cover',
+        'components/widget',
+        'components/today-datas',
+        'components/media',
+        'components/splash',
+        'components/thumbnails',
+        'components/back-to-top',
+        'components/modal',
+        'components/dropdown';
 
 ////page-specific styles
 //@import
