@@ -63,16 +63,6 @@ gulp.task('plato', function (done) {
 gulp.task('styles', ['clean-styles'], function () {
     log('Compiling SASS --> CSS');
 
-    var token = '';//'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.
-    // eyJleHAiOjE0MzgwODk3NjIsIl9pZCI6IjU1YThlNzU3NzgxNz
-    // c5NjQxYTU1MjZlNSIsImhhc2giOiI5NTNmYjkxNzYzYTk3YzQxM
-    // DcxZGU3MmNlOTRlNjM4YzFiOTc0NWE5NDk5OTRmNjA3YTg1NDA5N
-    // 2YwZjQ3NWY4OGM2YTE5YTYxOTI2NTcyODBlYjljMGMyZWZkYWI5YW
-    // IwMzY5MTMxZjNjMTI0ZGMyNzU1YTVlM2FhMTllZDRiYSIsInNhbHQ
-    // iOiI5NDBiZTBlZWFhMDBmN2I1ZTgxN2JjMzE1YjhkYTI5YSIsImVt
-    // YWlsIjoiYWRtaW5AZ21haWwuY29tIiwiX192IjowLCJ1cGRhdGVkT2
-    // 4iOiIyMDE1LTA3LTE3VDExOjMwOjMxLjU0NloiLCJhZG1pbiI6dHJ1ZX0.NG68mb2e2QUZETx29jP34CjFgfYc504RYVKo_Gu5XFo';
-
     return gulp
         .src(config.sass)
         .pipe($.plumber()) // exit gracefully if something fails after this
