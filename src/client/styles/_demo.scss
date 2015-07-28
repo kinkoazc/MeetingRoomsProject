@@ -7,24 +7,22 @@ $direction: 'left';
 //text
 $font-type: sans-serif;
 //identifier(unquoted)
-$font-type: unquote('sans-serif');
+$font-type: unquote('sans-serif');// === sans-serif;
 $length: 0;
 
 $value: 42;
-$length: $value * 1px;
-//to obtain 42, in px
-$value: ($length / 1px);
-//... and back
+$length: $value * 1px;//to obtain 42, in px
+$value: ($length / 1px);//... and back
 
 $sass-pink: #c69;
-$main-theme-color: $sass-pink;
+$main-theme-color: $sass-pink;//apply meaningful(self-explaining) color variables as theme colors
 
-//lists (~arrays); elements of different types
+//lists(~arrays); elements of different types
 $font-stack: ('Helvetica', 'Arial', sans-serif);
 $font-stack: (
     'Helvetica',
     'Arial',
-    sans-serif,
+    sans-serif
 );
 //adding items to lists using the respective API
 $shadows: (0 42px 13.37px hotpink);
@@ -84,7 +82,7 @@ $breakpoints: (
 }
 
 /**
- * 1. Magic number(to be avoided or, if not possible, commented). This value is the lowest I could find to align the top of
+ * 1. Magic number(to be avoided or, if not possible, commented, in the _shame.scss file). This value is the lowest I could find to align the top of
  * `.foo` with its parent. Ideally, we should fix it properly.
  */
 .foo {
@@ -99,9 +97,9 @@ $breakpoints: (
     color: #F00;
 }
 
-//for colors use mix()/scale-color() functions instead of lighten()/darken() functions
+// ! for colors use mix()/scale-color() functions instead of lighten()/darken() functions
 
-// Mixins using mix(), also available in the Compass library
+// Mixins, using mix(), also available in the Compass library
 /// Slightly lighten a color
 /// @access public
 /// @param {Color} $color - color to tint
@@ -154,12 +152,16 @@ $breakpoints: (
 //At some point, the risk of losing track and not being able to understand what’s going on anymore is so high that it is not worth it.
 //To prevent such a situation, we avoid selector nesting as much as possible. However, there are obviously a few exceptions to this rule.
 .foo {
+    // dimensions
     height: 100px;
     width: 100px;
+    // visibility, positioning
     overflow: hidden;
     position: absolute;
+    // position
     bottom: 0;
     right: 0;
+    // styling
     background: black;
     color: white;
     font-weight: bold;

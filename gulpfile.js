@@ -9,7 +9,7 @@ var _ = require('lodash');
 var $ = require('gulp-load-plugins')({lazy: true});
 
 var colors = $.util.colors;
-var envenv = $.util.env;
+var env = $.util.env;
 var port = process.env.PORT || config.defaultPort;
 
 /**
@@ -78,6 +78,7 @@ gulp.task('styles', ['clean-styles'], function () {
         .pipe($.sass())
 //        .on('error', errorLogger) // more verbose and dupe output. requires emit.
         .pipe($.autoprefixer({browsers: ['last 2 version', '> 5%']}))
+        .pipe($.csscomb())
         .pipe(gulp.dest(config.temp));
 });
 
