@@ -34,6 +34,10 @@
 <div id="mocha"></div>
 
 <!-- inject:testlibraries:js -->
+<script src="/node_modules/mocha/mocha.js"></script>
+<script src="/node_modules/chai/chai.js"></script>
+<script src="/node_modules/mocha-clean/index.js"></script>
+<script src="/node_modules/sinon-chai/lib/sinon-chai.js"></script>
 <!-- endinject -->
 
 <script>
@@ -44,18 +48,92 @@
 </script>
 
 <!-- bower:js -->
+<script src="/bower_components/es5-shim/es5-shim.js"></script>
+<script src="/bower_components/jquery/dist/jquery.js"></script>
+<script src="/bower_components/angular/angular.js"></script>
+<script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/bower_components/extras.angular.plus/ngplus-overlay.js"></script>
+<script src="/bower_components/moment/moment.js"></script>
+<script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="/bower_components/toastr/toastr.js"></script>
+<script src="/bower_components/angular-animate/angular-animate.js"></script>
+<script src="/bower_components/html5shiv/dist/html5shiv.js"></script>
+<script src="/bower_components/angular-resource/angular-resource.js"></script>
+<script src="/bower_components/angular-mocks/angular-mocks.js"></script>
+<script src="/bower_components/sinon/index.js"></script>
+<script src="/bower_components/bardjs/dist/bard.js"></script>
+<script src="/bower_components/bardjs/dist/bard-ngRouteTester.js"></script>
 <!-- endbower -->
 
 <!-- inject:js -->
+<script src="/src/client/app/app.module.js"></script>
+<script src="/src/client/app/blocks/compile/compile.module.js"></script>
+<script src="/src/client/app/blocks/exception/exception.module.js"></script>
+<script src="/src/client/app/blocks/logger/logger.module.js"></script>
+<script src="/src/client/app/blocks/router/router.module.js"></script>
+<script src="/src/client/app/core/core.module.js"></script>
+<script src="/src/client/app/layout/layout.module.js"></script>
+<script src="/src/client/app/login/login.module.js"></script>
+<script src="/src/client/app/meetings/meetings.module.js"></script>
+<script src="/src/client/app/rooms/rooms.module.js"></script>
+<script src="/src/client/app/users/users.module.js"></script>
+<script src="/src/client/app/app.config.js"></script>
+<script src="/src/client/app/blocks/compile/compile.directive.js"></script>
+<script src="/src/client/app/blocks/exception/exception-handler.provider.js"></script>
+<script src="/src/client/app/blocks/exception/exception.js"></script>
+<script src="/src/client/app/blocks/logger/logger.js"></script>
+<script src="/src/client/app/blocks/router/router-helper.provider.js"></script>
+<script src="/src/client/app/core/config.js"></script>
+<script src="/src/client/app/core/constants.js"></script>
+<script src="/src/client/app/core/core.route.js"></script>
+<script src="/src/client/app/core/dataservice.js"></script>
+<script src="/src/client/app/core/formatservice.js"></script>
+<script src="/src/client/app/core/mru.directive.js"></script>
+<script src="/src/client/app/core/time.filter.js"></script>
+<script src="/src/client/app/layout/ht-sidebar.directive.js"></script>
+<script src="/src/client/app/layout/ht-top-nav.directive.js"></script>
+<script src="/src/client/app/layout/shell.controller.js"></script>
+<script src="/src/client/app/layout/sidebar.controller.js"></script>
+<script src="/src/client/app/login/login.auth.service.js"></script>
+<script src="/src/client/app/login/login.controller.js"></script>
+<script src="/src/client/app/login/login.route.js"></script>
+<script src="/src/client/app/meetings/meetings.availability.directive.js"></script>
+<script src="/src/client/app/meetings/meetings.controller.js"></script>
+<script src="/src/client/app/meetings/meetings.route.js"></script>
+<script src="/src/client/app/meetings/meetings.service.js"></script>
+<script src="/src/client/app/rooms/rooms.controller.js"></script>
+<script src="/src/client/app/rooms/rooms.route.js"></script>
+<script src="/src/client/app/rooms/rooms.service.js"></script>
+<script src="/src/client/app/users/users.controller.js"></script>
+<script src="/src/client/app/users/users.route.js"></script>
+<script src="/src/client/app/users/users.service.js"></script>
 <!-- endinject -->
 
 <!-- inject:spechelpers:js -->
+<script src="/src/client/test-helpers/bind-polyfill.js"></script>
+<script src="/src/client/test-helpers/mock-data.js"></script>
 <!-- endinject -->
 
 <!-- inject:specs:js -->
+<script src="/src/client/app/blocks/exception/exception-handler.provider.spec.js"></script>
+<script src="/src/client/app/core/core.route.spec.js"></script>
+<script src="/src/client/app/core/mru.directive.spec.js"></script>
+<script src="/src/client/app/layout/ht-sidebar.directive.spec.js"></script>
+<script src="/src/client/app/layout/shell.controller.spec.js"></script>
+<script src="/src/client/app/layout/sidebar.controller.spec.js"></script>
+<script src="/src/client/app/login/login.controller.spec.js"></script>
+<script src="/src/client/app/login/login.route.spec.js"></script>
+<script src="/src/client/app/meetings/meetings.controller.spec.js"></script>
+<script src="/src/client/app/meetings/meetings.route.spec.js"></script>
+<script src="/src/client/app/rooms/rooms.controller.spec.js"></script>
+<script src="/src/client/app/rooms/rooms.route.spec.js"></script>
+<script src="/src/client/app/users/users.controller.spec.js"></script>
+<script src="/src/client/app/users/users.route.spec.js"></script>
 <!-- endinject -->
 
 <!-- inject:templates:js -->
+<script src="/.tmp/templates.js"></script>
 <!-- endinject -->
 
 <script>
