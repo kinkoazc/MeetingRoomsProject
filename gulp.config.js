@@ -37,6 +37,7 @@ module.exports = function() {
             clientApp + '**/*.module.js',
             clientApp + '**/*.js',
             '!' + clientApp + '**/*.spec.js',
+            '!' + clientApp + '**/*.e2e.js',
             '!' + clientApp + 'i_*/*.js',
             '!' + clientApp + 'i_blocks/*.js'
         ],
@@ -158,6 +159,7 @@ module.exports = function() {
                 clientApp + '**/*.service.js',
                 clientApp + '**/*.filter.js',
                 clientApp + '**/*.js',
+                !clientApp + '**/*.e2e.js',
                 temp + config.templateCache.file,
                 config.serverIntegrationSpecs
             ),

@@ -95,7 +95,7 @@ describe('rooms routes', function () {
                 //}));
 
                 expect(current.title).to.equal('Rooms list');//state title
-                expect(scope.title).to.equal('Meetings:  Rooms list');//controller title ?
+                expect(scope.title).to.equal('Meetings:  Rooms list');//page title
                 expect(template).to.equal('app/rooms/rooms.mru.list.html');
 
                 done();
@@ -115,7 +115,7 @@ describe('rooms routes', function () {
                 //expect(scope.title).to.equal('Rooms status');
 
                 expect(current.title).to.equal('Room add');//state title
-                expect(scope.title).to.equal('Meetings:  Room add');//controller title ?
+                expect(scope.title).to.equal('Meetings:  Room add');//page title
                 expect(template).to.equal('app/rooms/rooms.mru.add.html');
 
                 done();
@@ -135,7 +135,7 @@ describe('rooms routes', function () {
                 //expect(scope.title).to.equal('Rooms status');
 
                 expect(current.title).to.equal('Room edit');//state title
-                expect(scope.title).to.equal('Meetings:  Room edit');//controller title ?
+                expect(scope.title).to.equal('Meetings:  Room edit');//page title
                 expect(template).to.equal('app/rooms/rooms.mru.edit.html');
 
                 done();
@@ -155,7 +155,7 @@ describe('rooms routes', function () {
                 //expect(scope.title).to.equal('Rooms status');
 
                 expect(current.title).to.equal('Room details');//state title
-                expect(scope.title).to.equal('Meetings:  Room details');//controller title ?
+                expect(scope.title).to.equal('Meetings:  Room details');//page title
                 expect(template).to.equal('app/rooms/rooms.mru.details.html');
 
                 done();
@@ -176,7 +176,7 @@ describe('rooms routes', function () {
                 //expect(scope.title).to.equal('Rooms status');
 
                 expect(current.title).to.equal('Rooms status');//state title
-                expect(scope.title).to.equal('Meetings:  Rooms status');//controller title ?
+                expect(scope.title).to.equal('Meetings:  Rooms status');//page title
                 expect(template).to.equal('app/rooms/rooms.mru.status.html');
 
                 done();

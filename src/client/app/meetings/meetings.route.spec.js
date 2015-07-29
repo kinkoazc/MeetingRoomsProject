@@ -78,7 +78,7 @@ describe('meetings routes', function () {
                 //}));
 
                 expect(current.title).to.equal('Meetings list');//state title
-                expect(scope.title).to.equal('Meetings:  Meetings list');//controller title ?
+                expect(scope.title).to.equal('Meetings:  Meetings list');//page title
                 expect(template).to.equal('app/meetings/meetings.mru.list.html');
 
                 done();
@@ -98,7 +98,7 @@ describe('meetings routes', function () {
                 //expect(scope.title).to.equal('Meetings status');
 
                 expect(current.title).to.equal('Meeting add');//state title
-                expect(scope.title).to.equal('Meetings:  Meeting add');//controller title ?
+                expect(scope.title).to.equal('Meetings:  Meeting add');//page title
                 expect(template).to.equal('app/meetings/meetings.mru.add.html');
 
                 done();
@@ -118,7 +118,7 @@ describe('meetings routes', function () {
                 //expect(scope.title).to.equal('Meetings status');
 
                 expect(current.title).to.equal('Meeting edit');//state title
-                expect(scope.title).to.equal('Meetings:  Meeting edit');//controller title ?
+                expect(scope.title).to.equal('Meetings:  Meeting edit');//page title
                 expect(template).to.equal('app/meetings/meetings.mru.edit.html');
 
                 done();
@@ -138,7 +138,7 @@ describe('meetings routes', function () {
                 //expect(scope.title).to.equal('Meetings status');
 
                 expect(current.title).to.equal('Meeting details');//state title
-                expect(scope.title).to.equal('Meetings:  Meeting details');//controller title ?
+                expect(scope.title).to.equal('Meetings:  Meeting details');//page title
                 expect(template).to.equal('app/meetings/meetings.mru.details.html');
 
                 done();

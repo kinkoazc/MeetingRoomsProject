@@ -315,7 +315,7 @@ gulp.task('clean-code', function (done) {
  * @return {Stream}
  */
 gulp.task('test', ['vet', 'templatecache'], function (done) {
-    startTests(true /*singleRun*/, done); //TODO uncomment when tests are done
+    startTests(true /*singleRun*/, done);
 });
 
 /**

@@ -90,7 +90,7 @@ describe('login/logout routes', function () {
                 //expect(scope.title).to.equal('Rooms status');
 
                 expect(current.title).to.equal('Login/Register');//state title
-                expect(scope.title).to.equal('Meetings:  Login/Register');//controller title ?
+                expect(scope.title).to.equal('Meetings:  Login/Register');//page title
                 expect(template).to.equal('app/login/login.html');
 
                 done();
@@ -194,7 +194,7 @@ describe('login/logout routes', function () {
                 //expect(scope.title).to.equal('Rooms status');
 
                 expect(current.title).to.equal('Login/Register');//state title
-                expect(scope.title).to.equal('Meetings:  Login/Register');//controller title ?
+                expect(scope.title).to.equal('Meetings:  Login/Register');//page title
                 expect(template).to.equal('app/login/login.html');
 
                 done();
