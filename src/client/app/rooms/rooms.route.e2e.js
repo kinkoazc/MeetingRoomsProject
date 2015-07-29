@@ -4,7 +4,14 @@ describe('E2E: Testing Routes', function () {
     beforeEach(function () {
         browser.get('/login');
         browser.getLocationAbsUrl('/login').then(function (url) {
-                //TODO use sendKeys to fill the inputs
+                //TODO use sendKeys to fill the inputs(XHR, slow)
+                //var emailElem = element(by.css('form[name=loginForm] input#loginEmail')),
+                //    passElem = element(by.css('form[name=loginForm] input#loginPassword'));
+                //emailElem.clear();
+                //passElem.clear();
+                //emailElem.sendKeys('admin@gmail.com');
+                //passElem.sendKeys('password');
+
                 element.all(by.css('form[name=loginForm] button[type=submit]')).first().click();
             }
         );
