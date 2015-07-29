@@ -15,7 +15,10 @@
             resolveAlways: {}
         };
 
-        $locationProvider.html5Mode(true);
+        $locationProvider.html5Mode({
+            enabled: true,
+            requireBase: false//will cause problems with IE9-
+        });
 
         function configure(cfg) {
             angular.extend(config, cfg);

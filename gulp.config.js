@@ -115,8 +115,7 @@ module.exports = function() {
             nodeModules + '/mocha/mocha.js',
             nodeModules + '/chai/chai.js',
             nodeModules + '/mocha-clean/index.js',
-            nodeModules + '/sinon-chai/lib/sinon-chai.js',
-            nodeModules + '/ngMidwayTester/src/ngMidwayTester.js'
+            nodeModules + '/sinon-chai/lib/sinon-chai.js'
         ],
         specHelpers: [client + 'test-helpers/*.js'],
         specs: [clientApp + '**/*.spec.js'],
@@ -152,6 +151,7 @@ module.exports = function() {
     function getKarmaOptions() {
         var options = {
             files: [].concat(
+                nodeModules + '/ng-midway-tester/src/ngMidwayTester.js',
                 bowerFiles,
                 config.specHelpers,
                 clientApp + '**/*.module.js',
