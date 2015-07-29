@@ -110,6 +110,10 @@ describe('rooms routes', function () {
                 //var scope = current.scope;
                 //expect(scope.title).to.equal('Rooms status');
 
+                //console.log('current.resolve.rooms: ', current.resolve.rooms().then(function () {
+                //
+                //}));
+
                 expect(current.title).to.equal('Rooms list');//state title
                 expect(scope.title).to.equal('Meetings:  Rooms list');//controller title ?
                 expect(template).to.equal('app/rooms/rooms.mru.list.html');

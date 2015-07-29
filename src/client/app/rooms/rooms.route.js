@@ -155,12 +155,13 @@
                         //}
                     },
                     controller: ['$scope', 'rooms', function ($scope, rooms) {
-                        var vml = this;
+                        var vml = this, scope = $scope;
 
                         vml.rooms = [];
                         rooms.$promise.then(function (data) {
                             //$scope.$parent.vm.rooms
                             vml.rooms = formatservice.formatRoomsList(data);
+                            scope.$parent.vm.rooms = vml.rooms;
                         });
 
                     }],
