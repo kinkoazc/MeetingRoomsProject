@@ -78,26 +78,6 @@ describe('rooms routes', function () {
         //    expect($state.is('rooms'));
         //});
 
-        it('should have a working rooms status page', function (done) {
-            tester.visit('/rooms', function () {
-                expect(tester.path()).to.equal('/rooms/status');
-                //expect(tester.viewElement().html()).to.contain('Video Projector');
-
-                var current = tester.inject('$state').current;
-                //var controller = current.controller;
-                var template = current.templateUrl;
-                var scope = tester.viewScope();
-                //var scope = current.scope;
-                //expect(scope.title).to.equal('Rooms status');
-
-                expect(current.title).to.equal('Rooms status');//state title
-                expect(scope.title).to.equal('Meetings:  Rooms status');//controller title ?
-                expect(template).to.equal('app/rooms/rooms.mru.status.html');
-
-                done();
-            });
-        });
-
         it('should have a working rooms list page', function (done) {
             tester.visit('/rooms/list', function () {
                 expect(tester.path()).to.equal('/rooms/list');
@@ -181,6 +161,26 @@ describe('rooms routes', function () {
                 done();
             });
 
+        });
+
+        it('should have a working rooms status page', function (done) {
+            tester.visit('/rooms', function () {
+                expect(tester.path()).to.equal('/rooms/status');
+                //expect(tester.viewElement().html()).to.contain('Video Projector');
+
+                var current = tester.inject('$state').current;
+                //var controller = current.controller;
+                var template = current.templateUrl;
+                var scope = tester.viewScope();
+                //var scope = current.scope;
+                //expect(scope.title).to.equal('Rooms status');
+
+                expect(current.title).to.equal('Rooms status');//state title
+                expect(scope.title).to.equal('Meetings:  Rooms status');//controller title ?
+                expect(template).to.equal('app/rooms/rooms.mru.status.html');
+
+                done();
+            });
         });
 
         afterEach(function () {

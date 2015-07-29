@@ -1,30 +1,155 @@
-///* jshint -W117, -W030 */
-//describe('meetings routes', function () {
-//    describe('state', function () {
-//        var controller;
-//        var view = 'app/meetings/meetings.html';
-//
-//        beforeEach(function() {
-//            module('app.meetings', bard.fakeToastr);
-//            bard.inject('$httpBackend', '$location', '$rootScope', '$state', '$templateCache');
-//        });
-//
-//        beforeEach(function() {
-//            $templateCache.put(view, '');
-//        });
-//
-//        it('should map state meetings to url /meetings ', function() {
-//            expect($state.href('meetings', {})).to.equal('/meetings');
-//        });
-//
-//        it('should map /meetings route to meetings View template', function () {
-//            expect($state.get('meetings').templateUrl).to.equal(view);
-//        });
-//
-//        it('of meetings should work with $state.go', function () {
-//            $state.go('meetings');
-//            $rootScope.$apply();
-//            expect($state.is('meetings'));
-//        });
-//    });
-//});
+/* jshint -W117, -W030 */
+describe('meetings routes', function () {
+    describe('state', function () {
+        var tester,
+            adminToken = 'eyJ0eXAiOiJKV1QiLCJhbGciO' +
+                'iJIUzI1NiJ9.eyJleHAiOjE0MzgyNDQ2OTAsIl9pZCI6IjU1YThlNzU3NzgxNzc5NjQxYTU1MjZlNSIsI' +
+                'mhhc2giOiI5NTNmYjkxNzYzYTk3YzQxMDcxZGU3MmNlOTRlNjM4YzFiOTc0NWE5NDk5OTRmNjA3YTg1NDA' +
+                '5N2YwZjQ3NWY4OGM2YTE5YTYxOTI2NTcyODBlYjljMGMyZWZkYWI5YWIwMzY5MTMxZjNjMTI0ZGMyNzU1YT' +
+                'VlM2FhMTllZDRiYSIsInNhbHQiOiI5NDBiZTBlZWFhMDBmN2I1ZTgxN2JjMzE1YjhkYTI5YSIsImVtYWlsI' +
+                'joiYWRtaW5AZ21haWwuY29tIiwiX192IjowLCJ1cGRhdGVkT24iOiIyMDE1LTA3LTE3VDExOjMwOjMxLjU0' +
+                'NloiLCJhZG1pbiI6dHJ1ZX0.jJkuLLRhixGjJ8mOEnqlGSXkOvAMFlcOZ3A2YLQ6VF8',
+            meetingId = '55a8e758781779641a5526e9';//admin
+        //var controller, token, view = 'app/meetings/meetings.html';
+
+        beforeEach(function () {
+            //    module('app', bard.fakeToastr);
+            //    service('auth', bard.fakeToastr);
+
+            //creating the tester
+            if (tester) {
+                tester.destroy();
+            }
+            tester = ngMidwayTester('app');//, {/* options */})
+            auth = tester.inject('auth');//log in as admin, providing the token
+            auth.saveToken(adminToken);
+            //module('app.meetings', bard.fakeToastr);
+            //bard.inject(this, '$controller', '$q', '$rootScope', '$state', '$window', '$filter', '$timeout', 'auth');
+            //
+            //bard.mockService(auth, {
+            //    saveToken: function () {
+            //        token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0MzgxNzk5MzAsIl9pZCI6Ij' +
+            //            'U1YThlNzU3NzgxNzc5NjQxYTU1MjZlNSIsImhhc2giOiI5NTNmYjkxNzYzYTk3YzQxMDcxZGU3' +
+            //            'MmNlOTRlNjM4YzFiOTc0NWE5NDk5OTRmNjA3YTg1NDA5N2YwZjQ3NWY4OGM2YTE5YTYxOTI2NTcy' +
+            //            'ODBlYjljMGMyZWZkYWI5YWIwMzY5MTMxZjNjMTI0ZGMyNzU1YTVlM2FhMTllZDRiYSIsInNhbHQiO' +
+            //            'iI5NDBiZTBlZWFhMDBmN2I1ZTgxN2JjMzE1YjhkYTI5YSIsImVtYWlsIjoiYWRtaW5AZ21haWwu' +
+            //            'Y29tIiwiX192IjowLCJ1cGRhdGVkT24iOiIyMDE1LTA3LTE3VDExOjMwOjMxLjU0NloiLCJhZG1p' +
+            //            'biI6dHJ1ZX0.VoONJ5fAJ8nS6jPsj5hO71p5OAunAaAycPmY_Y9gmas';
+            //    },
+            //    getToken: function () {
+            //        return token;
+            //    },
+            //    isLoggedIn: function () {
+            //        return true;
+            //    },
+            //    currentMeeting: function () {
+            //        return {
+            //            isAdmin: true,
+            //            email: 'admin@gmail.com'
+            //        };
+            //    },
+            //    register: function () {},
+            //    logOut: function () {
+            //        token = '';
+            //    },
+            //    isAuthorized: function () {
+            //        return true;
+            //    },
+            //    _default:    $q.when([])
+            //});
+            //
+            //$rootScope.$apply();
+        });
+
+        it('should have a working meetings list page', function (done) {
+            tester.visit('/meetings/list', function () {
+                expect(tester.path()).to.equal('/meetings/list');
+                //expect(tester.viewElement().html()).to.contain('Video Projector');
+
+                var current = tester.inject('$state').current;
+                //var controller = current.controller;
+                var template = current.templateUrl;
+                var scope = tester.viewScope();
+                //var scope = current.scope;
+                //expect(scope.title).to.equal('Meetings status');
+
+                //console.log('current.resolve.meetings: ', current.resolve.meetings().then(function () {
+                //
+                //}));
+
+                expect(current.title).to.equal('Meetings list');//state title
+                expect(scope.title).to.equal('Meetings:  Meetings list');//controller title ?
+                expect(template).to.equal('app/meetings/meetings.mru.list.html');
+
+                done();
+            });
+        });
+
+        it('should have a working meeting add page', function (done) {
+            tester.visit('/meetings/add', function () {
+                expect(tester.path()).to.equal('/meetings/add');
+                //expect(tester.viewElement().html()).to.contain('Video Projector');
+
+                var current = tester.inject('$state').current;
+                //var controller = current.controller;
+                var template = current.templateUrl;
+                var scope = tester.viewScope();
+                //var scope = current.scope;
+                //expect(scope.title).to.equal('Meetings status');
+
+                expect(current.title).to.equal('Meeting add');//state title
+                expect(scope.title).to.equal('Meetings:  Meeting add');//controller title ?
+                expect(template).to.equal('app/meetings/meetings.mru.add.html');
+
+                done();
+            });
+        });
+
+        it('should have a working meeting edit page', function (done) {
+            tester.visit('/meetings/edit/' + meetingId, function () {
+                expect(tester.path()).to.equal('/meetings/edit/' + meetingId);
+                //expect(tester.viewElement().html()).to.contain('Video Projector');
+
+                var current = tester.inject('$state').current;
+                //var controller = current.controller;
+                var template = current.templateUrl;
+                var scope = tester.viewScope();
+                //var scope = current.scope;
+                //expect(scope.title).to.equal('Meetings status');
+
+                expect(current.title).to.equal('Meeting edit');//state title
+                expect(scope.title).to.equal('Meetings:  Meeting edit');//controller title ?
+                expect(template).to.equal('app/meetings/meetings.mru.edit.html');
+
+                done();
+            });
+        });
+
+        it('should have a working meeting details page', function (done) {
+            tester.visit('/meetings/details/' + meetingId, function () {
+                expect(tester.path()).to.equal('/meetings/details/' + meetingId);
+                //expect(tester.viewElement().html()).to.contain('Video Projector');
+
+                var current = tester.inject('$state').current;
+                //var controller = current.controller;
+                var template = current.templateUrl;
+                var scope = tester.viewScope();
+                //var scope = current.scope;
+                //expect(scope.title).to.equal('Meetings status');
+
+                expect(current.title).to.equal('Meeting details');//state title
+                expect(scope.title).to.equal('Meetings:  Meeting details');//controller title ?
+                expect(template).to.equal('app/meetings/meetings.mru.details.html');
+
+                done();
+            });
+
+        });
+
+        afterEach(function () {
+            //destroying the tester
+            tester.destroy();
+            tester = null;
+        });
+    });
+});
