@@ -115,7 +115,8 @@ module.exports = function() {
             nodeModules + '/mocha/mocha.js',
             nodeModules + '/chai/chai.js',
             nodeModules + '/mocha-clean/index.js',
-            nodeModules + '/sinon-chai/lib/sinon-chai.js'
+            nodeModules + '/sinon-chai/lib/sinon-chai.js',
+            nodeModules + '/ngMidwayTester/src/ngMidwayTester.js'
         ],
         specHelpers: [client + 'test-helpers/*.js'],
         specs: [clientApp + '**/*.spec.js'],
@@ -154,6 +155,8 @@ module.exports = function() {
                 bowerFiles,
                 config.specHelpers,
                 clientApp + '**/*.module.js',
+                clientApp + '**/*.service.js',
+                clientApp + '**/*.filter.js',
                 clientApp + '**/*.js',
                 temp + config.templateCache.file,
                 config.serverIntegrationSpecs
