@@ -17,44 +17,37 @@ xdescribe('E2E: Testing Routes', function () {
         );
     });
 
-    describe('Testing Room routes', function () {
-        it('should jump to the /rooms/status path when / is accessed', function () {
-            browser.get('/rooms/status');
+    describe('Testing Meeting routes', function () {
+        it('should have a working /meetings/list route', function () {
+            browser.get('/meetings/list');
             browser.getLocationAbsUrl().then(function (url) {
-                expect(url).toEqual('/rooms/status');
+                expect(url).toEqual('/meetings/list');
             });
         });
 
-        it('should have a working /rooms/list route', function () {
-            browser.get('/rooms/list');
+        it('should have a working /meetings/add route', function () {
+            browser.get('/meetings/add');
             browser.getLocationAbsUrl().then(function (url) {
-                expect(url).toEqual('/rooms/list');
+                expect(url).toEqual('/meetings/add');
             });
         });
 
-        it('should have a working /rooms/add route', function () {
-            browser.get('/rooms/add');
-            browser.getLocationAbsUrl().then(function (url) {
-                expect(url).toEqual('/rooms/add');
-            });
-        });
-
-        it('should have a working /rooms/details/... route', function () {
-            browser.get('/rooms/list');
+        it('should have a working /meetings/details/... route', function () {
+            browser.get('/meetings/list');
             browser.getLocationAbsUrl().then(function (url) {
                 element.all(by.css('table>tbody>tr td'))
                     .get(1)
                     .click();
 
                 browser.getLocationAbsUrl().then(function (url) {
-                    expect(url).toMatch(/^\/rooms\/details\/.+$/);
+                    expect(url).toMatch(/^\/meetings\/details\/.+$/);
                 });
 
             });
         });
 
-        it('should have a working /rooms/edit/... route', function () {
-            browser.get('/rooms/list');
+        it('should have a working /meetings/edit/... route', function () {
+            browser.get('/meetings/list');
             browser.getLocationAbsUrl().then(function (url) {
                 element.all(by.css('table>tbody>tr td'))
                     .get(1)
@@ -66,7 +59,7 @@ xdescribe('E2E: Testing Routes', function () {
                         .click();
 
                     browser.getLocationAbsUrl().then(function (url) {
-                        expect(url).toMatch(/^\/rooms\/edit\/.+$/);
+                        expect(url).toMatch(/^\/meetings\/edit\/.+$/);
                     });
                 });
 
