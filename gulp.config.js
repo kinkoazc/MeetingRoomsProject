@@ -159,11 +159,12 @@ module.exports = function() {
                 clientApp + '**/*.service.js',
                 clientApp + '**/*.filter.js',
                 clientApp + '**/*.js',
-                !clientApp + '**/*.e2e.js',
                 temp + config.templateCache.file,
                 config.serverIntegrationSpecs
             ),
-            exclude: [],
+            exclude: [
+                clientApp + '**/*.e2e.js'
+            ],
             coverage: {
                 dir: report + 'coverage',
                 reporters: [

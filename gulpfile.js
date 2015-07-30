@@ -585,6 +585,8 @@ function startTests(singleRun, done) {
         }
     }
 
+    excludeFiles = [].concat(excludeFiles, config.karma.exclude);
+
     karma.start({
         configFile: __dirname + '/karma.conf.js',
         exclude: excludeFiles,

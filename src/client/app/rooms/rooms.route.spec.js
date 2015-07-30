@@ -2,13 +2,12 @@
 describe('rooms routes', function () {
     describe('state', function () {
         var tester,
-            adminToken = 'eyJ0eXAiOiJKV1QiLCJhbGciO' +
-                'iJIUzI1NiJ9.eyJleHAiOjE0MzgyNDQ2OTAsIl9pZCI6IjU1YThlNzU3NzgxNzc5NjQxYTU1MjZlNSIsI' +
-                'mhhc2giOiI5NTNmYjkxNzYzYTk3YzQxMDcxZGU3MmNlOTRlNjM4YzFiOTc0NWE5NDk5OTRmNjA3YTg1NDA' +
-                '5N2YwZjQ3NWY4OGM2YTE5YTYxOTI2NTcyODBlYjljMGMyZWZkYWI5YWIwMzY5MTMxZjNjMTI0ZGMyNzU1YT' +
-                'VlM2FhMTllZDRiYSIsInNhbHQiOiI5NDBiZTBlZWFhMDBmN2I1ZTgxN2JjMzE1YjhkYTI5YSIsImVtYWlsI' +
-                'joiYWRtaW5AZ21haWwuY29tIiwiX192IjowLCJ1cGRhdGVkT24iOiIyMDE1LTA3LTE3VDExOjMwOjMxLjU0' +
-                'NloiLCJhZG1pbiI6dHJ1ZX0.jJkuLLRhixGjJ8mOEnqlGSXkOvAMFlcOZ3A2YLQ6VF8',
+            adminToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE0MzgzMzYxNzMsIl9pZCI6IjU1YTh' +
+                'lNzU3NzgxNzc5NjQxYTU1MjZlNSIsImhhc2giOiI5NTNmYjkxNzYzYTk3YzQxMDcxZGU3MmNlOTRlNjM4YzFi' +
+                'OTc0NWE5NDk5OTRmNjA3YTg1NDA5N2YwZjQ3NWY4OGM2YTE5YTYxOTI2NTcyODBlYjljMGMyZWZkYWI5YWIwM' +
+                'zY5MTMxZjNjMTI0ZGMyNzU1YTVlM2FhMTllZDRiYSIsInNhbHQiOiI5NDBiZTBlZWFhMDBmN2I1ZTgxN2JjMz' +
+                'E1YjhkYTI5YSIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwiX192IjowLCJ1cGRhdGVkT24iOiIyMDE1LTA' +
+                '3LTE3VDExOjMwOjMxLjU0NloiLCJhZG1pbiI6dHJ1ZX0.VIthwiyWs10JnKsdW8oSeEgOVbP99k65gyzp5CAcNZQ',
             roomId = '55a8e758781779641a5526e7';
         //var controller, token, view = 'app/rooms/rooms.html';
 

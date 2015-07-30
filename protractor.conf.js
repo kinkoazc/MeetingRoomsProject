@@ -1,4 +1,4 @@
-exports.config = {
+exports.config = {// to run, use 'protractor protractor.conf.js'
     allScriptsTimeout: 11000,
 
     specs: [
