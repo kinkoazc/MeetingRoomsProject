@@ -17,10 +17,12 @@ describe('E2E: Testing Routes', function () {
         );
     });
 
-    describe('Testing Room routes', function () {
+    describe('Testing Room list/add/status routes', function () {
         it('should jump to the /rooms/status path when / is accessed', function () {
             browser.get('/rooms/status');
             browser.getLocationAbsUrl().then(function (url) {
+                expect(element.all(by.css('div[ui-view]>mru')).count()).toBe(1);
+
                 expect(url).toEqual('/rooms/status');
             });
         });
@@ -28,6 +30,8 @@ describe('E2E: Testing Routes', function () {
         it('should have a working /rooms/list route', function () {
             browser.get('/rooms/list');
             browser.getLocationAbsUrl().then(function (url) {
+                expect(element.all(by.css('div[ui-view]>mru')).count()).toBe(1);
+
                 expect(url).toEqual('/rooms/list');
             });
         });
@@ -35,48 +39,69 @@ describe('E2E: Testing Routes', function () {
         it('should have a working /rooms/add route', function () {
             browser.get('/rooms/add');
             browser.getLocationAbsUrl().then(function (url) {
+                expect(element.all(by.css('div[ui-view]>mru')).count()).toBe(1);
+
                 expect(url).toEqual('/rooms/add');
+            });
+        });
+    });
+
+    describe('Testing Room details/edit routes', function () {
+        beforeEach(function () {
+            browser.get('/rooms/list');
+            //browser.waitForAngular();
+            browser.getLocationAbsUrl().then(function (url) {
+                element(by.repeater('room in vml.rooms').row(0))
+                    .element(by.css('td>a'))
+                    .click()
+                    .then(function () {
+                        //console.log('click completed');
+                    });
             });
         });
 
         it('should have a working /rooms/details/... route', function () {
-            browser.get('/rooms/list');
+            //browser.get('/rooms/list');
+            //browser.getLocationAbsUrl().then(function (url) {
+            //    element.all(by.css('table>tbody>tr td'))
+            //        .get(1)
+            //        .click();
+
             browser.getLocationAbsUrl().then(function (url) {
-                element.all(by.css('table>tbody>tr td'))
-                    .get(1)
-                    .click();
+                expect(element.all(by.css('div[ui-view]>mru')).count()).toBe(1);
 
-                browser.getLocationAbsUrl().then(function (url) {
-                    expect(url).toMatch(/^\/rooms\/details\/.+$/);
-                });
-
+                expect(url).toMatch(/^\/rooms\/details\/.+$/);
             });
+
+            //            });
         });
 
         it('should have a working /rooms/edit/... route', function () {
-            browser.get('/rooms/list');
+            //browser.get('/rooms/list');
+            //browser.getLocationAbsUrl().then(function (url) {
+            //    element.all(by.css('table>tbody>tr td'))
+            //        .get(1)
+            //        .click();
+
             browser.getLocationAbsUrl().then(function (url) {
-                element.all(by.css('table>tbody>tr td'))
+                element.all(by.css('mru button[type=button]'))
                     .get(1)
-                    .click();
+                    .click()
+                    .then(function () {
+                        browser.getLocationAbsUrl().then(function (url) {
+                            expect(element.all(by.css('div[ui-view]>mru')).count()).toBe(1);
 
-                browser.getLocationAbsUrl().then(function (url) {
-                    element.all(by.css('mru button[type=button]'))
-                        .get(1)
-                        .click();
-
-                    browser.getLocationAbsUrl().then(function (url) {
-                        expect(url).toMatch(/^\/rooms\/edit\/.+$/);
+                            expect(url).toMatch(/^\/rooms\/edit\/.+$/);
+                        });
                     });
-                });
-
             });
         });
+    });
 
-        afterEach(function () {
-            browser.get('/logout');
-        });
-
+    afterEach(function () {
+        browser.get('/logout');
     });
 
 });
+
+//});

@@ -17,10 +17,12 @@ describe('E2E: Testing Routes', function () {
         );
     });
 
-    describe('Testing Meeting routes', function () {
+    describe('Testing Meeting list/add routes', function () {
         it('should have a working /meetings/list route', function () {
             browser.get('/meetings/list');
             browser.getLocationAbsUrl().then(function (url) {
+                expect(element.all(by.css('div[ui-view]>mru')).count()).toBe(1);
+
                 expect(url).toEqual('/meetings/list');
             });
         });
@@ -28,48 +30,68 @@ describe('E2E: Testing Routes', function () {
         it('should have a working /meetings/add route', function () {
             browser.get('/meetings/add');
             browser.getLocationAbsUrl().then(function (url) {
+                expect(element.all(by.css('div[ui-view]>mru')).count()).toBe(1);
+
                 expect(url).toEqual('/meetings/add');
+            });
+        });
+    });
+
+    describe('Testing Meeting details/edit routes', function () {
+        beforeEach(function () {
+            browser.get('/meetings/list');
+            //browser.waitForAngular();
+            browser.getLocationAbsUrl().then(function (url) {
+                element(by.repeater('meeting in vml.meetings').row(0))
+                    .element(by.css('td>a'))
+                    .click()
+                    .then(function () {
+                        //console.log('click completed');
+                    });
             });
         });
 
         it('should have a working /meetings/details/... route', function () {
-            browser.get('/meetings/list');
+            //browser.get('/meetings/list');
+            //browser.getLocationAbsUrl().then(function (url) {
+            //    element.all(by.css('table>tbody>tr td'))
+            //        .get(1)
+            //        .click()
+            //        .then(function () {
             browser.getLocationAbsUrl().then(function (url) {
-                element.all(by.css('table>tbody>tr td'))
-                    .get(1)
-                    .click();
+                expect(element.all(by.css('div[ui-view]>mru')).count()).toBe(1);
 
-                browser.getLocationAbsUrl().then(function (url) {
-                    expect(url).toMatch(/^\/meetings\/details\/.+$/);
-                });
-
+                expect(url).toMatch(/^\/meetings\/details\/.+$/);
             });
+            //        });
+            //});
         });
 
         it('should have a working /meetings/edit/... route', function () {
-            browser.get('/meetings/list');
+            //browser.get('/meetings/list');
+            //browser.getLocationAbsUrl().then(function (url) {
+            //    element.all(by.css('table>tbody>tr td'))
+            //        .get(1)
+            //        .click();
+
             browser.getLocationAbsUrl().then(function (url) {
-                element.all(by.css('table>tbody>tr td'))
+                element.all(by.css('mru button[type=button]'))
                     .get(1)
-                    .click();
+                    .click()
+                    .then(function () {
+                        browser.getLocationAbsUrl().then(function (url) {
+                            expect(element.all(by.css('div[ui-view]>mru')).count()).toBe(1);
 
-                browser.getLocationAbsUrl().then(function (url) {
-                    element.all(by.css('mru button[type=button]'))
-                        .get(1)
-                        .click();
-
-                    browser.getLocationAbsUrl().then(function (url) {
-                        expect(url).toMatch(/^\/meetings\/edit\/.+$/);
+                            expect(url).toMatch(/^\/meetings\/edit\/.+$/);
+                        });
                     });
-                });
-
             });
-        });
 
-        afterEach(function () {
-            browser.get('/logout');
         });
+    });
 
+    afterEach(function () {
+        browser.get('/logout');
     });
 
 });

@@ -132,6 +132,8 @@ describe('users routes', function () {
                 var $params = tester.inject('$stateParams');
                 expect($params.id).to.equal(userId);
 
+                //expect(tester.viewElement()).to.contain('app-youtube-listings');
+
                 expect(tester.path()).to.equal('/users/details/' + userId);
                 //expect(tester.viewElement().html()).to.contain('Video Projector');
 

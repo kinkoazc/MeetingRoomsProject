@@ -18,12 +18,17 @@ describe('E2E: Testing Routes', function () {
         );
     });
 
-    describe('Testing User routes', function () {
+    describe('Testing User list/add routes', function () {
         it('should have a working /users/list route', function () {
             browser.get('/users/list');
             browser.getLocationAbsUrl().then(function (url) {
                 //browser.waitForAngular();
+
+                expect(element.all(by.css('div[ui-view]>mru')).count()).toBe(1);
+
                 expect(url).toEqual('/users/list');
+
+                //expect(element('div[ui-view]').getText()).toContain('Users list');
             });
         });
 
@@ -31,6 +36,8 @@ describe('E2E: Testing Routes', function () {
             browser.get('/users/add');
             browser.getLocationAbsUrl().then(function (url) {
                 //browser.waitForAngular();
+                expect(element.all(by.css('div[ui-view]>mru')).count()).toBe(1);
+
                 expect(url).toEqual('/users/add');
             });
         });
@@ -53,6 +60,8 @@ describe('E2E: Testing Routes', function () {
 
         it('should have a working /users/details/... route', function () {
             browser.getLocationAbsUrl().then(function (url) {
+                expect(element.all(by.css('div[ui-view]>mru')).count()).toBe(1);
+
                 expect(url).toMatch(/^\/users\/details\/.+$/);
             });
         });
@@ -64,6 +73,8 @@ describe('E2E: Testing Routes', function () {
                     .click()
                     .then(function () {
                         browser.getLocationAbsUrl().then(function (url) {
+                            expect(element.all(by.css('div[ui-view]>mru')).count()).toBe(1);
+
                             expect(url).toMatch(/^\/users\/edit\/.+$/);
                         });
                     });
