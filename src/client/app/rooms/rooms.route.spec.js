@@ -123,6 +123,9 @@ describe('rooms routes', function () {
 
         it('should have a working room edit page', function (done) {
             tester.visit('/rooms/edit/' + roomId, function () {
+                var $params = tester.inject('$stateParams');
+                expect($params.id).to.equal(roomId);
+
                 expect(tester.path()).to.equal('/rooms/edit/' + roomId);
                 //expect(tester.viewElement().html()).to.contain('Video Projector');
 
@@ -143,6 +146,9 @@ describe('rooms routes', function () {
 
         it('should have a working room details page', function (done) {
             tester.visit('/rooms/details/' + roomId, function () {
+                var $params = tester.inject('$stateParams');
+                expect($params.id).to.equal(roomId);
+
                 expect(tester.path()).to.equal('/rooms/details/' + roomId);
                 //expect(tester.viewElement().html()).to.contain('Video Projector');
 

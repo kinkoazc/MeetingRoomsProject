@@ -106,6 +106,9 @@ describe('users routes', function () {
 
         it('should have a working user edit page', function (done) {
             tester.visit('/users/edit/' + userId, function () {
+                var $params = tester.inject('$stateParams');
+                expect($params.id).to.equal(userId);
+
                 expect(tester.path()).to.equal('/users/edit/' + userId);
                 //expect(tester.viewElement().html()).to.contain('Video Projector');
 
@@ -126,6 +129,9 @@ describe('users routes', function () {
 
         it('should have a working user details page', function (done) {
             tester.visit('/users/details/' + userId, function () {
+                var $params = tester.inject('$stateParams');
+                expect($params.id).to.equal(userId);
+
                 expect(tester.path()).to.equal('/users/details/' + userId);
                 //expect(tester.viewElement().html()).to.contain('Video Projector');
 

@@ -102,8 +102,31 @@ describe('meetings routes', function () {
             });
         });
 
-        it('should have a working meeting edit page', function (done) {
+        //xit('should have a working meeting edit page', function (done) {
+        //    tester.visit('/meetings/edit/' + meetingId, function () {
+        //        expect(tester.path()).to.equal('/meetings/edit/' + meetingId);
+        //        //expect(tester.viewElement().html()).to.contain('Video Projector');
+        //
+        //        var current = tester.inject('$state').current;
+        //        //var controller = current.controller;
+        //        var template = current.templateUrl;
+        //        var scope = tester.viewScope();
+        //        //var scope = current.scope;
+        //        //expect(scope.title).to.equal('Meetings status');
+        //
+        //        expect(current.title).to.equal('Meeting edit');//state title
+        //        expect(scope.title).to.equal('Meetings:  Meeting edit');//page title
+        //        expect(template).to.equal('app/meetings/meetings.mru.edit.html');
+        //
+        //        done();
+        //    });
+        //});
+
+        it('should have a working meeting edit page, with :id filled', function (done) {
             tester.visit('/meetings/edit/' + meetingId, function () {
+                var $params = tester.inject('$stateParams');
+                expect($params.id).to.equal(meetingId);
+
                 expect(tester.path()).to.equal('/meetings/edit/' + meetingId);
                 //expect(tester.viewElement().html()).to.contain('Video Projector');
 
@@ -124,6 +147,9 @@ describe('meetings routes', function () {
 
         it('should have a working meeting details page', function (done) {
             tester.visit('/meetings/details/' + meetingId, function () {
+                var $params = tester.inject('$stateParams');
+                expect($params.id).to.equal(meetingId);
+
                 expect(tester.path()).to.equal('/meetings/details/' + meetingId);
                 //expect(tester.viewElement().html()).to.contain('Video Projector');
 
