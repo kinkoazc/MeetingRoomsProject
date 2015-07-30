@@ -1,5 +1,5 @@
 /* jshint -W117, -W030 */
-xdescribe('E2E: Testing Routes', function () {
+describe('E2E: Testing Routes', function () {
 
     beforeEach(function () {
         browser.get('/login');

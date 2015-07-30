@@ -18,7 +18,7 @@ describe('E2E: Testing Routes', function () {
         );
     });
 
-    xdescribe('Testing User routes', function () {
+    describe('Testing User routes', function () {
         it('should have a working /users/list route', function () {
             browser.get('/users/list');
             browser.getLocationAbsUrl().then(function (url) {
@@ -46,7 +46,7 @@ describe('E2E: Testing Routes', function () {
                     .element(by.css('td>a'))
                     .click()
                     .then(function () {
-                        console.log('click completed');
+                        //console.log('click completed');
                     });
             });
         });
