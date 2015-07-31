@@ -16,13 +16,19 @@ describe('MeetingsController', function () {
             $httpBackend = _$httpBackend_;
             //auth = _auth_;
 
+            $httpBackend
+                .whenGET('/api/room-status')
+                .respond(function (method, url, data) {
+                    return [200, [], {}];
+                });
+
             //auth.saveToken(adminToken);
             $scope = $rootScope.$new();
             ctrl = $controller('MeetingsController', {$scope: $scope});
         }));
 
         it('should have a MeetingsController', function () {
-            //expect(typeof ctrl).not.to.equal('object');
+            $httpBackend.flush();
             expect(ctrl).not.to.equal(null);
         });
     });
