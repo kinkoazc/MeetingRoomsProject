@@ -20,3 +20,34 @@ describe('Unit: Testing auth service', function () {
 
         }]));
 });
+
+describe('Midway: Testing auth service', function () {
+    var tester;
+
+    beforeEach(function () {
+        if (tester) {
+            tester.destroy();
+        }
+        tester = ngMidwayTester('app');
+    });
+
+    it('should verify the auth service functionality', function () {
+        var auth = tester.inject('auth');
+        expect(auth).not.to.equal(null);
+
+        auth.saveToken(window.testingGlobals.token);
+
+        expect(auth.isLoggedIn()).to.equal(true);
+
+        auth.logOut();
+
+        expect(auth.isLoggedIn()).to.equal(false);
+        //auth.findVideo(youtubeID, false,
+        //    function (q, data) {
+        //        expect(data).not.to.equal(null);
+        //        expect(data.id).to.equal(youtubeID);
+        //        done();
+        //    }
+        //);
+    });
+});

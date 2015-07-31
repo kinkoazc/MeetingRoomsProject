@@ -245,15 +245,15 @@
 
         /* GET ALL with STATUSES */
         function gettingRoomsStatus() {
-            var room = $resource('/api/room-status').query();//$http.get('/api/room-status');
+            var rooms = $resource('/api/room-status').query();//$http.get('/api/room-status');
 
-            room.$promise.then(function (data) {
+            rooms.$promise.then(function (data) {
                 //Room.setRoom(data);
 
                 return data;
             });
 
-            return room;
+            return rooms;
             //$http
             //    .get('/api/rooms')
             //    .then(function (results) {
