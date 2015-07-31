@@ -79,6 +79,8 @@
                         break;
                 }
             }
+
+            return false;
         };
 
         return auth;
