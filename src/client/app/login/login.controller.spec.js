@@ -1,32 +1,39 @@
-///* jshint -W117, -W030 */
-//describe('LoginController', function() {
-//    var controller;
-//
-//    beforeEach(function() {
-//        bard.appModule('app.login');
-//        bard.inject('$controller', '$log', '$rootScope');
-//    });
-//
-//    beforeEach(function () {
-//        controller = $controller('LoginController');
-//        $rootScope.$apply();
-//    });
-//
-//    bard.verifyNoOutstandingHttpRequests();
-//
-//    describe('Login controller', function() {
-//        it('should be created successfully', function () {
-//            expect(controller).to.be.defined;
-//        });
-//
-//        describe('after activate', function() {
-//            it('should have title of Login', function() {
-//                expect(controller.title).to.equal('Login');
-//            });
-//
-//            it('should have logged "Activated"', function() {
-//                expect($log.info.logs).to.match(/Activated/);
-//            });
-//        });
-//    });
-//});
+/* jshint -W117, -W030 */
+describe('LoginController', function () {
+    var $scope, ctrl, $httpBackend;
+
+    beforeEach(module('app'));
+
+    beforeEach(inject(function (_$httpBackend_, $rootScope, $controller) {
+        $httpBackend = _$httpBackend_;
+
+        $httpBackend
+            .whenGET('/api/room-status')
+            .respond(function (method, url, data) {
+                return [200, [], {}];
+            });
+
+        $scope = $rootScope.$new();
+        ctrl = $controller('LoginController', {$scope: $scope});
+    }));
+
+    describe('Check if LoginController is instantiated: ', function () {
+        it('should have a LoginController', function () {
+            $httpBackend.flush();
+            expect(ctrl).not.to.equal(null);
+        });
+    });
+
+    describe('Check if LoginController is working: ', function () {
+        it('should have a properly working LoginController', function () {
+            $httpBackend.flush();
+            expect(ctrl.title).to.equal('Login');
+        });
+    });
+
+    afterEach(function () {
+        $httpBackend.verifyNoOutstandingExpectation();
+        $httpBackend.verifyNoOutstandingRequest();
+    });
+});
+
