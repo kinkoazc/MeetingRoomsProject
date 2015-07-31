@@ -9,7 +9,7 @@
     /* @ngInject */
     function dataservice($http, $q, $state, $resource, Meeting, Room, User, logger) {
         return {
-            loging: loging,
+            logging: logging,
             registering: registering,
             gettingMeetings: gettingMeetings,
             gettingMeeting: gettingMeeting,
@@ -52,7 +52,7 @@
         //}
 
         /* USER */
-        function loging(user) {
+        function logging(user) {
             return $http
                 .post('/api/authenticate', user)
                 .then(function (results) {
@@ -101,15 +101,15 @@
         /* MEETINGS */
         /* GET ALL */
         function gettingMeetings() {
-            var meeting = Meeting.resource.query();
+            var meetings = Meeting.resource.query();
 
-            meeting.$promise.then(function (data) {
+            meetings.$promise.then(function (data) {
                 //Meeting.setMeeting(data);
 
                 return data;
             });
 
-            return meeting;
+            return meetings;
             //$http
             //    .get('/api/meetings')
             //    .then(function (results) {

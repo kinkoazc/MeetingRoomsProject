@@ -45,7 +45,7 @@
         function login(e) {
             e.preventDefault();
 
-            dataservice.loging({email: e.target['email'].value, password: e.target['password'].value})
+            dataservice.logging({email: e.target['email'].value, password: e.target['password'].value})
                 .then(function (data) {
                     if (data.success === true) {
                         $state.go('login');
