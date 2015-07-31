@@ -189,4 +189,9 @@ describe('MeetingsController', function () {
             expect(ctrl.title).to.equal('Meetings');
         });
     });
+
+    afterEach(function () {
+        $httpBackend.verifyNoOutstandingExpectation();
+        $httpBackend.verifyNoOutstandingRequest();
+    });
 });
