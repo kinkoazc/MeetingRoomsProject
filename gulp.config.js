@@ -115,6 +115,7 @@ module.exports = function() {
         testlibraries: [
             nodeModules + '/mocha/mocha.js',
             nodeModules + '/chai/chai.js',
+            nodeModules + '/chai-as-promised/lib/chai-as-promised.js',
             nodeModules + '/mocha-clean/index.js',
             nodeModules + '/sinon-chai/lib/sinon-chai.js'
         ],
